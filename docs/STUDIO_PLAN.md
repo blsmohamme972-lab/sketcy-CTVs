@@ -1,6 +1,6 @@
 # Sketcy Studio — visual lesson authoring plan
 
-User direction, 31 October 2026: build an Illustrator-like editor inside this
+User direction, 30 October 2026 (UTC): build an Illustrator-like editor inside this
 repository, make the plan first, then implement without further questions. Work
 alone. The goal is a strong editor for visual mnemonic lessons, not a claim of
 full Adobe Illustrator feature parity. The user clarified that this is an

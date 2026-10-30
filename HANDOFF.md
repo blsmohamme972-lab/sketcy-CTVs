@@ -2,7 +2,7 @@
 
 ## Latest user direction and saved work
 
-31 October 2026: build an Illustrator-like tool inside this repository, make the
+30 October 2026 (UTC): build an Illustrator-like tool inside this repository, make the
 plan first and start building without asking questions. The user explicitly
 clarified: **the assistant uses this tool to build lessons; it must not appear
 on the student side.** Work alone and use English. The implementation below
@@ -28,6 +28,12 @@ integer-coordinate recomposition differs from the original by at most 4/255 in
 one channel; mean absolute channel difference was 0.000369/255. These are real
 render/import/export checks, not Android device tests or narration acceptance.
 See [VERIFICATION.md](docs/VERIFICATION.md) for exact environment and scope.
+
+The implementation is saved at `92c331a4ae67eabca95295da3195c901d98b7327`.
+The [hosted Studio run](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41144223907)
+also passed all 45 core/CLI and 15 browser checks. All 37 saved file identities
+were verified against GitHub. This handoff's follow-up edit records hosted
+verification and does not modify the tested tool.
 
 ### Continue here
 

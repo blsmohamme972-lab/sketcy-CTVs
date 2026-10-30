@@ -1,6 +1,6 @@
 # Verification — Studio 0.1 and Android 0.2.0
 
-## Studio 0.1 internal authoring — 31 October 2026
+## Studio 0.1 internal authoring — 30 October 2026 (UTC)
 
 This work adds the assistant's authoring tool only. No Android source or
 dependency changed. The student app does not expose the editor. Tests use an
@@ -73,6 +73,32 @@ and lesson review remain separate outstanding deliverables.
 User screenshots later showed the Android Library/Review UI and an import error.
 That is user-reported launch/UI evidence; it does not replace the device checklist
 or make the historical zero-executed instrumented tests a pass.
+
+### Hosted Studio verification and saved files
+
+The [Studio GitHub Actions run](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41144223907)
+**passed** for implementation commit
+`92c331a4ae67eabca95295da3195c901d98b7327`. Its downloaded job log confirms all
+45 core/CLI tests and 15 browser tests passed with zero failures. Formatting,
+Python compilation, browser installation and verification-artifact upload also
+passed on the hosted runner. The runner emitted an action-runtime deprecation
+advisory for the pinned v4 actions; execution was successful under its automatic
+Node 24 action-runtime migration. This is separate from the Node 22 test runtime.
+
+The existing [Android workflow](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41144224215)
+also started automatically for this commit. At the 23:27 UTC status check, its
+Python tooling steps had passed and the JVM/build/lint step was still running.
+That check is not recorded as a new Android pass here. No Android source changed;
+this Studio milestone's confirmed hosted results are the 60 authoring checks
+above. Historical Android results and open physical-device gates remain below.
+
+All 37 changed files were fetched from GitHub and their Git blob identities
+compared with the exact staged files. The complete saved tree matched
+`31037edebfc9b3a0d8dd9d8b00d2e8bf0c1599b4`, and the local checkout was clean.
+The following documentation-only checkpoint records these results; it does not
+change the tested Studio implementation. Its commit uses `[skip ci]` because
+only verification documentation changed; the implementation run remains linked
+above and the existing Android run is left undisturbed.
 
 ## Historical Android 0.2.0 verification
 
