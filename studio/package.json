@@ -1,0 +1,21 @@
+{
+  "name": "sketcy-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local visual mnemonic lesson editor for Sketcy CTVS",
+  "scripts": {
+    "start": "python3 server.py",
+    "test": "node tests/run.mjs",
+    "test:browser": "node tests/browser/run.mjs",
+    "format:check": "prettier --check agent.mjs src tests index.html studio.css package.json",
+    "check": "node --check src/editor.mjs && node tests/run.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

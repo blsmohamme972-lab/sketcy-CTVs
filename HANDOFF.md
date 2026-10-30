@@ -1,4 +1,58 @@
-# Worker handoff — version 0.2.0 engineering checkpoint
+# Worker handoff — Studio 0.1 internal authoring checkpoint
+
+## Latest user direction and saved work
+
+31 October 2026: build an Illustrator-like tool inside this repository, make the
+plan first and start building without asking questions. The user explicitly
+clarified: **the assistant uses this tool to build lessons; it must not appear
+on the student side.** Work alone and use English. The implementation below
+fulfills the first authoring milestone; it does not claim Adobe feature parity.
+
+Read [STUDIO_PLAN.md](docs/STUDIO_PLAN.md), [studio/README.md](studio/README.md),
+[studio/AGENTS.md](studio/AGENTS.md), [STUDIO_FORMAT.md](docs/STUDIO_FORMAT.md)
+and [ART_DIRECTION.md](docs/ART_DIRECTION.md). `studio/agent.mjs` is the primary
+agent interface. `studio/server.py` provides an optional loopback-only browser
+workspace. No Android source, navigation, dependency or package contract changed.
+
+Completed: editable vector and raster layers; grouping, transforms, pen/Bézier
+editing and history; embedded-asset project Save/Open and local recovery;
+source/fact links; distinct explanation/story cues; actual WAV-clock preview;
+camera and object keyframes with reduced motion; SVG/PNG and transparent layer
+exports; source-preserving production handoff; command-line authoring; pinned CI.
+The original neutral Lantern Workshop demo is vector code and silent draft
+timelines, distinct from the earlier narrated Lantern Library Android package.
+
+Local verification: **45 core/CLI checks and 15 real Chromium checks passed**.
+Layer export produced one background and seven actual transparent PNGs. Their
+integer-coordinate recomposition differs from the original by at most 4/255 in
+one channel; mean absolute channel difference was 0.000369/255. These are real
+render/import/export checks, not Android device tests or narration acceptance.
+See [VERIFICATION.md](docs/VERIFICATION.md) for exact environment and scope.
+
+### Continue here
+
+1. Import and preserve the existing measured Breeze generation ledger in Studio,
+   including exact code/model/voice hashes. Imported WAV alone remains unverified.
+2. Extend the Android format and renderer for independent object layers with
+   deterministic seek, speed, mode switching and reduced motion. Current package
+   v1 supports one PNG per part; do not claim Studio motion is already in Android.
+3. Use the authoring commands and drawing rules to complete the first three
+   cardiac layered demonstrations. Earlier flattened scenes/background drafts
+   do not supply the missing transparent cutouts, narration or device checks.
+4. Keep source preservation, listening and physical-device acceptance open until
+   actually reviewed. Studio handoffs reset both review flags and are not ZIPs.
+
+The user authorized public medical sources for the separate ten-lesson testing
+demonstration. Preserve real source attribution and use `EXTERNAL_REVIEW` in
+Studio for those drafts. The current v1 Android contract does not support that
+content type. Do not bypass this by claiming the sources were supplied by the
+learner or the content is nonmedical. The showcase PDF is an art reference only.
+
+User-supplied screenshots show the Android Library and Review screens running
+and a failed import message. They are launch/UI evidence, not a completed
+installation, audio, lesson import, review or backup acceptance checklist.
+
+## Previous Android 0.2.0 checkpoint (preserved)
 
 The user directed “Do all work now” after the bounded Breeze CPU feasibility
 checkpoint `c5eea4d16d8f6aced4c41c83add7f657a9e4dcf2`. The current checkpoint

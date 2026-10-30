@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#13251f" />
+    <meta
+      name="description"
+      content="Internal visual lesson authoring for Sketcy CTVS. Local files, editable layers, facts and narration."
+    />
+    <title>Sketcy Studio · Authoring</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./studio.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Sketcy Studio home"
+        ><img src="./favicon.svg" alt="" width="32" height="32" /><span
+          >Sketcy <b>Studio</b></span
+        ><small>AUTHORING</small></a
+      >
+      <div class="project-heading">
+        <input
+          id="project-title"
+          aria-label="Project title"
+          maxlength="200"
+        /><span id="save-status" role="status">Local workspace</span>
+      </div>
+      <div class="top-actions">
+        <button data-action="new" title="New empty project">New</button
+        ><button data-action="open">Open</button
+        ><button data-action="save" class="save-button">
+          Save project <kbd>⌘ S</kbd></button
+        ><button data-action="export" class="primary">
+          Export <span>↗</span>
+        </button>
+      </div>
+    </header>
+    <div class="commandbar">
+      <div class="command-left">
+        <button data-action="undo" id="undo" title="Undo (Ctrl/Cmd Z)">
+          ↶ <span>Undo</span></button
+        ><button data-action="redo" id="redo" title="Redo (Ctrl/Cmd Shift Z)">
+          ↷ <span>Redo</span></button
+        ><i></i
+        ><button data-action="import-image" class="import-art">
+          + Import artwork</button
+        ><button data-action="group" title="Group selected layers (Ctrl/Cmd G)">
+          Group</button
+        ><button data-action="ungroup" title="Ungroup (Ctrl/Cmd Shift G)">
+          Ungroup
+        </button>
+      </div>
+      <div class="segmented" aria-label="Workspace mode">
+        <button id="design-mode" data-action="design" class="active">
+          Design</button
+        ><button id="preview-mode" data-action="preview">Preview lesson</button>
+      </div>
+      <div class="command-right">
+        <button data-action="help" title="Keyboard shortcuts">
+          ? <span>Shortcuts</span></button
+        ><span class="local-badge"><i></i> Files stay local</span>
+      </div>
+    </div>
+    <main class="workspace">
+      <nav class="toolrail" aria-label="Drawing tools" id="toolrail"></nav>
+      <aside class="left-panel">
+        <div class="panel-tabs">
+          <button class="active" data-tab="layers">Layers</button
+          ><button data-tab="facts">Facts</button
+          ><button data-tab="assets">Assets</button>
+        </div>
+        <div id="left-content" class="panel-content"></div>
+        <div class="panel-footer">
+          <span id="object-count"></span
+          ><button
+            data-action="demo"
+            title="Open the editable nonmedical example"
+          >
+            Example scene
+          </button>
+        </div>
+      </aside>
+      <section class="canvas-column" aria-label="Scene workspace">
+        <div class="canvas-top">
+          <div>
+            <span class="eyebrow">SCENE 01</span
+            ><span id="scope-label"> / Artboard</span
+            ><button id="leave-group" data-action="leave-group" hidden>
+              ↰ Leave group
+            </button>
+          </div>
+          <div class="view-controls">
+            <button data-action="zoom-out" aria-label="Zoom out">−</button
+            ><button data-action="fit" id="zoom-label" title="Fit artboard">
+              Fit</button
+            ><button data-action="zoom-in" aria-label="Zoom in">+</button
+            ><button data-action="grid" id="grid-toggle" aria-pressed="false">
+              Grid</button
+            ><button data-action="snap" id="snap-toggle" aria-pressed="false">
+              Snap
+            </button>
+          </div>
+        </div>
+        <div class="stage-scroll" id="stage-scroll">
+          <div class="stage-wrap" id="stage-wrap">
+            <svg
+              id="artboard"
+              xmlns="http://www.w3.org/2000/svg"
+              tabindex="0"
+              aria-label="Editable scene artboard"
+            >
+              <g id="artwork"></g>
+              <g id="grid-overlay" pointer-events="none"></g>
+              <g id="highlights" pointer-events="none"></g>
+              <g id="selection-overlay"></g>
+              <g id="drawing-overlay"></g>
+            </svg>
+          </div>
+        </div>
+        <div id="caption-bar" class="caption-bar">
+          <span class="caption-label">SCENE NOTES</span
+          ><span id="caption-text"
+            >Select an object to shape the scene. Double-click a group to edit
+            its contents.</span
+          >
+        </div>
+        <section class="timeline" aria-label="Narration and motion timeline">
+          <div class="timeline-toolbar">
+            <div class="track-switch segmented">
+              <button class="active" data-track="explanation">
+                Explanation</button
+              ><button data-track="story">Story</button>
+            </div>
+            <button
+              class="play-button"
+              id="play"
+              data-action="play"
+              aria-label="Play preview"
+            >
+              ▶</button
+            ><span class="time-code" id="time-code">00:00 / 01:30</span
+            ><select id="playback-speed" aria-label="Playback speed">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option></select
+            ><span id="audio-status" class="audio-status"
+              >Silent motion preview</span
+            ><button data-action="import-audio">Attach WAV</button
+            ><button data-action="remove-audio" id="remove-audio" hidden>
+              Detach</button
+            ><label class="reduced"
+              ><input type="checkbox" id="reduced-motion" /> Still scene</label
+            >
+          </div>
+          <div class="timeline-body">
+            <div class="track-label">
+              <span id="track-name">EXPLANATION</span
+              ><button data-action="add-cue">+ Cue</button>
+            </div>
+            <div class="timeline-lanes">
+              <div id="time-ruler" class="time-ruler"></div>
+              <div id="cue-lane" class="cue-lane"></div>
+              <div id="waveform" class="waveform"></div>
+              <input
+                id="playhead"
+                aria-label="Playhead milliseconds"
+                type="range"
+                min="0"
+                max="90000"
+                value="0"
+                step="10"
+              />
+              <div
+                id="playhead-line"
+                class="playhead-line"
+                aria-hidden="true"
+              ></div>
+            </div>
+          </div>
+        </section>
+        <footer class="canvas-footer">
+          <span id="tool-hint"
+            >V · Select &nbsp; Space · Pan &nbsp; Ctrl/⌘ + wheel · Zoom</span
+          ><span id="canvas-size">1600 × 900</span>
+        </footer>
+      </section>
+      <aside class="right-panel">
+        <div class="inspector-heading">
+          <span>Properties</span><span id="selection-count">Artboard</span>
+        </div>
+        <div id="inspector" class="panel-content"></div>
+        <div class="author-note">
+          Internal lesson authoring<br /><span
+            >Student lessons are delivered separately.</span
+          >
+        </div>
+      </aside>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <dialog id="dialog">
+      <form method="dialog" id="dialog-form">
+        <div class="dialog-title">
+          <h2 id="dialog-heading"></h2>
+          <button value="cancel" aria-label="Close dialog" formnovalidate>
+            ×
+          </button>
+        </div>
+        <div id="dialog-body"></div>
+        <div id="dialog-actions" class="dialog-actions"></div>
+      </form>
+    </dialog>
+    <input
+      id="project-file"
+      type="file"
+      accept=".json,application/json"
+      hidden
+    />
+    <input
+      id="image-files"
+      type="file"
+      accept="image/png,image/jpeg,image/webp"
+      multiple
+      hidden
+    />
+    <input
+      id="audio-file"
+      type="file"
+      accept=".wav,audio/wav,audio/x-wav"
+      hidden
+    />
+    <input
+      id="source-file"
+      type="file"
+      accept=".json,application/json"
+      hidden
+    />
+    <audio id="narration" preload="metadata"></audio>
+    <script type="module" src="./src/editor.mjs"></script>
+  </body>
+</html>

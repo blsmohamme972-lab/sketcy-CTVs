@@ -5,12 +5,20 @@ PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
 (API 26). Imports, playback and spaced review use local files and on-device
 storage. No account, server, analytics or Internet permission is required.
 
-**Status: version 0.2.0 engineering checkpoint.** The user asked to proceed with
+**Current checkpoint: Sketcy Studio 0.1 internal authoring, Android 0.2.0.**
+The repository now includes an illustration/composition tool for the assistant
+and future agents. It creates editable scenes, independent image layers, source
+fact links and explanation/story previews. **Studio is not in the student app.**
+See [the authoring guide](studio/README.md) and [the staged plan](docs/STUDIO_PLAN.md).
+The new work passed 45 JavaScript/core/CLI checks and 15 real Chromium checks;
+those are separate from Android JVM, emulator and physical-device validation.
+
+**Android baseline: version 0.2.0 engineering checkpoint.** The user asked to proceed with
 all remaining work after the bounded CPU feasibility checkpoint `c5eea4d`.
 The app now implements the complete import → listen/explore → review → backup
 path. Read [verification](docs/VERIFICATION.md) for the actual checks and limits;
 implementation does not by itself constitute device or medical acceptance.
-**Build and CI checks pass. Emulator app validation remains unverified:** the
+**The recorded Android build and CI checks passed. Emulator app validation remains unverified:** the
 final software-emulator APK installation timed out after 600 seconds, so none of
 the four compiled instrumented tests ran. No physical-device pass is claimed.
 
@@ -18,6 +26,9 @@ No medical PDF/text has been supplied. The separately delivered **Lantern Librar
 package is an original nonmedical technical demo, with actual Breeze TTS 2 CPU
 narration and original artwork. It is not the requested medical pilot. Human
 listening review and physical-device acceptance are still required.
+The user later authorized public medical sources for a separate cardiac testing
+demonstration. Those remain external-source review drafts; this exception does
+not make them learner-supplied sources or change the v1 importer policy.
 
 The real Explanation track measures **86.88 seconds** and Story **91.04 seconds**
 at normal speed. Eight separate CPU generation processes took 57.64 minutes in
@@ -48,8 +59,35 @@ model weights; import the separate validated ZIP to play the demonstration.
   picker, with recoverable settings writes and orphan-file cleanup.
 - A Linux authoring toolkit for supplied-source text/OCR extraction, fact-linked
   Breeze CPU segments, measured assembly and validated ZIP packaging.
+- Internal Sketcy Studio: agent CLI, vector editing, real transparent image
+  layers, portable project files, two-track previews, deterministic object
+  keyframes and production handoff exports.
 - Pinned GitHub Actions build/test/lint automation producing an installable debug
   APK. No models, generated media, user PDFs or credentials are stored in Git.
+
+## Internal illustration and composition
+
+[Sketcy Studio](studio/README.md) gives the assistant a repeatable way to build
+lesson artwork inside this repository. Its CLI creates and edits private
+projects, validates source/fact links, renders the scene or a requested frame,
+and exports a background plus separate transparent object PNGs. The optional
+local browser workspace provides drawing tools, layers, properties and a
+narration timeline. Students receive only the completed lesson package.
+
+The original **Lantern Workshop** vector example verifies the authoring tool.
+It has no narration and is distinct from the earlier **Lantern Library** audio
+demo. Actual WAV imports drive Studio preview from the media clock; silent
+previews are labelled. Image generation and pinned Breeze CPU synthesis remain
+external authoring steps, with their real outputs imported into Studio.
+
+The production export retains exact source references and false review flags,
+writes a real scene PNG, and supplies separate explanation/story script inputs.
+It is a draft handoff, not an Android lesson ZIP. Android package v1 still uses
+one PNG per part; independent object animation currently works in Studio only.
+The new tool does not complete the pending cardiac lesson artwork/audio packs.
+
+Start with [agent instructions](studio/AGENTS.md),
+[drawing rules](docs/ART_DIRECTION.md), and [format details](docs/STUDIO_FORMAT.md).
 
 ## Install and try
 
@@ -123,7 +161,9 @@ is an allowed fallback.
 ## Continue from this checkpoint
 
 Read [HANDOFF.md](HANDOFF.md), [PLAN.md](PLAN.md), and
-[VERIFICATION.md](docs/VERIFICATION.md). The open acceptance work is the first
+[VERIFICATION.md](docs/VERIFICATION.md). The next authoring milestone is the
+measured Breeze ledger bridge and versioned Android layer playback; see
+[STUDIO_PLAN.md](docs/STUDIO_PLAN.md). The open acceptance work is the first
 source-backed medical pilot, human listening review and physical Android checks.
 Source preservation, medical completeness and audio quality must not be claimed
 from automated timing, checksum or scheduling tests.

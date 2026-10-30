@@ -1,5 +1,28 @@
 # Sketcy CTVS — Project Plan
 
+## New authoring direction — Studio 0.1
+
+The user requested an Illustrator-like tool inside the repo and clarified that
+it is **for the assistant to author lessons, never part of the student app**.
+The staged [Studio plan](docs/STUDIO_PLAN.md) was written before implementation.
+Its first milestone is implemented under `studio/`: agent commands, editable
+vectors and images, source-linked facts, two narration timelines, deterministic
+camera/object previews, portable projects, raster layer exports and production
+handoff. Local verification is recorded separately from Android checks.
+
+Next: measured Breeze ledger integration, a versioned Android layer renderer,
+then completion and review of the first three cardiac layer packs. Advanced
+Illustrator features and automatic image/audio job orchestration remain later
+milestones. The existing Android app stays Kotlin/Compose/Media3, API 26+.
+
+The user explicitly allowed public medical sources for the separate ten-lesson
+test demonstration. Preserve that limited exception as external-source review
+drafts; it does not change the source policy for future learner-material lessons
+or justify bypassing the current package validator. The art showcase remains an
+art reference, not medical evidence.
+
+## Existing Android plan and acceptance
+
 > Current checkpoint: version 0.2.0 engineering implementation. After the bounded
 > CPU probe at `c5eea4d`, the user directed “Do all work now”. That instruction
 > supersedes separate milestone permission stops for the remaining engineering.

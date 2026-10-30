@@ -1,0 +1,50 @@
+name: Studio authoring checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'studio/**'
+      - '.github/workflows/studio.yml'
+  pull_request:
+    paths:
+      - 'studio/**'
+      - '.github/workflows/studio.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: studio-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  authoring:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: studio
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: studio/package-lock.json
+      - name: Install pinned authoring test tools
+        run: npm ci --ignore-scripts
+      - name: Core, agent CLI and format checks
+        run: |
+          npm run check
+          npm run format:check
+          python3 -m py_compile server.py
+      - name: Install Chromium for real rendering and UI checks
+        run: npx playwright install --with-deps chromium --only-shell
+      - name: Browser, layer recomposition and production handoff checks
+        run: npm run test:browser
+      - name: Save neutral authoring verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: studio-checks-${{ github.sha }}
+          path: studio/test-results/
+          retention-days: 14
+          if-no-files-found: warn

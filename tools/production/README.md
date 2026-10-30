@@ -5,6 +5,24 @@ ZIPs and does not run TTS or an LLM. It has no Internet permission. Keep user
 sources, extracted passages, weights, saved voices and generated media outside
 this repository.
 
+## Internal visual authoring
+
+Use [Sketcy Studio](../../studio/README.md) and its
+[agent instructions](../../studio/AGENTS.md) to compose original vectors and
+independent image layers, connect source facts, and preview both narration
+modes. This tool is for the assistant; it is not in the student app.
+`node studio/agent.mjs handoff --project … --out-dir …` writes a real scene PNG,
+`authoring.json` in this toolkit's input shape, a `narration-plan.json`, and
+explicit draft timing. Continue through the real generation/review/package
+steps below; a Studio handoff is not an importable ZIP.
+
+The handoff's review flags start false. Its cue times do not override measured
+Breeze segment boundaries. Current Android package v1 flattens artwork to one
+PNG per part and cannot play Studio's independent element motion. Keep external
+medical testing drafts labelled `EXTERNAL_REVIEW` in Studio; that authoring-only
+type is not supported by the existing Android importer. Do not mislabel content
+or source origin to bypass validation.
+
 ## 1. Extract only material supplied by the learner
 
 Python 3.12, Poppler (`pdfinfo`, `pdftotext`, `pdftoppm`) and optional Tesseract

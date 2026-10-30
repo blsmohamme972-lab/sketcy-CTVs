@@ -1,5 +1,22 @@
 # Third-party code and tools
 
+## Internal Studio authoring tools
+
+Studio's editor, SVG scene code, neutral Workshop example and interface icons
+are original repository code. It uses browser-native SVG, Canvas, HTML audio
+elements and IndexedDB, served by Python's standard library. No Adobe
+code, artwork, proprietary format parser or runtime SDK is included.
+
+Development dependencies are pinned in `studio/package-lock.json`: Playwright
+1.56.1 / playwright-core 1.56.1 (Apache-2.0) and Prettier 3.6.2 (MIT). Their
+licenses are supplied with the installed npm packages. Playwright's Chromium
+browser and supporting binaries are downloaded separately for authoring tests
+and rendering; they are not bundled in Git or the Android APK. System serif,
+sans-serif and monospace fonts are used; no external font is downloaded.
+
+The art-reference PDF and generated lesson images remain outside the repository.
+Only abstract drawing/authoring guidance is recorded in `docs/ART_DIRECTION.md`.
+
 ## FSRS v6
 
 `lesson-model/.../FsrsScheduler.kt` is a Kotlin port of the canonical

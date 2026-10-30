@@ -1,4 +1,80 @@
-# Version 0.2.0 verification
+# Verification — Studio 0.1 and Android 0.2.0
+
+## Studio 0.1 internal authoring — 31 October 2026
+
+This work adds the assistant's authoring tool only. No Android source or
+dependency changed. The student app does not expose the editor. Tests use an
+original nonmedical vector scene, local synthetic parser/media fixtures and
+temporary files outside Git. No new Breeze narration, medical lesson package,
+model download or human listening pass was produced in this milestone.
+
+| Check | Observed result and scope |
+| --- | --- |
+| JavaScript core and agent CLI | **45 passed**: 25 model/geometry/source/history tests, 13 timing/WAV tests and 7 CLI process tests |
+| Real Chromium browser suite | **15 passed**: 12 UI/media/persistence/server tests and 3 agent rendering/export/handoff tests |
+| Layer export/recomposition | Original 1600 × 900 scene exported as one background and seven transparent object PNGs; all objects contain both zero-alpha and painted pixels; dimensions, placement and hashes match the manifest |
+| Recomposition error | Maximum absolute 8-bit channel difference **4**; mean **0.0003690972**, consistent with separate raster alpha rounding; no missing or displaced scene objects |
+| Deterministic frame rendering | Two independent story renders at 45,000 ms have identical SHA-256; the reduced-motion frame matches the base scene and differs from the moving frame |
+| Production handoff | Actual PNG decoded; separate narration plans, exact source quotes and false review flags preserved; no ZIP or generated audio fabricated |
+| Browser JavaScript errors | No uncaught page errors observed in the exercised UI workflows |
+| Formatting and Python server | Pinned Prettier check and Python server compilation passed |
+| Android validation in this milestone | No new emulator/device test; prior Android evidence remains in its separately dated section below |
+
+Environment: Linux x86-64, Node **24.22.1**, Python **3.12.14**, Playwright
+**1.56.1**, Chromium Headless Shell **141.0.7390.37** (build 1194), Prettier
+**3.6.2**. Dependencies and integrity hashes are pinned in
+`studio/package-lock.json`. The routine CI workflow uses Node 22 on Ubuntu 24.04
+and the same pinned Playwright browser. The editor itself has no npm runtime
+dependencies or external CDN assets.
+
+The initially attempted Playwright 1.62.1 browser download returned a CDN error
+page instead of a ZIP. The official 1.56.1 installer succeeded through its
+automatic Microsoft mirror fallback. That exact working version is pinned;
+there is no claim that it is the newest browser release. The sandbox also blocked
+captured CLI subprocess output until the test command ran with subprocess
+permission. All final test cases ran; none were skipped or converted to passes.
+
+```sh
+cd studio
+npm ci --ignore-scripts
+npx playwright install chromium --only-shell
+npm run check
+npm run format:check
+npm run test:browser
+python3 -m py_compile server.py
+```
+
+The local browser cache was selected with
+`PLAYWRIGHT_BROWSERS_PATH=/tmp/sketcy-studio-browsers`. It is not committed.
+The browser tests exercised pointer gestures, Bézier editing, lock/group
+behavior, alpha-preserving import/export, save/reopen, IndexedDB recovery,
+malformed-project rejection, exact-quote validation, shared-fact switching,
+reduced motion, real media-clock seeking and source-preserving CLI handoff.
+Test-generated PCM is a disposable clock/parser fixture, not narration supplied
+to the user. No subjective audio-quality claim follows from that fixture.
+
+Visual inspection identified an overly cropped camera focus; a shared viewport
+fit now includes tall/wide target regions without aspect-ratio cropping, with a
+regression check at artboard edges. The scene and editor screenshot were
+visually inspected in addition to the
+automated pixel checks. Browser evidence and recomposition metrics are emitted
+under ignored `studio/test-results/` and retained as CI artifacts, not committed
+media. The workflow definition is `.github/workflows/studio.yml`; a committed
+workflow alone is not evidence that a hosted run passed.
+
+Not established here: Safari/Firefox/mobile editing, assistive-technology
+acceptance, arbitrary large-document performance, Adobe file compatibility,
+medical/source completeness, narration pronunciation/listening, or Android
+layer playback. System-font rasterization can differ across operating systems.
+Independent object animation is a Studio preview/export capability; Android
+package v1 still plays one flattened PNG per part. Cardiac cutouts, narration
+and lesson review remain separate outstanding deliverables.
+
+User screenshots later showed the Android Library/Review UI and an import error.
+That is user-reported launch/UI evidence; it does not replace the device checklist
+or make the historical zero-executed instrumented tests a pass.
+
+## Historical Android 0.2.0 verification
 
 Date: 2026-10-30. This checkpoint extends the bounded CPU probe at `c5eea4d`
 following the user's instruction to proceed with the remaining work. Results

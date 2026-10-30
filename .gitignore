@@ -27,3 +27,12 @@ __pycache__/
 *.pdf
 core
 core.*
+
+# Internal Studio authoring files and browser tooling. Media/source drafts are
+# private outputs, not code examples or Android application resources.
+/studio/node_modules/
+/studio/test-results/
+/studio/local-artifacts/
+*.sketcy-studio.json
+*.studio-handoff.json
+*.layer-assets.json
