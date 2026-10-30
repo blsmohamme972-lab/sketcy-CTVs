@@ -4,7 +4,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,7 +69,7 @@ fun ReviewSession(model: AppViewModel,prefs: StudyPreferences,busy: Boolean,onFi
     val p=prompt
     if(loading && p==null){Box(Modifier.fillMaxSize(),contentAlignment=Alignment.Center){CircularProgressIndicator()};return}
     if(p==null){Column(Modifier.fillMaxSize().padding(28.dp),verticalArrangement=Arrangement.spacedBy(18.dp),horizontalAlignment=Alignment.CenterHorizontally) {
-        Icon(Icons.Outlined.CheckCircleOutline,null,Modifier.size(56.dp),tint=MaterialTheme.colorScheme.primary)
+        Icon(StudyIcons.CheckCircleOutline,null,Modifier.size(56.dp),tint=MaterialTheme.colorScheme.primary)
         Text("All caught up",style=MaterialTheme.typography.headlineMedium)
         Text("Your ratings are saved. Come back when more facts are due.")
         Button(onClick=onFinish){Text("Back to reviews")}

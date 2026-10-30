@@ -35,7 +35,7 @@ fun PlayerScreen(model: AppViewModel,installed: InstalledLesson,part: PackagePar
                 focus=frame?.focus ?: ImageRegion(0f,0f,1f,1f),highlighted=frame?.highlightedSymbolIds?.toSet() ?: emptySet(),
                 resetKey="${part.id}/${state.mode}")
             FilledTonalIconButton(onClick=onFullscreen,modifier=Modifier.align(Alignment.BottomEnd).padding(8.dp)) {
-                Icon(if(fullscreen)Icons.Outlined.FullscreenExit else Icons.Outlined.Fullscreen,if(fullscreen)"Exit fullscreen" else "Fullscreen")
+                Icon(if(fullscreen)StudyIcons.FullscreenExit else StudyIcons.Fullscreen,if(fullscreen)"Exit fullscreen" else "Fullscreen")
             }
             if(state.buffering)CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
@@ -56,11 +56,11 @@ fun PlayerScreen(model: AppViewModel,installed: InstalledLesson,part: PackagePar
                 Text(clock(state.durationMs),style=MaterialTheme.typography.labelMedium)
             }
             Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.Center,verticalAlignment=Alignment.CenterVertically) {
-                IconButton(onClick={model.player.seek(state.positionMs-10_000)},modifier=Modifier.size(56.dp)){Icon(Icons.Outlined.Replay10,"Back 10 seconds")}
+                IconButton(onClick={model.player.seek(state.positionMs-10_000)},modifier=Modifier.size(56.dp)){Icon(StudyIcons.Replay10,"Back 10 seconds")}
                 FilledIconButton(onClick=model.player::playPause,modifier=Modifier.size(64.dp),enabled=state.partId==part.id) {
-                    Icon(if(state.playRequested)Icons.Outlined.Pause else Icons.Outlined.PlayArrow,if(state.playRequested)"Pause" else "Play",Modifier.size(36.dp))
+                    Icon(if(state.playRequested)StudyIcons.Pause else Icons.Outlined.PlayArrow,if(state.playRequested)"Pause" else "Play",Modifier.size(36.dp))
                 }
-                IconButton(onClick={model.player.seek(state.positionMs+10_000)},modifier=Modifier.size(56.dp)){Icon(Icons.Outlined.Forward10,"Forward 10 seconds")}
+                IconButton(onClick={model.player.seek(state.positionMs+10_000)},modifier=Modifier.size(56.dp)){Icon(StudyIcons.Forward10,"Forward 10 seconds")}
             }
             val captionScroll=rememberScrollState()
             LaunchedEffect(state.mode,frame?.segmentId){captionScroll.scrollTo(0)}
@@ -75,7 +75,7 @@ fun PlayerScreen(model: AppViewModel,installed: InstalledLesson,part: PackagePar
                 FilterChip(selected=prefs.reducedMotion,onClick={model.settings(prefs.copy(reducedMotion=!prefs.reducedMotion))},label={Text("Still scene")})
             }
             if(!fullscreen) {
-                OutlinedButton(onClick=onExplorer){Icon(Icons.Outlined.TouchApp,null);Spacer(Modifier.width(8.dp));Text("Explore the symbols")}
+                OutlinedButton(onClick=onExplorer){Icon(StudyIcons.TouchApp,null);Spacer(Modifier.width(8.dp));Text("Explore the symbols")}
                 var evidence by rememberSaveable(part.id) {mutableStateOf(false)}
                 TextButton(onClick={evidence=!evidence}){Text(if(evidence)"Hide current source" else "Show current source")}
                 if(evidence){val ids=part.track(state.mode).segments.find {it.id==frame?.segmentId}?.factIds.orEmpty()

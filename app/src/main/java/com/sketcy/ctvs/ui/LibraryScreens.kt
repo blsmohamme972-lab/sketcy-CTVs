@@ -63,7 +63,7 @@ fun LibraryScreen(lessons: List<InstalledLesson>,progress: List<ProgressRow>,bus
                         Modifier.fillMaxWidth().aspectRatio(1.5f),gestures=false)
                     Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment=Alignment.CenterVertically){Text(lesson.title,Modifier.weight(1f),style=MaterialTheme.typography.titleLarge,maxLines=2,overflow=TextOverflow.Ellipsis)
-                            IconButton(onClick={onBookmark(lesson.lessonId,!installed.row.bookmarked)},enabled=!busy){Icon(if(installed.row.bookmarked)Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder,
+                            IconButton(onClick={onBookmark(lesson.lessonId,!installed.row.bookmarked)},enabled=!busy){Icon(if(installed.row.bookmarked)StudyIcons.Bookmark else StudyIcons.BookmarkBorder,
                                 if(installed.row.bookmarked)"Remove bookmark" else "Bookmark lesson")}}
                         Text("${lesson.specialty} · ${lesson.parts.size} ${if(lesson.parts.size==1)"part" else "parts"} · ${lesson.facts.size} facts",style=MaterialTheme.typography.bodyMedium)
                         if(lesson.contentType==ContentType.TECHNICAL_DEMO)Text("TECHNICAL DEMO · NONMEDICAL",color=MaterialTheme.colorScheme.secondary,style=MaterialTheme.typography.labelSmall)
@@ -91,7 +91,7 @@ fun LessonScreen(installed: InstalledLesson,progress: List<ProgressRow>,busy: Bo
                 (if(lesson.quality.audioReviewed) "An audio review is recorded for this package. " else "Its narration has not received a human listening review. ") +
                 "It is not a medical lesson.")
         FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            FilterChip(selected=installed.row.bookmarked,onClick={onBookmark(!installed.row.bookmarked)},label={Text("Bookmark")},leadingIcon={Icon(Icons.Outlined.BookmarkBorder,null)})
+            FilterChip(selected=installed.row.bookmarked,onClick={onBookmark(!installed.row.bookmarked)},label={Text("Bookmark")},leadingIcon={Icon(StudyIcons.BookmarkBorder,null)})
             AssistChip(onClick={sources=!sources},label={Text(if(sources)"Hide sources" else "Source passages")})
         }
         if(sources)lesson.facts.forEach {SourceEvidence(lesson,it)}
@@ -110,7 +110,7 @@ fun LessonScreen(installed: InstalledLesson,progress: List<ProgressRow>,busy: Bo
                 }
             }}
         }
-        TextButton(onClick={delete=true},enabled=!busy){Icon(Icons.Outlined.DeleteOutline,null);Text("Remove lesson and its history")}
+        TextButton(onClick={delete=true},enabled=!busy){Icon(StudyIcons.DeleteOutline,null);Text("Remove lesson and its history")}
     }
     if(delete)AlertDialog(onDismissRequest={delete=false},title={Text("Remove this lesson?")},
         text={Text("Its media, progress, and review history will be deleted from this device. Export a backup first if you need to keep them.")},

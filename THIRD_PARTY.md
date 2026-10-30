@@ -58,3 +58,8 @@ for their license terms when distributing model weights or generated material.
 The library-tour illustration and scripts are original nonmedical demonstration
 material. Sketchy and Picmonic supplied visual-teaching inspiration only; no
 artwork, interface assets, source text or medical facts were copied from them.
+
+The small interface vectors in `StudyIcons.kt` are original. Common navigation,
+search and play icons use AndroidX Material Icons Core under Apache 2.0. The
+extended icon collection is intentionally excluded to avoid shipping thousands
+of unused classes and their installation-time verification cost.

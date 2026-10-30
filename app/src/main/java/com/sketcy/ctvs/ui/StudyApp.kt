@@ -83,8 +83,8 @@ fun StudyApp(model: AppViewModel) {
                 if(screen=="library")Text("A place for memorable learning",style=MaterialTheme.typography.labelSmall)
             }},navigationIcon={if(screen !in roots)IconButton(onClick=goBack){Icon(Icons.AutoMirrored.Outlined.ArrowBack,"Back")}})},
             bottomBar={if(screen in roots)NavigationBar {
-                listOf(Triple("library","Library",Icons.Outlined.AutoStories),Triple("review","Review",Icons.Outlined.Style),
-                    Triple("settings","Settings",Icons.Outlined.Tune)).forEach {(route,label,icon)->
+                listOf(Triple("library","Library",StudyIcons.AutoStories),Triple("review","Review",StudyIcons.Style),
+                    Triple("settings","Settings",StudyIcons.Tune)).forEach {(route,label,icon)->
                     NavigationBarItem(selected=screen==route,onClick={screen=route},icon={Icon(icon,label)},label={Text(label)})
                 }
             }},snackbarHost={SnackbarHost(snack)}) {padding ->
@@ -151,7 +151,7 @@ private fun SettingsScreen(prefs: StudyPreferences,busy: Boolean,onChange: (Stud
         HorizontalDivider()
         SectionTitle("Keep a copy")
         Text("Your lessons, audio, bookmarks, progress, and review history live on this device. Export a backup before uninstalling or moving to another device.")
-        Button(onClick=onExport,enabled=!busy){Icon(Icons.Outlined.FileUpload,null);Spacer(Modifier.width(8.dp));Text("Export backup")}
+        Button(onClick=onExport,enabled=!busy){Icon(StudyIcons.FileUpload,null);Spacer(Modifier.width(8.dp));Text("Export backup")}
         OutlinedButton(onClick=onRestore,enabled=!busy){Text("Restore backup")}
         Notice("Your material is the source","Medical lessons must be made from your supplied PDFs or text. Each fact keeps an exact source passage. Technical demos are labelled separately.")
         Text("Sketcy CTVS 0.2.0 · Android 8+\nWorks offline after import. No accounts or analytics.",style=MaterialTheme.typography.bodySmall)
