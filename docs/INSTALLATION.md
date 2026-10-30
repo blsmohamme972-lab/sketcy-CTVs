@@ -2,6 +2,11 @@
 
 ## APK and offline lesson import
 
+The delivered APK passed compilation, signing verification, unit tests and a
+fresh CI build. App runtime validation is still open: the local software-only
+Android 8 emulator timed out during APK installation, before instrumented tests
+could execute. The checklist below is required for actual device acceptance.
+
 Version 0.2.0 is a debug-signed personal-testing APK for Android 8+ (minSdk 26,
 targetSdk 35). Download the APK and the separate Lantern Library lesson ZIP from
 the delivery message. Install from a file manager, allow installation for that

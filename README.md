@@ -2,19 +2,29 @@
 
 An Android study app for original illustrated lessons made from the learner's own
 PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
-(API 26). Imported lessons, playback and spaced review work offline. No account,
-server, analytics or Internet permission is required.
+(API 26). Imports, playback and spaced review use local files and on-device
+storage. No account, server, analytics or Internet permission is required.
 
 **Status: version 0.2.0 engineering checkpoint.** The user asked to proceed with
 all remaining work after the bounded CPU feasibility checkpoint `c5eea4d`.
 The app now implements the complete import → listen/explore → review → backup
 path. Read [verification](docs/VERIFICATION.md) for the actual checks and limits;
 implementation does not by itself constitute device or medical acceptance.
+**Build and CI checks pass. Emulator app validation remains unverified:** the
+final software-emulator APK installation timed out after 600 seconds, so none of
+the four compiled instrumented tests ran. No physical-device pass is claimed.
 
 No medical PDF/text has been supplied. The separately delivered **Lantern Library**
 package is an original nonmedical technical demo, with actual Breeze TTS 2 CPU
 narration and original artwork. It is not the requested medical pilot. Human
 listening review and physical-device acceptance are still required.
+
+The real Explanation track measures **86.88 seconds** and Story **91.04 seconds**
+at normal speed. Eight separate CPU generation processes took 57.64 minutes in
+total, with peak process memory 4.23 GiB; voice encoding is measured separately.
+These runs overlapped other authoring work, so they are not isolated performance
+benchmarks. The delivered APK is 13,408,761 bytes and contains no narration or
+model weights; import the separate validated ZIP to play the demonstration.
 
 ## Included
 

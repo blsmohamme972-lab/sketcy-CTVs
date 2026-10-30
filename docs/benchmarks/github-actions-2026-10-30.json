@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-30",
+  "source_commit": "b0f7cc6f512b26d260a9a07cdd8e5668ac9ac92e",
+  "run_id": 41126878920,
+  "url": "https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41126878920",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-10-30T20:54:20Z",
+  "run_started_at": "2026-10-30T20:54:20Z",
+  "updated_at": "2026-10-30T20:59:52Z",
+  "workflow_path": ".github/workflows/android.yml",
+  "jobs": [
+    {
+      "id": 124307574217,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41126878920,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install verified Android command-line tools, platform and build tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "CPU benchmark tooling tests (no model download)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Production tooling tests (no medical sources or generated media)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "JVM tests, Android build, instrumented-test build, and lint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Save installable debug APK and verification reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Run actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    "2026-10-30T20:54:25.1890117Z Resolved Java 17.0.21+9 from tool-cache",
+    "2026-10-30T20:54:25.1891621Z Setting Java 17.0.21+9 as the default",
+    "2026-10-30T20:54:37.5313972Z Ran 12 tests in 0.319s",
+    "2026-10-30T20:54:37.6611009Z Ran 6 tests in 0.004s",
+    "2026-10-30T20:56:26.3051058Z > Task :lesson-model:test",
+    "2026-10-30T20:58:46.7049420Z > Task :app:assembleDebug",
+    "2026-10-30T20:59:08.2119144Z > Task :app:assembleDebugAndroidTest",
+    "2026-10-30T20:59:47.8085046Z > Task :app:lintDebug",
+    "2026-10-30T20:59:47.8085853Z BUILD SUCCESSFUL in 5m 10s"
+  ],
+  "scope": "Fresh hosted CI build, JVM/Python tests and lint. The instrumented APK is built, but emulator tests are not executed by this workflow.",
+  "previous_attempt": {
+    "run_id": 41125060208,
+    "conclusion": "failure",
+    "reason": "sdkmanager was not available on PATH; corrected by installing the exact command-line tools ZIP and exporting the SDK path."
+  }
+}

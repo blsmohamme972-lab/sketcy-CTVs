@@ -1,5 +1,9 @@
 # Screen guide — implemented in 0.2.0
 
+This describes implemented Compose behavior. No emulator or physical-device
+visual acceptance is claimed; see [verification](VERIFICATION.md) for the
+installation blocker and the remaining runtime checks.
+
 Original visual direction: warm ivory, forest green, restrained gold, rounded
 scene cards and serif section headings. System dark mode is supported. The
 Lantern Library illustration is original nonmedical artwork, distributed with

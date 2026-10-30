@@ -59,6 +59,12 @@ explicitly not user-provided medical evidence. The package has three fact groups
 two separately generated tracks, measured paragraph boundaries, camera cues,
 three hotspots and twelve review questions. No audio is embedded in the APK.
 
+Measured complete tracks: Explanation **86.88 s**, Story **91.04 s**. All eight
+CPU segment processes exited successfully. The final debug APK is 13,408,761
+bytes after removing the unused extended icon collection; its fourteen extra
+interface icons are small original vectors. Artifact hashes and the debug
+certificate identity are in verification, and the APK/ZIP are supplied separately.
+
 The exact code, model, cached synthetic voice, process resources, generated WAV
 hashes and durations are recorded in [BREEZE_CPU.md](docs/BREEZE_CPU.md) and its
 linked text-only benchmark reports. Use standard Q8_0 only: source
@@ -77,6 +83,21 @@ synthesized paragraphs; there is no word-level forced alignment. A shared cached
 voice is recorded conditioning, not proof of perceptual consistency.
 
 ## Verification and remaining acceptance
+
+The application code at `b0f7cc6f512b26d260a9a07cdd8e5668ac9ac92e` passed the
+[fresh GitHub Actions run](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41126878920).
+The final checkpoint adds verification documentation to that tested code.
+Local results: 38 JVM tests, 18 Python tests, both APK builds and lint (0 errors,
+14 advisory warnings). The signed APK and real demo ZIP were saved separately.
+
+**Emulator app validation is blocked, not passed.** Android 8 booted under
+software emulation without KVM, but even the final smaller APK installation
+timed out after 600 seconds. Stock System UI showed an ANR before app launch.
+Four instrumented tests compile, but zero executed. Import, playback, camera/UI,
+rotation, offline restart, review and backup still need actual runtime checks.
+Retry on an accelerated emulator or physical device using the real supplied ZIP.
+The temporary emulator was stopped; do not silently carry a device-pass claim
+into the next checkpoint.
 
 Read [VERIFICATION.md](docs/VERIFICATION.md) for final, separately classified JVM,
 Python, Android build/lint, emulator and artifact results. Do not reinterpret
