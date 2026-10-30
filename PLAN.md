@@ -1,12 +1,11 @@
-# Sketcy CTVS — Final Project Plan
+# Sketcy CTVS — Project Plan
 
-> Checkpoint update (2026-10-30): a third bounded increment adds a pinned Breeze
-> TTS 2 standard Q8_0 CPU probe and measured nonmedical smoke output. One
-> 12.56-second take completed in 174.91 seconds with 4.13 GiB peak process RSS.
-> Listening, full 1–4-minute track pairs, and Media3 integration remain pending.
-> The Android app remains at the prior approximately 20% implementation scope.
-> See [HANDOFF.md](HANDOFF.md) for the exact stopping point and next-worker tasks.
-> The remaining product requirements and staged approval boundaries are retained.
+> Current checkpoint: version 0.2.0 engineering implementation. After the bounded
+> CPU probe at `c5eea4d`, the user directed “Do all work now”. That instruction
+> supersedes separate milestone permission stops for the remaining engineering.
+> Work alone and use English. Do not invent a medical pilot without a supplied
+> source. Actual checks, open acceptance gates and the next handoff are recorded
+> in [VERIFICATION.md](docs/VERIFICATION.md) and [HANDOFF.md](HANDOFF.md).
 
 ## 1. Goal and confirmed requirements
 
@@ -20,11 +19,11 @@ Build a personal Android study app inspired by Sketchy’s visual storytelling a
 - Animate illustrations with synchronized camera movements instead of producing video files.
 - Deliver lesson ZIPs that you import into the app.
 - Include adaptive, mixed image-based review.
-- Use English, work alone, and request permission after each implementation milestone.
+- Use English and work alone. The latest instruction authorizes the remaining work without milestone confirmation stops.
 
-The original documentation-only request has been superseded by limited
-implementation increments. Current implementation status is recorded in
-`README.md` and `HANDOFF.md`.
+The original documentation-only request and bounded increments have been superseded
+by the latest instruction to proceed with the remaining work. Current status is
+recorded in `README.md` and `HANDOFF.md`.
 
 ## 2. Android experience and architecture
 
@@ -61,14 +60,17 @@ Use a Python production toolkit for validation, audio assembly, timing, and ZIP 
 
 Test the CPU build of Breeze-TTS-2.cpp with its standard Q8_0 model first. Generate short segments using a consistent synthetic voice, then assemble each track. Assess pronunciation, completeness, consistency, memory use, and generation time.
 
-**Breeze CPU inference is demonstrated only for one short nonmedical take.**
-The third checkpoint built unchanged upstream code with GPU backends disabled,
-verified the standard Q8_0 checksum, and measured a successful 12.56-second WAV.
-Audio listening quality, completeness, cross-track voice consistency, long-form
-generation, and actual 1–4-minute track durations remain unverified. See
-[docs/BREEZE_CPU.md](docs/BREEZE_CPU.md). If a CPU attempt or quality review fails,
-report the blocker and pause the audio milestone. Do not silently substitute
-another model, GPU service, or placeholder audio.
+**Breeze CPU generation and its limits**
+
+Use only the pinned standard Q8_0 CPU path. The original smoke probe succeeded;
+the current technical demonstration uses a shared cached synthetic voice and
+separately generated, measured segments. The source and generation ledger retain
+exact versions, commands, timing, memory, WAV counts and hashes. Read
+[docs/BREEZE_CPU.md](docs/BREEZE_CPU.md) for the actual completed runs.
+Automatic format/duration checks do not establish subjective listening quality,
+pronunciation or factual completeness. Keep review gates open until reviewed.
+A failed CPU attempt or failed quality review pauses audio production; do not
+substitute another model, quantization, GPU service or placeholder audio.
 
 **Lesson package**
 
@@ -82,7 +84,9 @@ Keep GitHub focused on code and documentation. Deliver your lesson packages sepa
 
 ## 4. Adaptive review and staged delivery
 
-Use FSRS v6 through its Kotlin implementation, with a default retention target of 90%. Maintain scheduling per fact, with question variants connected to that fact.
+Use FSRS v6 in Kotlin, with a default retention target of 90%. The current port
+follows the pinned canonical Open Spaced Repetition Python reference and compares
+24 independently generated scheduler steps; see `THIRD_PARTY.md`. Maintain scheduling per fact, with question variants connected to that fact.
 
 - Begin new facts with an image cue.
 - After successful recall, rotate eligible question types to test the same knowledge differently.
@@ -92,7 +96,7 @@ Use FSRS v6 through its Kotlin implementation, with a default retention target o
 
 Anki synchronization and `.apkg` compatibility are outside version one.
 
-**Milestones requiring separate approval**
+**Delivery milestones (authorized together by the latest instruction)**
 
 1. Screen designs, package specification, and original visual direction.
 2. CPU narration and synchronized camera proof of concept.
@@ -102,7 +106,10 @@ Anki synchronization and `.apkg` compatibility are outside version one.
 6. Complete pilot lesson using your first supplied PDF or text.
 7. Installable Android APK, reproducible GitHub builds, and installation instructions.
 
-At each milestone, report completed work, verification results, and remaining limitations before requesting permission for the next.
+Report completed work, verification results and remaining limitations. Continue
+through engineering milestones without another permission stop. The medical pilot
+remains dependent on the learner supplying the source; listening and physical
+device acceptance must be recorded honestly.
 
 ## 5. Acceptance criteria
 
@@ -116,5 +123,7 @@ At each milestone, report completed work, verification results, and remaining li
 - Emulator testing passes; a physical Android installation and playback check is recorded before device validation is considered complete.
 - Final delivery includes source code, an installable APK, a validated pilot ZIP, generation instructions, and test results.
 
-For each authorized increment, save the bounded change to GitHub, verify the saved
-files, and record completed checks and remaining limitations for the next worker.
+Save the completed work to GitHub, verify the exact saved files, deliver the APK
+and technical lesson separately, and record remaining source/listening/device
+acceptance work for the next worker. Do not claim a completed medical pilot or
+physical-device validation from an implementation or emulator test.

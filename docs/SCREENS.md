@@ -1,46 +1,56 @@
-# Screen direction — initial foundation
+# Screen guide — implemented in 0.2.0
 
-The original visual direction is a quiet study notebook: warm ivory surfaces,
-forest-green emphasis, generous spacing, and simple book geometry. Use original
-lesson artwork in later increments; do not copy Sketchy or Picmonic characters,
-illustrations, branding, or layouts. No medical artwork is supplied at this stage.
+Original visual direction: warm ivory, forest green, restrained gold, rounded
+scene cards and serif section headings. System dark mode is supported. The
+Lantern Library illustration is original nonmedical artwork, distributed with
+the demo ZIP rather than bundled in Git or the APK.
 
-The current app implements only the Library, Review, and Settings empty states.
-Tabs are operable and restore selection after activity recreation. Content scrolls
-to accommodate large text and small/landscape windows. Compose uses semantic text
-and tab roles, Material touch targets, and the system dark-mode preference.
-TalkBack, large-font, rotation, and device checks remain to be performed.
+## Library
 
-## Implemented shell
+A study shelf with full-scene previews, a title/topic/fact search, specialty
+filters, bookmarks and two-track completion. Import opens Android's document
+picker. The empty state explains the listen → explore → recall workflow without
+invented medical lessons. Lesson updates are identified by stable IDs/revisions.
 
-```text
-Sketcy CTVS
-[ Library ] [ Review ] [ Settings ]
+## Lesson overview
 
-Screen title
-Brief introduction
+Title, specialty, fact count, objectives, source quotations and part cards.
+Technical demos are explicitly labelled. Each part shows measured explanation
+and story durations, Start/Resume and Explore symbols. Removal requires an
+in-app confirmation because it deletes that lesson's local history and media.
 
-┌──────────────────────────────────────┐
-│ Empty-state title                    │
-│ What belongs here / availability     │
-└──────────────────────────────────────┘
-```
+## Player
 
-The shell shows no invented lessons, review counts, inactive import button, or
-settings switches that cannot save preferences.
+Original scene, synchronized focus/highlights, explanation/story chips,
+segment-level captions, scrubber, current/measured duration, ±10 seconds,
+play/pause, speed choices, captions and still-scene controls. Source passages for
+the current segment can be expanded. Media3 current position is the timeline
+clock. Fullscreen hides app navigation; landscape places the scene beside the
+scrollable controls. Pinch/drag explores the picture and Follow scene resumes the
+camera. Rotation retains playback; leaving/backgrounding pauses it.
 
-## Planned screens (design notes only)
+## Symbol Explorer
 
-| Screen | Main content | Primary action |
-| --- | --- | --- |
-| Library | Search, specialty filter, bookmarked lessons, resume card | Import lesson ZIP |
-| Lesson overview | Parts, objectives, completion, source references | Start/resume a part |
-| Player | Illustration, explanation/story choice, captions, seek/speed controls | Play/pause |
-| Symbol Explorer | Image hotspots, symbol list, hide/reveal meanings | Select a symbol |
-| Review | One image-based question, concealed answer, then feedback | Submit/reveal, then rate |
-| Progress/settings | Due counts, review history, playback preferences | Backup/restore |
+Tap a hotspot or choose a symbol by name. Focus, meaning and exact cited passages
+appear together. Hide meanings supports recall without deleting source context.
+Whole scene resets the focus; manual zoom/pan remains available.
 
-Later player work must provide landscape fullscreen, manual image exploration,
-and reduced motion. Narration switching will match fact/symbol anchors; audio
-position will control captions and camera cues. These behaviors are not present
-in this checkpoint.
+## Review
+
+Due facts, learned facts, recent ratings and next due time. Initial/relearning
+image recall, image occlusion, symbol taps and MCQs conceal explanations until
+reveal/submission. Tap questions include an accessible object-button alternative.
+Incorrect objective answers force Again; the other ratings show FSRS interval
+previews. Saved ratings update per-fact scheduling and immutable review history.
+
+## Settings
+
+Captions, reduced motion, narration speed and desired retention (80–97%, 90%
+default). Export/restore uses Android's document picker. Restore explains that it
+replaces local data and requests an in-app confirmation. Source policy, app
+version, offline behavior and third-party notices remain visible.
+
+Implementation files are in `app/src/main/java/com/sketcy/ctvs/ui/`. See
+[VERIFICATION.md](VERIFICATION.md) for what was actually rendered/tested; a list
+of implemented screens is not a claim that every accessibility or physical-device
+scenario has been validated.

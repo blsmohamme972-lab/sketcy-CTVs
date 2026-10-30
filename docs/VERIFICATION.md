@@ -1,80 +1,142 @@
-# Third checkpoint verification
+# Version 0.2.0 verification
 
-Date: 2026-10-30. Scope: a bounded CPU feasibility increment after
-`d58a734b6c715aab5c36fcdd7cc8406492d36840`. The app and Kotlin timing core were
-not changed. A short successful CPU run does not establish completed narration,
-Media3 synchronization, or an overall 30% implementation milestone.
+Date: 2026-10-30. This checkpoint extends the bounded CPU probe at `c5eea4d`
+following the user's instruction to proceed with the remaining work. Results
+below distinguish pure tests, Android compilation, actual runtime checks and
+human acceptance. No user medical PDF/text was supplied.
 
-## Checks performed in this increment
+## Completed automated checks
 
-| Check | Result and scope |
+| Check | Observed result and scope |
 | --- | --- |
-| Existing lesson-model JVM unit tests | **21 passed**, 0 failures/errors/skipped; rerun with OpenJDK 17.0.20 and Gradle 8.9 |
-| Python benchmark-tool unit tests | **12 passed** with Python 3.12.14 |
-| Upstream C++ CPU CLI and test target | Release build passed with GCC 13.3.0 and CMake 3.31.6; Vulkan/CUDA disabled |
-| Upstream `depth-replay-cpu` CTest | **1 passed**; synthetic tensors, not a full-model speech test |
-| Standard Q8_0 model identity | Actual 3,568,844,480-byte file matched published SHA-256 and pinned model revision |
-| Actual Breeze CPU smoke inference | **Process exited 0**, CPU backend; 174.906905 seconds wall time, 4.13 GiB peak child RSS |
-| Actual generated WAV | 12.56 seconds, 301,440 frames, mono 24 kHz PCM16; no empty/truncated/all-zero payload |
-| Independent ffprobe check | Format, channels, sample rate, duration, and size agree with the Python measurement |
-| Automatic signal measurements | Peak -7.64 dBFS, RMS -22.28 dBFS, full-scale sample fraction 0.0; not a listening pass |
-| Documentation and evidence consistency | Local Markdown links, JSON parsing, pinned-input/report agreement, and `git diff --check` passed |
-| Repository artifact check | Tracked/candidate files contain no model weights, generated media, PDFs, credentials, or unexpected large files |
+| Kotlin JVM unit tests | **38 passed**, 0 failures/errors/skipped: 21 foundation/timeline tests, 6 FSRS tests and 11 package/archive tests |
+| FSRS conformance | 24 independently generated steps from pinned canonical FSRS v6 Python source match state, difficulty, stability and due times; learning/relearning, all ratings and retention settings covered |
+| Python benchmark tools | **12 passed**; measurement, invalid model/build/audio, child failure and timeout handling |
+| Python production tools | **6 passed**; original source preservation, strict JSON, review gates, neutral demo, CPU failure and model/content mismatch |
+| Android app | `assembleDebug` passed; application ID `com.sketcy.ctvs`, version `0.2.0` / code 2, minSdk 26, targetSdk 35 |
+| Instrumented test APK | `assembleDebugAndroidTest` passed; this is compilation, separate from test execution |
+| Android lint | **0 errors, 14 warnings**: 13 newer-dependency advisories and KaptUsageInsteadOfKsp |
+| APK signature | `apksigner verify` passed, v2 signature, local Android Debug certificate; not owner-controlled release signing |
+| APK permissions/ABIs | No Internet permission. Media3 adds ACCESS_NETWORK_STATE. APK includes arm64-v8a, armeabi-v7a, x86 and x86_64 |
+| Source extraction smoke | One original neutral page passed direct PDF text extraction and OCR after correcting renderer/font configuration; exact numbers/units and all three lines retained |
 
-Commands run from the repository:
+JVM tests run outside Android. Archive tests use synthetic PCM parser fixtures,
+which are never delivered as narration or installed in the app. FSRS reference
+vectors validate the configured deterministic implementation, not medical
+learning efficacy or long-term real-user outcomes.
+
+The extraction smoke initially failed with a bundled Poppler/font setup that
+rendered overlapping characters. Inspection identified the rendering fault;
+system Poppler 24.02.0 with system fontconfig and a writable cache produced a
+legible page, and Tesseract 5.3.4 then preserved the intended text. See the
+[text-only extraction record](benchmarks/source-extraction-smoke-2026-10-30.json).
+This is a clean nonmedical page, not validation of medical tables, handwriting,
+complex layouts, source coverage or clinical correctness. Human extraction and
+coverage review remain mandatory.
+
+## Android build environment and commands
+
+Complete OpenJDK 17.0.20+8, Gradle 8.9, Android SDK platform 35 and Build Tools
+34.0.0 on Linux x86-64. Both `javac` and `jlink` are required. The original stripped
+runtime lacked `jlink`; installing a complete JDK resolved that build failure.
+A stalled Kotlin daemon was replaced by the documented in-process compiler and
+one Gradle worker. The final full build succeeded with the committed settings.
 
 ```sh
-./gradlew :lesson-model:test --no-daemon
+./gradlew :lesson-model:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --no-daemon
 python3 -m unittest discover -s tools/breeze -p 'test_*.py' -v
-python3 tools/breeze/benchmark.py --source-dir /tmp/sketcy-breeze-cpu-src --model /tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf --case smoke --timeout-seconds 600 --output-dir /tmp/sketcy-breeze-smoke-01
-ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_name,sample_rate,channels,bits_per_sample -of json /tmp/sketcy-breeze-smoke-01/narration.wav
+python3 -m unittest discover -s tools/production -p 'test_*.py' -v
+apksigner verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Full native setup and the CPU CTest command are in
-[tools/breeze/README.md](../tools/breeze/README.md). Exact versions, hardware,
-metrics, and limits are in [BREEZE_CPU.md](BREEZE_CPU.md) and the
-[machine-readable report](benchmarks/breeze-cpu-smoke-2026-10-30.json).
-Model weights and the generated WAV are excluded from GitHub.
+Kapt emits its Kotlin language-version compatibility warning and Room annotation
+processor option warnings; they did not fail compilation. Native dependency
+libraries were packaged unchanged when stripping was unavailable. No warning was
+silenced to represent a false zero-warning build.
 
-The Python tests use tiny temporary PCM parser fixtures and short child processes
-to test duration measurement, clipping counts, silence/empty/truncation/rate
-rejection, wrong or partial model rejection, GPU-build rejection, timeout
-termination, nonzero exit handling, and explicit listening-review status. These
-fixtures are not narration, are not shipped, and were not used in the app.
+## Real CPU narration and package evidence
 
-## Not validated in this increment
+The historical short CPU probe, exact model/source/submodule versions and new
+full-track measurements are in [BREEZE_CPU.md](BREEZE_CPU.md). Actual narration
+uses the unchanged standard Q8_0 CPU binary. No model/quantization substitution,
+GPU service or placeholder audio is used. The original smoke's upstream CPU
+regression test passed at `c5eea4d`; that synthetic-tensor test is not speech
+quality validation.
 
-- **No listening or ASR review.** This session could not ingest audio for listening
-  and had no supported transcription capability. Pronunciation, omissions,
-  substitutions, noise, clarity, pacing, and voice consistency remain unknown.
-- The neutral explanation/story scripts were not synthesized. No 60–240-second
-  track pair, long-form stability, repeated-run statistics, or source-to-audio
-  coverage is claimed. The smoke clip is intentionally shorter than a lesson.
-- No Android compilation or lint rerun: there was no configured SDK/adb, and no
-  Android/Kotlin source or dependency change required a new Android build.
-- **No emulator or physical-device tests.** Media3 playback, camera/caption/
-  highlight rendering, pause/seek/speed behavior, narration switching, reduced
-  motion, rotation, TalkBack, and process recreation remain device-unverified.
-- No medical source, fact inventory, finished lesson, lesson ZIP, imported assets,
-  adaptive review, or installable APK was created.
+The separate Lantern Library package contains original nonmedical facts,
+artwork, both real narration files and actual segment boundaries. Source and
+listening review flags remain false. The package builder invokes the exact JVM
+archive validator used by the Android importer. SHA-256 identities and measured
+WAV duration are recorded with the delivery artifacts below.
 
-The full CPU narration/synchronized-camera milestone remains partial. The next
-worker must pass listening and full-track checks before integrating the real
-audio. If a later CPU attempt fails, preserve its measured failure and pause
-without substituting a model, GPU service, or placeholder audio.
+## Emulator runtime checks
 
-## Historical Android verification at the second checkpoint
+Runtime results are being recorded before this checkpoint is saved. The test
+setup is Android 8.0 / API 26, Google APIs x86_64, emulator 37.2.13.0 build
+16740729, software CPU emulation without KVM, SwiftShader, 800 × 1280 display,
+1024 MiB guest RAM and 2 virtual cores. Host audio is disabled. Runtime playback
+checks therefore exercise Media3 decoding/content-clock behavior, not subjective
+listening or speaker/headphone output.
 
-At `d58a734`, on the same calendar date, the previous worker recorded Linux,
-OpenJDK 21, Gradle 8.9, Android SDK platform 35, and Build Tools 34.0.0:
+The instrumented suite requires the separately supplied real ZIP. It fails if
+the fixture is absent; it does not skip or synthesize replacement audio. After
+installing the app and test APK, a POSIX host can copy the fixture into the debug
+app's private files and run the suite:
 
 ```sh
-./gradlew :lesson-model:test :app:compileDebugKotlin :app:lintDebug --no-daemon
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+adb shell run-as com.sketcy.ctvs mkdir -p files/fixtures
+adb shell 'run-as com.sketcy.ctvs sh -c "cat > files/fixtures/technical-demo.zip"' < /absolute/path/sketcy-lantern-library-v1.zip
+adb shell am instrument -w -r com.sketcy.ctvs.test/androidx.test.runner.AndroidJUnitRunner
 ```
 
-That checkpoint passed 21 JVM tests and Android Kotlin compilation. Lint reported
-0 errors and 3 warnings: two newer AndroidX dependency versions and the future
-need for Android 12+ data-extraction rules. Android XML parsing, documentation
-links, the wrapper JAR checksum, and the pinned Gradle distribution were also
-verified then. These historical build/lint results must not be described as
-new emulator/device validation or a fresh Android build in this increment.
+The four instrumented cases cover:
+
+1. Library → overview → Symbol Explorer → review, answer concealment/reveal and
+   persisted Easy rating.
+2. Actual Media3 playback/content position, pause during buffering, seeking,
+   shared-fact mode switching, speed and reduced-motion timeline behavior.
+3. Activity recreation retaining the player and advancing position, background
+   pause, persisted progress and reopening without overwriting resume with zero.
+4. Actual ZIP import, unchanged/changed fact updates, wrong-answer Again, full
+   backup/restore, settings journal completion, invalid import/restore safety,
+   and rejection of stale player writes after restoring identical content.
+
+ActivityScenario recreation is a lifecycle test. It must not be described as a
+physical rotation, force-stop restart, hardware audio-focus test or physical
+installation. Additional manual emulator observations are recorded separately.
+
+## Build automation and repository checks
+
+The GitHub Actions workflow pins checkout, setup-java and upload-artifact to
+verified upstream commits. It builds with JDK 17/platform 35/build-tools 34.0.0,
+runs the 38 JVM and 18 Python tests, builds both APKs, and runs lint. It uploads a
+debug APK and reports. It does not download model weights or run instrumented
+playback tests, because the actual generated ZIP is excluded from Git. Workflow
+configuration is not, by itself, a successful GitHub Actions run.
+
+The final save checks local Markdown links, JSON parsing, `git diff --check`,
+tracked/candidate media/credential exclusions, and the committed tree/files
+against GitHub. All generated media, model weights, SDKs, test PDFs and private
+signing material stay outside the repository.
+
+## Acceptance that remains open
+
+- **No human listening or ASR review.** Container/signal/duration checks do not
+  prove spoken completeness, pronunciation, clarity, clean joins, pacing,
+  consistent voice or correct endings. The shared voice anchor is also unreviewed.
+- **No physical Android device validation.** Speaker/Bluetooth/wired-headphone
+  audio, interruptions/focus, physical rotation, accessibility/TalkBack and broad
+  Android/OEM compatibility require the [device checklist](INSTALLATION.md).
+- No medical source, verified medical fact inventory or medical pilot. The
+  technical demo cannot establish preservation of every supplied medical fact.
+- Captions use measured paragraph boundaries, not word-level forced alignment.
+  A repeated fact maps to its first matching segment in the destination track.
+- No isolated/repeated CPU performance benchmark, on-phone TTS measurement,
+  sustained memory stress, abrupt power-loss test or large-library soak test.
+- Release signing, Play Store publishing, Anki synchronization, cloud backup,
+  accounts and background audio service are outside this personal-test release.
+
+The app is an installable engineering checkpoint. Medical, listening and physical
+acceptance remain explicit and must not be inferred from passing automated tests.

@@ -1,4 +1,8 @@
-plugins { kotlin("jvm") }
+plugins {
+    kotlin("jvm")
+    application
+    id("org.jetbrains.kotlin.plugin.serialization")
+}
 
 kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
 java {
@@ -6,4 +10,9 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-dependencies { testImplementation(kotlin("test-junit")) }
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    testImplementation(kotlin("test-junit"))
+}
+
+application { mainClass.set("com.sketcy.ctvs.lesson.PackageToolKt") }

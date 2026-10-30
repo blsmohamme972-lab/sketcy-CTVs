@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-30",
+  "scope": "Nonmedical one-page source extraction smoke; not a medical or complex-table acceptance test",
+  "source_sha256": "ae51f303ba0ceb6ae0daeaf4b804f7942c3a09d45f90f52385924d59baeefe70",
+  "source_description": "Temporary ReportLab PDF with three neutral lines, Helvetica 20 pt; PDF and rendered pages kept outside Git",
+  "poppler": "24.02.0 (system installation)",
+  "tesseract": "5.3.4",
+  "fontconfig_file": "/etc/fonts/fonts.conf",
+  "writable_font_cache_used": true,
+  "initial_ocr_attempt": {
+    "passed": false,
+    "finding": "The initial renderer/font configuration produced overlapping glyphs and incorrect words. System Poppler with system Fontconfig rendered correctly."
+  },
+  "results": {
+    "pdf_text": {
+      "passed": true,
+      "method": "Poppler layout text",
+      "passages": {
+        "page 1": "The invented box is 5 cm wide.\n\nIt has three blue dots.\n\nThis is a nonmedical test fixture."
+      },
+      "review_flags": [
+        "Inspect every page, table, figure label and reading order against the original. OCR confidence is not proof of correctness."
+      ]
+    },
+    "ocr": {
+      "passed": true,
+      "method": "Tesseract English OCR",
+      "passages": {
+        "page 1": "The invented box is 5 cm wide.\nIt has three blue dots.\nThis is a nonmedical test fixture."
+      },
+      "review_flags": [
+        "Inspect every page, table, figure label and reading order against the original. OCR confidence is not proof of correctness."
+      ]
+    }
+  }
+}

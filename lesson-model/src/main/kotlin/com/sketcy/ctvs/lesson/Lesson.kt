@@ -1,9 +1,13 @@
 package com.sketcy.ctvs.lesson
 
+import kotlinx.serialization.Serializable
+
 /** Foundation types, not a ZIP parser or a complete package validator. */
+@Serializable
 enum class NarrationMode { EXPLANATION, STORY }
 
 /** Coordinates relative to the image, with the origin at the top left. */
+@Serializable
 data class ImageRegion(val x: Float, val y: Float, val width: Float, val height: Float) {
     init {
         require(listOf(x, y, width, height).all { it.isFinite() }) { "Coordinates must be finite" }
@@ -15,12 +19,14 @@ data class ImageRegion(val x: Float, val y: Float, val width: Float, val height:
 }
 
 /** A page, table, figure label, or passage in material supplied by the learner. */
-data class SourceReference(val sourceId: String, val locator: String) {
+@Serializable
+data class SourceReference(val sourceId: String, val locator: String, val quote: String = "") {
     init {
         require(sourceId.isNotBlank() && locator.isNotBlank()) { "Source and locator are required" }
     }
 }
 
+@Serializable
 data class Fact(val id: String, val text: String, val sources: List<SourceReference>) {
     init {
         require(id.isNotBlank() && text.isNotBlank()) { "Fact ID and text are required" }

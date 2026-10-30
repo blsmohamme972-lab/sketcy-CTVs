@@ -1,4 +1,4 @@
-# Breeze TTS 2 CPU feasibility record
+# Breeze TTS 2 CPU generation record
 
 Date: 2026-10-30. This is a technical test with original, nonmedical English
 text. No user medical source was supplied, and no medical lesson was authored.
@@ -57,7 +57,7 @@ checkout, build, model verification, and benchmark commands. The initial sandbox
 could not reach its proxy; the approved execution path successfully performed
 the downloads without changing proxy settings or disabling TLS verification.
 
-## Test protocol
+## Historical short smoke protocol at `c5eea4d`
 
 The first case is [smoke.txt](../tools/breeze/text/smoke.txt), a 29-word passage
 describing a lantern, paper birds, a clock, and a wooden boat. It is deliberately
@@ -78,10 +78,10 @@ cache and the Python parent. WAV duration comes from actual PCM sample frames.
 The process must exit successfully and report the CPU backend; an incomplete WAV
 after a failure cannot pass. A valid WAV still requires listening review.
 
-## Measured outcome and checkpoint decision
+## Historical short smoke measurements
 
-**Short-form CPU inference succeeded. The complete narration/camera milestone
-is not accepted.** The process exited 0, reported `backend: CPU`, and produced a
+**Short-form CPU inference succeeded at the bounded checkpoint.** That
+checkpoint did not accept the complete narration/camera milestone. The process exited 0, reported `backend: CPU`, and produced a
 valid, nonsilent WAV before the 600-second timeout. This is one measured take,
 not a repeatability, long-form, or cross-voice benchmark.
 
@@ -143,27 +143,97 @@ unverified. The original test WAV is supplied separately for listening; it has
 not been approved as production narration. No ASR result or human listening
 assessment is claimed.
 
-### Bounded stopping point
+## Current full-track generation and integration
 
-This increment adds the pinned CPU probe, its neutral scripts, failure/measurement
-tests, and measured evidence. A three-minute CPU process produced only 12.56
-seconds of audio on this machine. Full dual-track generation, listening, timing
-alignment, and Android integration are left for the next authorized increment;
-no throughput claim is made for a 1–4-minute track or for a phone.
+The version 0.2.0 checkpoint extends the historical smoke probe with separately
+synthesized explanation/story segments using the same pinned standard Q8_0 CPU
+binary. A cached synthetic voice is encoded from the original smoke WAV and
+shared by all segments. The anchor is our own synthetic audio; its intended
+transcript has not been verified by listening. Shared conditioning records the
+voice input but does not prove perceptual consistency.
 
-The [explanation](../tools/breeze/text/explanation.txt) and
-[story](../tools/breeze/text/story.txt) scripts are ready for a later test but were
-**not generated**. No finished lesson, synchronized proof, or medical content was
-created. Media3 playback, image viewport rendering, captions/highlights in the UI,
-and emulator/device checks remain unimplemented or unperformed.
+Each paragraph is generated in a separate process with `--cpu`, seed 42, CFG 1.0,
+`--split-chars 0`, a 750-frame cap and `--timings`. Any nonzero exit, timeout,
+missing CPU evidence, empty/silent WAV, hash mismatch or frame-cap termination
+stops production. The runner concatenates actual PCM payloads without padding,
+time stretching, alternate synthesis or replacement audio. Each assembled track
+must independently measure 60–240 seconds at normal speed.
 
-There was no CPU crash, timeout, or out-of-memory failure in this take. The open
-gate is audio acceptance and full-track validation, rather than a proven engine
-failure. If a later CPU attempt fails, record its actual failure and pause the
-audio milestone without changing model, quantization, or backend.
+The original nonmedical scripts are
+[explanation.txt](../tools/breeze/text/explanation.txt) and
+[story.txt](../tools/breeze/text/story.txt). The production plan assigns source
+fact/symbol IDs to each paragraph. Captions and camera/highlight segments use the
+measured paragraph boundaries, not estimated word timing. The original artwork,
+actual audio and versioned manifest are distributed in a separate technical-demo
+ZIP; none of those media files is committed.
 
-Next: listen to the smoke output against its exact text; resolve any quality
-failure using the same approved CPU engine; then generate and measure both
-neutral tracks, verify consistent synthetic voice, and align actual segments.
-Only after those checks should real narration drive Media3 and `PlaybackTimeline`
-on an emulator/device. A medical pilot still requires the user's supplied source.
+Media3 now plays imported WAV files and drives `PlaybackTimeline` from actual
+content position. See [verification](VERIFICATION.md) for build and runtime
+results, and [the production guide](../tools/production/README.md) for commands.
+The complete [full-run record](benchmarks/breeze-cpu-tracks-2026-10-30.json)
+preserves every segment command, exact input text, measurements, voice hash and
+independent ffprobe result. Both tracks pass the 60–240-second duration gate.
+
+These are resource-contended authoring measurements: Android compilation and a
+software emulator overlapped portions of generation. They are not isolated
+throughput, repeated-run, desktop-to-phone or phone inference benchmarks.
+The model is not executed on Android.
+
+Human listening remains unperformed for the smoke, voice anchor and both full
+tracks. No ASR score or transcript match is claimed. Review completeness,
+pronunciation, clarity, joins, pacing, consistency and endings before approving
+narration. A CPU failure or quality failure pauses the audio milestone without a
+model, quantization, GPU service or placeholder-audio substitution. A medical
+pilot still requires the learner's supplied PDF/text and complete source review.
+
+## Full explanation/story measurements
+
+All eight CPU processes exited 0 and produced valid nonzero mono 24 kHz PCM16.
+No timeout, frame-cap termination or recorded OOM kill occurred. PCM assembly
+added no silence and changed no sample rate or speed. `ffprobe` independently
+agrees with each assembled file's format, sample count duration and byte size.
+
+| Track | Actual duration | PCM frames | Sum of four process wall times | Largest process RSS | Wall / audio |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Explanation | 86.88 s | 2,085,120 | 1841.456650 s | 4,431,176 KiB (4.23 GiB) | 21.195403 |
+| Story | 91.04 s | 2,184,960 | 1616.791272 s | 4,416,816 KiB (4.21 GiB) | 17.759131 |
+
+Each CLI process reloads the model. These sums include process startup/loading,
+and exclude model verification, downloads, artwork, assembly, package validation
+and Android checks. The eight narration processes total **3458.247922 seconds**
+(57.64 minutes) for **177.92 seconds** of assembled audio.
+
+The one shared voice-encoding process took **9.758588 seconds**,
+with peak RSS **3,907,168 KiB**. It is excluded from the track sums above.
+Cached voice SHA-256: `7f9fba8918bfc79c37702c2d391ee98395d1435db56fc4cc94a54fcfae26eeb6`.
+
+| Segment | Actual audio | Process wall time | User CPU | System CPU | Peak RSS (KiB) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| explanation-1 | 22.80 s | 427.457470 s | 1560.787033 s | 10.181263 s | 4,405,716 |
+| explanation-2 | 17.36 s | 310.733304 s | 1140.433491 s | 6.950342 s | 4,388,272 |
+| explanation-3 | 16.08 s | 343.180822 s | 1207.285553 s | 13.759055 s | 4,382,280 |
+| explanation-4 | 30.64 s | 760.085054 s | 2558.041317 s | 17.161358 s | 4,431,176 |
+| story-1 | 26.64 s | 516.107733 s | 1867.706820 s | 11.345796 s | 4,416,816 |
+| story-2 | 24.08 s | 410.341108 s | 1509.679975 s | 10.248194 s | 4,410,120 |
+| story-3 | 19.52 s | 390.025247 s | 1378.167273 s | 11.645052 s | 4,394,704 |
+| story-4 | 20.80 s | 300.317185 s | 1115.113592 s | 11.614327 s | 4,399,068 |
+
+CPU user/system time aggregates worker threads and can exceed wall time. Peak
+RSS is the largest measured child resident set, not the sum of processes or the
+whole machine's peak memory. During overlap with the first emulator attempt,
+cache/memory contention occurred; the emulator was stopped to let synthesis
+finish, then restarted for Android tests. These timings must retain that caveat.
+
+| Track | Bytes | Peak | RMS | Full-scale sample fraction |
+| --- | ---: | ---: | ---: | ---: |
+| Explanation | 4,170,284 | -8.696469 dBFS | -23.805100 dBFS | 0.0 |
+| Story | 4,369,964 | -6.890277 dBFS | -23.803668 dBFS | 0.0 |
+
+Assembled WAV SHA-256 identities:
+
+- Explanation: `157f0bce7dfac5b66071348d7d9e632a0d778f464eba4142025a57967ed9a87a`.
+- Story: `03cbc608a799fbed50adbe952dd0bf191d0e9b1960d3a4396c837ce2b8ca406e`.
+
+These signal findings show headroom and nonzero output; they do not establish
+a listening pass. The unreviewed technical package is suitable for engineering
+playback checks. Neither this record nor the APK certifies medical narration.

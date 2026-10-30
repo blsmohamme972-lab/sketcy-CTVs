@@ -1,0 +1,669 @@
+{
+  "recorded_on": "2026-10-30",
+  "scope": "Original nonmedical technical demo; resource-contended authoring run, not an isolated or repeated performance benchmark.",
+  "generation_ledger": {
+    "plan_sha256": "78ab7592350b2350a08e0745666c5e78dea67a92eddf5a3586c1b81730fa02f6",
+    "versions": {
+      "source_repository": "https://github.com/HoppouAI/Breeze-TTS-2.cpp",
+      "source_commit": "2904b9ad126c07363e8a6c9afa08f73e3309075b",
+      "submodules": {
+        "third_party/ggml": "36da57138425487184aa1da2eee2cde155909c6f",
+        "third_party/shine": "ab5e3526b64af1a2eaa43aa6f441a7312e013519"
+      },
+      "model_repository": "https://huggingface.co/HoppouAI/Breeze-TTS-2.cpp",
+      "model_revision": "81b22bad9f05b99970e30c5ee5e4bbc52fedf2f8",
+      "model_filename": "breeze-tts-2-q8_0.gguf",
+      "model_size_bytes": 3568844480,
+      "model_sha256": "a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879",
+      "cmake_version_used": "3.31.6",
+      "voice_instruction": "A calm adult narrator speaking clear, natural English at a steady pace.",
+      "seed": 42,
+      "cfg_scale": 1.0,
+      "split_chars": 600,
+      "max_new_frames_per_piece": 750
+    },
+    "anchor_sha256": "6dd3282fa17e6322b39a38cef526d633aca0935d50b5df4ccf78f7369e168f4d",
+    "anchor_text": "A blue lantern hangs beside the library door. Three paper birds circle a clock, and a small wooden boat rests on the windowsill. This is a nonmedical narration test.",
+    "binary_sha256": "f2c83bded360a23df89fdf95a75551c3c5d4432e089c6205b06b4fb689c47122",
+    "reviewStatus": "UNREVIEWED",
+    "contentType": "TECHNICAL_DEMO",
+    "environment": {
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+      "python": "3.12.14",
+      "logical_cpus": 9,
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "cpu_quota": "800000 100000",
+      "memory_limit_bytes": "8589934592",
+      "memory_current_bytes": "4481101824",
+      "memory_host": {
+        "MemTotal": "10206468 kB",
+        "MemAvailable": "9473068 kB",
+        "SwapTotal": "0 kB"
+      }
+    },
+    "segments": {
+      "library-tour-explanation-1": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "This is a technical demonstration about an imaginary library. It contains no medical teaching. Picture a wide room with a blue lantern beside the entrance, a round clock above a reading table, and a wooden boat on the windowsill. We will use these objects to remember three simple details about this invented scene.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-explanation-1.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 427.45746960299994,
+          "cpu_user_seconds": 1560.787033,
+          "cpu_system_seconds": 10.181263,
+          "peak_rss_kib": 4405716
+        },
+        "audio": {
+          "sha256": "a8c6c7e0d77f11ac2fbdb4e2b252e2483fc4af24cd46931f5ba163e7fdbbec53",
+          "size_bytes": 1094444,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 547200,
+          "duration_seconds": 22.8,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -10.00935252748472,
+          "rms_dbfs": -24.61632002703077,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-explanation-2": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "The blue lantern marks the entrance. Whenever you see the lantern, think of the door and the beginning of a visit. Its color helps distinguish it from the other objects. Notice its handle, its square glass panels, and its position beside the doorway.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-explanation-2.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 310.73330431,
+          "cpu_user_seconds": 1140.433491,
+          "cpu_system_seconds": 6.950342,
+          "peak_rss_kib": 4388272
+        },
+        "audio": {
+          "sha256": "4b01d69d08d948cf881a34c257d67646d4d28305f7146dac8b7d9d81c678c061",
+          "size_bytes": 833324,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 416640,
+          "duration_seconds": 17.36,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -9.557281842662015,
+          "rms_dbfs": -23.65811966618788,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-explanation-3": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "The round clock hangs above the reading table. Three paper birds circle it. Associate the clock with the table, and remember that there are exactly three birds. Look at each bird before moving on to the final object.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-explanation-3.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 343.1808223519997,
+          "cpu_user_seconds": 1207.285553,
+          "cpu_system_seconds": 13.759055,
+          "peak_rss_kib": 4382280
+        },
+        "audio": {
+          "sha256": "3694b6b4e610e4c12cddb6f3ca4e5bcbf60b3fe78629c63a48b909400c89e6ae",
+          "size_bytes": 771884,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 385920,
+          "duration_seconds": 16.08,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -8.951222565486383,
+          "rms_dbfs": -24.15174106476188,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-explanation-4": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "The wooden boat rests on the windowsill. It has one white sail and a red flag. The boat connects the window with a quiet ending to the visit. Review the scene in order: lantern and entrance, clock and reading table, then boat and window. These descriptions are invented test material for checking speech completeness, pacing, and synchronization. They are not a lesson from a supplied source.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-explanation-4.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 760.0850541710001,
+          "cpu_user_seconds": 2558.041317,
+          "cpu_system_seconds": 17.161358,
+          "peak_rss_kib": 4431176
+        },
+        "audio": {
+          "sha256": "275794f21692304ea3d1f3b48c4ee93b3544e60d5470036ec5b435dc66617393",
+          "size_bytes": 1470764,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 735360,
+          "duration_seconds": 30.64,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -8.696468960758244,
+          "rms_dbfs": -23.20741110996668,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-story-1": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "This is an invented story for a nonmedical narration test. At sunset, a tiny librarian arrives at an imaginary library. A blue lantern beside the entrance politely bows its handle and invites the visitor through the door. Its square glass panels glow as though they are smiling. The lantern promises to remember where every visit begins.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-story-1.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 516.1077327140001,
+          "cpu_user_seconds": 1867.70682,
+          "cpu_system_seconds": 11.345796,
+          "peak_rss_kib": 4416816
+        },
+        "audio": {
+          "sha256": "b921528607cd32bee3dc752170b15b0603cca214655f6ac1e1e2951ad9e8651f",
+          "size_bytes": 1278764,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 639360,
+          "duration_seconds": 26.64,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -9.631681352236356,
+          "rms_dbfs": -23.68455125980755,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-story-2": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "Inside, the librarian meets three paper birds. One bird folds its wings, another performs a loop, and the third carries a tiny bookmark. All three circle a round clock hanging above the reading table. The clock taps a gentle rhythm while the birds count their circles. The librarian watches each bird before continuing across the room.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-story-2.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 410.3411076559996,
+          "cpu_user_seconds": 1509.679975,
+          "cpu_system_seconds": 10.248194,
+          "peak_rss_kib": 4410120
+        },
+        "audio": {
+          "sha256": "6fae24a76df1a45c64313cc1cc7aea91d2e0bfb76fbaec11fae37e6d85912f74",
+          "size_bytes": 1155884,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 577920,
+          "duration_seconds": 24.08,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -6.890276527012774,
+          "rms_dbfs": -23.60162497293691,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-story-3": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "On the windowsill, a wooden boat is preparing for a very small voyage. It raises one white sail and waves its red flag. Although the boat never leaves the window, it announces that the journey is complete. The librarian laughs and looks back across the room.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-story-3.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 390.02524670699995,
+          "cpu_user_seconds": 1378.167273,
+          "cpu_system_seconds": 11.645052,
+          "peak_rss_kib": 4394704
+        },
+        "audio": {
+          "sha256": "54a4e28197cf0a5a8bbbe1583e6b35cd574f5e599633d4ea793b7416ae2701c0",
+          "size_bytes": 937004,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 468480,
+          "duration_seconds": 19.52,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -7.706184582808842,
+          "rms_dbfs": -23.818808103827934,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      },
+      "library-tour-story-4": {
+        "command": [
+          "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+          "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+          "--cpu",
+          "--text",
+          "First comes the blue lantern at the entrance. Next comes the clock above the reading table, with exactly three paper birds. Finally comes the boat on the windowsill, carrying one white sail and a red flag. The objects settle down as the imaginary library closes for the night.",
+          "--instruction",
+          "A calm adult narrator speaking clear, natural English at a steady pace.",
+          "--voice",
+          "neutral-anchor",
+          "--voices-dir",
+          "/tmp/sketcy-neutral-production/voices",
+          "--seed",
+          "42",
+          "--cfg-scale",
+          "1.0",
+          "--split-chars",
+          "0",
+          "--max-new",
+          "750",
+          "--timings",
+          "--output",
+          "/tmp/sketcy-neutral-production/library-tour-story-4.wav"
+        ],
+        "run": {
+          "return_code": 0,
+          "timed_out": false,
+          "interrupted": false,
+          "wall_seconds": 300.31718473,
+          "cpu_user_seconds": 1115.113592,
+          "cpu_system_seconds": 11.614327,
+          "peak_rss_kib": 4399068
+        },
+        "audio": {
+          "sha256": "a54b47217733c13ccc28ac59b1fdbd2d00cc65b6365c5ab45f5417391af3a4bf",
+          "size_bytes": 998444,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 499200,
+          "duration_seconds": 20.8,
+          "within_60_to_240_seconds": false,
+          "peak_dbfs": -8.264442096731758,
+          "rms_dbfs": -24.20124361840199,
+          "full_scale_sample_fraction": 0.0
+        },
+        "status": "generated_needs_listening_review"
+      }
+    },
+    "tracks": {
+      "library-tour/explanation": {
+        "audio": {
+          "sha256": "157f0bce7dfac5b66071348d7d9e632a0d778f464eba4142025a57967ed9a87a",
+          "size_bytes": 4170284,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 2085120,
+          "duration_seconds": 86.88,
+          "within_60_to_240_seconds": true,
+          "peak_dbfs": -8.696468960758244,
+          "rms_dbfs": -23.805100073059513,
+          "full_scale_sample_fraction": 0.0
+        },
+        "segments": [
+          {
+            "id": "explanation-1",
+            "text": "This is a technical demonstration about an imaginary library. It contains no medical teaching. Picture a wide room with a blue lantern beside the entrance, a round clock above a reading table, and a wooden boat on the windowsill. We will use these objects to remember three simple details about this invented scene.",
+            "factIds": [
+              "entrance",
+              "clock",
+              "boat"
+            ],
+            "symbolIds": [
+              "entrance",
+              "clock",
+              "boat"
+            ],
+            "startMs": 0,
+            "endMs": 22800
+          },
+          {
+            "id": "explanation-2",
+            "text": "The blue lantern marks the entrance. Whenever you see the lantern, think of the door and the beginning of a visit. Its color helps distinguish it from the other objects. Notice its handle, its square glass panels, and its position beside the doorway.",
+            "factIds": [
+              "entrance"
+            ],
+            "symbolIds": [
+              "entrance"
+            ],
+            "startMs": 22800,
+            "endMs": 40160
+          },
+          {
+            "id": "explanation-3",
+            "text": "The round clock hangs above the reading table. Three paper birds circle it. Associate the clock with the table, and remember that there are exactly three birds. Look at each bird before moving on to the final object.",
+            "factIds": [
+              "clock"
+            ],
+            "symbolIds": [
+              "clock"
+            ],
+            "startMs": 40160,
+            "endMs": 56240
+          },
+          {
+            "id": "explanation-4",
+            "text": "The wooden boat rests on the windowsill. It has one white sail and a red flag. The boat connects the window with a quiet ending to the visit. Review the scene in order: lantern and entrance, clock and reading table, then boat and window. These descriptions are invented test material for checking speech completeness, pacing, and synchronization. They are not a lesson from a supplied source.",
+            "factIds": [
+              "boat"
+            ],
+            "symbolIds": [
+              "boat"
+            ],
+            "startMs": 56240,
+            "endMs": 86880
+          }
+        ]
+      },
+      "library-tour/story": {
+        "audio": {
+          "sha256": "03cbc608a799fbed50adbe952dd0bf191d0e9b1960d3a4396c837ce2b8ca406e",
+          "size_bytes": 4369964,
+          "sample_rate_hz": 24000,
+          "channels": 1,
+          "sample_width_bits": 16,
+          "sample_frames": 2184960,
+          "duration_seconds": 91.04,
+          "within_60_to_240_seconds": true,
+          "peak_dbfs": -6.890276527012774,
+          "rms_dbfs": -23.803668383144036,
+          "full_scale_sample_fraction": 0.0
+        },
+        "segments": [
+          {
+            "id": "story-1",
+            "text": "This is an invented story for a nonmedical narration test. At sunset, a tiny librarian arrives at an imaginary library. A blue lantern beside the entrance politely bows its handle and invites the visitor through the door. Its square glass panels glow as though they are smiling. The lantern promises to remember where every visit begins.",
+            "factIds": [
+              "entrance"
+            ],
+            "symbolIds": [
+              "entrance"
+            ],
+            "startMs": 0,
+            "endMs": 26640
+          },
+          {
+            "id": "story-2",
+            "text": "Inside, the librarian meets three paper birds. One bird folds its wings, another performs a loop, and the third carries a tiny bookmark. All three circle a round clock hanging above the reading table. The clock taps a gentle rhythm while the birds count their circles. The librarian watches each bird before continuing across the room.",
+            "factIds": [
+              "clock"
+            ],
+            "symbolIds": [
+              "clock"
+            ],
+            "startMs": 26640,
+            "endMs": 50720
+          },
+          {
+            "id": "story-3",
+            "text": "On the windowsill, a wooden boat is preparing for a very small voyage. It raises one white sail and waves its red flag. Although the boat never leaves the window, it announces that the journey is complete. The librarian laughs and looks back across the room.",
+            "factIds": [
+              "boat"
+            ],
+            "symbolIds": [
+              "boat"
+            ],
+            "startMs": 50720,
+            "endMs": 70240
+          },
+          {
+            "id": "story-4",
+            "text": "First comes the blue lantern at the entrance. Next comes the clock above the reading table, with exactly three paper birds. Finally comes the boat on the windowsill, carrying one white sail and a red flag. The objects settle down as the imaginary library closes for the night.",
+            "factIds": [
+              "entrance",
+              "clock",
+              "boat"
+            ],
+            "symbolIds": [
+              "entrance",
+              "clock",
+              "boat"
+            ],
+            "startMs": 70240,
+            "endMs": 91040
+          }
+        ]
+      }
+    },
+    "voice_run": {
+      "return_code": 0,
+      "timed_out": false,
+      "interrupted": false,
+      "wall_seconds": 9.758588110000119,
+      "cpu_user_seconds": 13.977262,
+      "cpu_system_seconds": 4.35337,
+      "peak_rss_kib": 3907168
+    },
+    "voice_sha256": "7f9fba8918bfc79c37702c2d391ee98395d1435db56fc4cc94a54fcfae26eeb6"
+  },
+  "per_track_process_totals": {
+    "library-tour/explanation": {
+      "wall_seconds": 1841.4566504359998,
+      "cpu_user_seconds": 6466.547394,
+      "cpu_system_seconds": 48.052018,
+      "peak_rss_kib": 4431176,
+      "sum_process_wall_per_audio_second": 21.19540343503683
+    },
+    "library-tour/story": {
+      "wall_seconds": 1616.7912718069997,
+      "cpu_user_seconds": 5870.66766,
+      "cpu_system_seconds": 44.853369,
+      "peak_rss_kib": 4416816,
+      "sum_process_wall_per_audio_second": 17.759130841465286
+    }
+  },
+  "independent_ffprobe": {
+    "library-tour/explanation": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "pcm_s16le",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bits_per_sample": 16
+        }
+      ],
+      "format": {
+        "duration": "86.880000",
+        "size": "4170284"
+      }
+    },
+    "library-tour/story": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "pcm_s16le",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bits_per_sample": 16
+        }
+      ],
+      "format": {
+        "duration": "91.040000",
+        "size": "4369964"
+      }
+    }
+  },
+  "audio_quality": {
+    "automatic_findings": "All eight CPU processes exited 0; valid nonzero mono 24 kHz PCM16; each assembled track measures 60\u2013240 s; measured peaks and full-scale fractions are in the ledger.",
+    "listening_performed": false,
+    "asr_performed": false,
+    "source_coverage_reviewed": false,
+    "unverified": [
+      "spoken sentence completeness",
+      "pronunciation",
+      "subjective clarity and noise",
+      "pacing and joins",
+      "perceptual voice consistency",
+      "spoken ending"
+    ]
+  },
+  "measurement_limits": [
+    "Each segment reloads the model; process wall time includes startup and model loading.",
+    "Hashing, downloads, artwork, package creation and Android checks are excluded from the summed CLI wall times.",
+    "Cached voice encoding is measured separately and shared by all eight segments.",
+    "Android builds and a software emulator overlapped portions of synthesis; memory contention occurred without a recorded OOM kill.",
+    "No padding or time stretching was used. Captions use actual paragraph durations; no word-level forced alignment."
+  ]
+}

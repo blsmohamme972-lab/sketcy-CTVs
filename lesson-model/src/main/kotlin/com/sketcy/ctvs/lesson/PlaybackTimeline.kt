@@ -1,5 +1,8 @@
 package com.sketcy.ctvs.lesson
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class NarrationSegment(
     val id: String,
     val startMs: Long,
@@ -8,11 +11,14 @@ data class NarrationSegment(
     val symbolIds: List<String> = emptyList(),
 )
 
+@Serializable
 data class Caption(val id: String, val startMs: Long, val endMs: Long, val text: String)
 
+@Serializable
 enum class CameraEasing { LINEAR, EASE_IN_OUT }
 
 /** Moves from the previous settled focus to [target] over this interval. */
+@Serializable
 data class CameraCue(
     val startMs: Long,
     val endMs: Long,

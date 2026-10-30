@@ -1,0 +1,481 @@
+{
+  "referenceCommit": "9446cb06605c597a063aeee49f7d188d42e34dc2",
+  "vectors": [
+    {
+      "sequence": [
+        1
+      ],
+      "grade": 1,
+      "nowMs": 1767225600000,
+      "phase": "LEARNING",
+      "step": 0,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "dueMs": 1767225660000
+    },
+    {
+      "sequence": [
+        2
+      ],
+      "grade": 2,
+      "nowMs": 1767225600000,
+      "phase": "LEARNING",
+      "step": 0,
+      "stability": 1.2931,
+      "difficulty": 5.112170705601056,
+      "dueMs": 1767225930000
+    },
+    {
+      "sequence": [
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767225600000,
+      "phase": "LEARNING",
+      "step": 1,
+      "stability": 2.3065,
+      "difficulty": 2.118103970459016,
+      "dueMs": 1767226200000
+    },
+    {
+      "sequence": [
+        4
+      ],
+      "grade": 4,
+      "nowMs": 1767225600000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 8.2956,
+      "difficulty": 1.0,
+      "dueMs": 1767916800000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767225600000,
+      "phase": "LEARNING",
+      "step": 1,
+      "stability": 2.3065,
+      "difficulty": 2.118103970459016,
+      "dueMs": 1767226200000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767226200000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 2.3065,
+      "difficulty": 2.111214235785395,
+      "dueMs": 1767399000000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 2,
+      "nowMs": 1767399000000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 7.517359325415191,
+      "difficulty": 4.748284761594571,
+      "dueMs": 1768090200000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1768090200000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 26.427128255446185,
+      "difficulty": 4.738764846129815,
+      "dueMs": 1770336600000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 4,
+      "nowMs": 1770336600000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 122.0677726013272,
+      "difficulty": 2.965933600561408,
+      "dueMs": 1780877400000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 1,
+      "nowMs": 1780877400000,
+      "phase": "RELEARNING",
+      "step": 0,
+      "stability": 4.162734263453206,
+      "difficulty": 7.673178575452888,
+      "dueMs": 1780878000000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 2,
+      "nowMs": 1780878000000,
+      "phase": "RELEARNING",
+      "step": 0,
+      "stability": 4.162734263453206,
+      "difficulty": 8.44057587780408,
+      "dueMs": 1780878900000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1780878900000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 4.162734263453206,
+      "difficulty": 8.427363671223112,
+      "dueMs": 1781224500000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 4,
+      "nowMs": 1781224500000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 12.443051727604345,
+      "difficulty": 7.887090264295637,
+      "dueMs": 1782261300000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1782261300000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 25.80213194789437,
+      "difficulty": 7.874431543328179,
+      "dueMs": 1784507700000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 1,
+      "nowMs": 1784507700000,
+      "phase": "RELEARNING",
+      "step": 0,
+      "stability": 2.1192470807708896,
+      "difficulty": 9.286568471454316,
+      "dueMs": 1784508300000
+    },
+    {
+      "sequence": [
+        3,
+        3,
+        2,
+        3,
+        4,
+        1,
+        2,
+        3,
+        4,
+        3,
+        1,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1784508300000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 2.11936617398494,
+      "difficulty": 9.2725102722797,
+      "dueMs": 1784681100000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 1,
+      "nowMs": 1767225600000,
+      "phase": "LEARNING",
+      "step": 0,
+      "stability": 0.212,
+      "difficulty": 6.4133,
+      "dueMs": 1767225660000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 1,
+      "nowMs": 1767225660000,
+      "phase": "LEARNING",
+      "step": 0,
+      "stability": 0.08335671711031604,
+      "difficulty": 8.806304468856837,
+      "dueMs": 1767225720000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 2,
+      "nowMs": 1767225720000,
+      "phase": "LEARNING",
+      "step": 0,
+      "stability": 0.08335671711031604,
+      "difficulty": 9.192797649512254,
+      "dueMs": 1767226050000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767226050000,
+      "phase": "LEARNING",
+      "step": 1,
+      "stability": 0.10314065007785231,
+      "difficulty": 9.17883322115958,
+      "dueMs": 1767226650000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767226650000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 0.12584423732556518,
+      "difficulty": 9.164882757235258,
+      "dueMs": 1767313050000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 1,
+      "nowMs": 1767313050000,
+      "phase": "RELEARNING",
+      "step": 0,
+      "stability": 0.06553776467002533,
+      "difficulty": 9.710731010397318,
+      "dueMs": 1767313650000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767313650000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 0.08238604020768912,
+      "difficulty": 9.696248648683758,
+      "dueMs": 1767400050000
+    },
+    {
+      "sequence": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        1,
+        3,
+        3
+      ],
+      "grade": 3,
+      "nowMs": 1767400050000,
+      "phase": "REVIEW",
+      "step": null,
+      "stability": 0.3958870747353993,
+      "difficulty": 9.681780769331912,
+      "dueMs": 1767486450000
+    }
+  ]
+}
