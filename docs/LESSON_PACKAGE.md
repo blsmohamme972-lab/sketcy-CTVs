@@ -5,6 +5,10 @@ or an implemented importer. The `lesson-model` module contains only the first
 in-memory types and invariants; JSON serialization, archive validation, and the
 remaining entities are deferred.
 
+The second checkpoint adds in-memory timeline metadata and validation. See
+[PLAYBACK_TIMING.md](PLAYBACK_TIMING.md) for the precise interval, camera, and
+narration-switching semantics. It does not freeze or serialize the ZIP format.
+
 ## ZIP layout
 
 ```text
@@ -52,6 +56,13 @@ return changed facts to learning.
   captions/segments. A declared duration alone is insufficient.
 - `ImageRegion` uses top-left origin and normalized x/y/width/height. All values
   must be finite, dimensions positive, and the region contained within the image.
+- `PlaybackTimeline` checks ordered, non-overlapping segments, captions, and
+  camera intervals against the declared audio duration. Segment IDs and caption
+  IDs are unique within their respective track collections.
+- `PartPlayback` checks that both tracks reference exactly the part's fact IDs,
+  that segment symbol IDs exist in the provided symbol inventory, and that the
+  timelines use the part's declared audio assets and durations. These checks
+  validate metadata coverage, not the medical content or actual narration.
 
 Asset paths currently remain untrusted strings. Never open or extract a package
 using these constructors alone.
@@ -68,4 +79,4 @@ as before extraction; numeric limits must be agreed before implementation.
 Extract into a private staging directory, then publish atomically only after all
 checks succeed. Failed imports must remove staging data and preserve existing
 lessons and review history. No package parsing, extraction, or persistence is
-implemented in the first checkpoint.
+implemented in the first two checkpoints.

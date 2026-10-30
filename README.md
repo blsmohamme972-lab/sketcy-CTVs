@@ -3,7 +3,7 @@
 A personal Android study app for illustrated lessons made only from the learner's
 own PDFs and text. Lessons and review are planned to work offline.
 
-**Status: initial foundation, approximately 10% of the planned implementation.**
+**Status: second checkpoint, approximately 20% of the planned implementation.**
 This is a scope estimate, not a measured percentage of the final code. Development
 stops at this checkpoint as requested. This is not yet a usable study app.
 
@@ -15,6 +15,10 @@ stops at this checkpoint as requested. This is not yet a usable study app.
 - A small JVM lesson-model module: source-backed facts, separate explanation/story
   tracks, 1–4-minute declared durations, and normalized image regions.
 - Tests for model boundaries, source requirements, and narration selection.
+- A deterministic playback timeline for captions, symbol highlighting, linear or
+  eased camera movement, reduced motion, and seeking between narration modes by
+  shared fact IDs. Both modes must cover the part's declared fact inventory.
+- A [worker handoff](HANDOFF.md) and [timing integration guide](docs/PLAYBACK_TIMING.md).
 - [Full project plan](PLAN.md), [screen direction](docs/SCREENS.md), and a
   [draft package contract](docs/LESSON_PACKAGE.md).
 
@@ -36,11 +40,13 @@ Gradle files; no local SDK paths or credentials belong in Git.
 ## Deliberately deferred
 
 ZIP parsing/import, Room storage, DataStore preferences, Media3 playback,
-captions, camera animation, Symbol Explorer, FSRS reviews, backup/restore,
+caption rendering, camera rendering, Symbol Explorer, FSRS reviews, backup/restore,
 the Python production toolkit, GPT illustrations, and Breeze TTS are not
-implemented. There are no sample medical claims, lesson assets, or placeholder
+implemented. The timing core is tested independently; the app still displays its
+initial empty screens. There are no sample medical claims, lesson assets, or placeholder
 audio. The package contract is a draft; constructor checks do not validate media
 files, prove factual coverage, or secure ZIP imports.
 
 See [verification notes](docs/VERIFICATION.md) for the checks performed and
-remaining device validation. Continue only when another increment is requested.
+remaining device validation. The next worker should start with [HANDOFF.md](HANDOFF.md)
+and continue only within the next requested increment.

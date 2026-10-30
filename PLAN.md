@@ -1,10 +1,9 @@
 # Sketcy CTVS — Final Project Plan
 
-> Checkpoint update (2026-10-30): the latest request authorizes only the first
-> approximately 10% of implementation, saving it to GitHub, and then stopping.
-> The repository now contains the initial app/model foundation described in
-> [README.md](README.md). The documentation-only delivery/status statements below
-> describe the earlier planning session and are superseded by this request.
+> Checkpoint update (2026-10-30): the second approximately 10% increment adds a
+> tested playback timing core, bringing the scope estimate to approximately 20%.
+> The app remains a shell; real narration and Media3 integration are still pending.
+> See [HANDOFF.md](HANDOFF.md) for the exact stopping point and next-worker tasks.
 > The remaining product requirements and staged approval boundaries are retained.
 
 ## 1. Goal and confirmed requirements
@@ -21,9 +20,9 @@ Build a personal Android study app inspired by Sketchy’s visual storytelling a
 - Include adaptive, mixed image-based review.
 - Use English, work alone, and request permission after each implementation milestone.
 
-The immediate GitHub deliverable is `PLAN.md`, linked from `README.md`, with no application implementation.
-
-**Status:** planning is complete. GitHub has not been updated because this session remains in Plan mode.
+The original documentation-only request has been superseded by limited
+implementation increments. Current implementation status is recorded in
+`README.md` and `HANDOFF.md`.
 
 ## 2. Android experience and architecture
 
@@ -60,7 +59,11 @@ Use a Python production toolkit for validation, audio assembly, timing, and ZIP 
 
 Test the CPU build of Breeze-TTS-2.cpp with its standard Q8_0 model first. Generate short segments using a consistent synthetic voice, then assemble each track. Assess pronunciation, completeness, consistency, memory use, and generation time.
 
-**The CPU environment is currently unavailable.** If CPU generation fails its feasibility test, report the blocker and pause the audio milestone. Do not silently substitute another model, GPU service, or placeholder audio.
+**Breeze CPU narration feasibility is still unverified.** The initial planning
+session had no CPU environment; a build environment was available for the first
+two code increments, but Breeze has not been built or run. If CPU generation fails
+its feasibility test, report the blocker and pause the audio milestone. Do not
+silently substitute another model, GPU service, or placeholder audio.
 
 **Lesson package**
 
@@ -108,4 +111,5 @@ At each milestone, report completed work, verification results, and remaining li
 - Emulator testing passes; a physical Android installation and playback check is recorded before device validation is considered complete.
 - Final delivery includes source code, an installable APK, a validated pilot ZIP, generation instructions, and test results.
 
-For the current documentation-only task, completion means committing `PLAN.md` and its README link, reading them back from GitHub, and then replying **“Done.”**
+For each authorized increment, save the bounded change to GitHub, verify the saved
+files, and record completed checks and remaining limitations for the next worker.
