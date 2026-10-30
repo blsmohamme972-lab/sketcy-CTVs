@@ -7,6 +7,22 @@ workflow, plus a source-preserving authoring toolkit. **Implementation is not
 medical, listening or physical-device acceptance.** No medical source has been
 supplied; do not invent a medical pilot or claim the product is fully accepted.
 
+## Browser delivery follow-up
+
+The user explicitly approved a public APK release after asking for a Chrome
+download. [The Android preview release](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/tag/v0.2.0-android-preview) contains
+`Sketcy-CTVS-0.2.0.apk` from the previously successful CI run of `b0f7cc6`.
+No application code changed. The public download returned HTTP 200; its SHA-256,
+ZIP integrity, signature, alignment and package identity were checked again.
+The temporary publishing workflow was removed after delivery verification.
+The routine Android build workflow retains its read-only repository permission.
+
+The public APK has a different debug certificate from the earlier chat-delivered
+APK. Preserve both artifact identities in [verification](docs/VERIFICATION.md#public-browser-download).
+The reported package parsing error is not diagnosed or confirmed fixed; actual
+phone installation and all earlier runtime/listening/medical acceptance remain
+open. Do not infer a device pass from a valid public download.
+
 ## Start here
 
 1. Read this file, [README.md](README.md), and [PLAN.md](PLAN.md).

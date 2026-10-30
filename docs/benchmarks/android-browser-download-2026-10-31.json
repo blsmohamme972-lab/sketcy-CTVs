@@ -1,0 +1,65 @@
+{
+  "release_url": "https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/tag/v0.2.0-android-preview",
+  "downloads": {
+    "Sketcy-CTVS-0.2.0.apk": {
+      "http_status": 200,
+      "content_type": "application/vnd.android.package-archive",
+      "content_disposition": "attachment; filename=Sketcy-CTVS-0.2.0.apk",
+      "bytes": 13408761,
+      "sha256": "724ac6d6ed096603e8c3592caa0977f54e13b850a2fabd3861544ae2887730f3"
+    },
+    "APK-VERIFICATION.json": {
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "content_disposition": "attachment; filename=APK-VERIFICATION.json",
+      "bytes": 899,
+      "sha256": "07d17f19530251c9bef7e6bee82cc33cb948e8bb80a58a86e30a37edf514aa59"
+    },
+    "SHA256SUMS.txt": {
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "content_disposition": "attachment; filename=SHA256SUMS.txt",
+      "bytes": 88,
+      "sha256": "2c630c521ae0b0f66f1cd6de5032461103fd6314ad0b8256b0bfabb3d576e9ab"
+    }
+  },
+  "debug_certificate_sha256": "041319bd276ab261871cfb619a486714d3335be7a5819c08583b3d4170236218",
+  "apk_signature_verification": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: 041319bd276ab261871cfb619a486714d3335be7a5819c08583b3d4170236218\nSigner #1 certificate SHA-1 digest: 34395c324bd31d52ebe0cea9db1f70b12b585bf4\nSigner #1 certificate MD5 digest: 867398f61ce6b53d01cc985922bdfad0\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 9b906101436a7981859ea0dace714fbea838ab7e2399bcc2212701eac75df849\nSigner #1 public key SHA-1 digest: 5d86094582560d8171693bbcccaefafb6b264f57\nSigner #1 public key MD5 digest: 38350a99c202ef7a931a097d58e7fb6e\n",
+  "apk_identity": [
+    "package: name='com.sketcy.ctvs' versionCode='2' versionName='0.2.0' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'",
+    "sdkVersion:'26'",
+    "targetSdkVersion:'35'",
+    "native-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'"
+  ],
+  "zip_crc_valid": true,
+  "zipalign_valid": true,
+  "release_evidence": {
+    "source_commit": "b0f7cc6f512b26d260a9a07cdd8e5668ac9ac92e",
+    "source_ci_run": 41126878920,
+    "source_artifact_id": 13011995495,
+    "source_artifact_sha256": "984b0c05cee33d31bc8d47499c0991a8dd44983baaec6438545f6706be3d621c",
+    "apk_name": "Sketcy-CTVS-0.2.0.apk",
+    "apk_bytes": 13408761,
+    "apk_sha256": "724ac6d6ed096603e8c3592caa0977f54e13b850a2fabd3861544ae2887730f3",
+    "debug_certificate_sha256": "certificate SHA-256 digest: 041319bd276ab261871cfb619a486714d3335be7a5819c08583b3d4170236218",
+    "checks": [
+      "source CI success",
+      "artifact SHA-256",
+      "APK ZIP CRC",
+      "apksigner verify",
+      "zipalign",
+      "Android package identity"
+    ],
+    "runtime_validation": "Not completed. Earlier software-emulator installation timed out; no instrumented or physical-device pass is claimed.",
+    "signing": "CI debug certificate; may differ from the earlier chat-delivered debug APK."
+  },
+  "runtime_validation": "Not performed; package parsing error on the user device remains undiagnosed.",
+  "verification_date_baghdad": "2026-10-31",
+  "release_published_at_utc": "2026-10-30T21:21:12Z",
+  "publication_workflow_commit": "15edbfa0c585af55fabe8ea6a0a95b0121dfe849",
+  "publication_workflow_run": 41130383669,
+  "publication_job": 124319450728,
+  "publication_result": "success",
+  "temporary_workflow_removed": true,
+  "no_application_source_change": true
+}

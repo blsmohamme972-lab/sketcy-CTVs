@@ -157,7 +157,7 @@ passed again. This does not imply a physical-device performance measurement.
 
 ## Delivered artifact identities
 
-The app is debug-signed with certificate SHA-256
+The earlier chat-delivered APK is debug-signed with certificate SHA-256
 `d63055ff24dc6d93a9e91f82aca5c6eb26eb380dc0148a0bbf520768ffea0c17`.
 A CI-generated debug certificate can differ; export a backup before replacing a
 build with a different signing identity. Do not confuse a source revision with
@@ -166,6 +166,7 @@ bit-identical APKs signed by separate debug keys.
 | Artifact | Bytes | SHA-256 |
 | --- | ---: | --- |
 | `sketcy-ctvs-0.2.0-debug.apk` | 13,408,761 | `c57894654d2cf18d38bd9ca235ef2f180051eec0284291c622e77ccb616db3f2` |
+| `Sketcy-CTVS-0.2.0.apk` (public CI build) | 13,408,761 | `724ac6d6ed096603e8c3592caa0977f54e13b850a2fabd3861544ae2887730f3` |
 | `sketcy-lantern-library-v1.zip` | 9,805,575 | `c8542beb693393cc280edafa83395d1288bcefa64f6a16e87357c490c77da224` |
 
 The ZIP passed the JVM importer before publication. Its manifest declares
@@ -173,6 +174,34 @@ The ZIP passed the JVM importer before publication. Its manifest declares
 86,880 ms and story 91,040 ms, one original PNG and two distinct WAV files.
 `sourceCoverageReviewed` and `audioReviewed` remain false. The source is marked
 `userProvided: false`. No media is embedded in the source repository or APK.
+
+## Public browser download
+
+The user explicitly approved publishing the debug APK in GitHub Releases.
+[Preview release `v0.2.0-android-preview`](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/tag/v0.2.0-android-preview) points to application
+commit `b0f7cc6f512b26d260a9a07cdd8e5668ac9ac92e`. It promotes the exact APK from
+successful CI run `41126878920`, artifact `13011995495`; no rebuild or app source
+change was needed. Publication run
+[41130383669](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41130383669)
+completed successfully. The temporary publishing workflow was removed afterward.
+The normal build workflow remains read-only.
+
+The [direct APK link](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/download/v0.2.0-android-preview/Sketcy-CTVS-0.2.0.apk) was fetched again without supplying an
+account token. It returned HTTP 200, MIME type
+`application/vnd.android.package-archive`, and an attachment filename of
+`Sketcy-CTVS-0.2.0.apk`. All 13,408,761 bytes matched the published SHA-256.
+ZIP CRC, `apksigner verify`, `zipalign` and Android package identity passed on
+those downloaded bytes. The separate checksum and release-evidence downloads
+also returned HTTP 200 and matched their recorded content hashes. Exact evidence
+is in [the browser download record](benchmarks/android-browser-download-2026-10-31.json).
+
+Public CI debug certificate SHA-256:
+`041319bd276ab261871cfb619a486714d3335be7a5819c08583b3d4170236218`.
+This differs from the earlier chat APK's certificate despite identical app
+version and size. Back up an already installed app before switching signing
+identities. These checks do not reproduce or diagnose the reported package
+parsing error and do not establish a successful device installation. No emulator,
+physical-device or listening acceptance was added by this delivery follow-up.
 
 ## Acceptance that remains open
 

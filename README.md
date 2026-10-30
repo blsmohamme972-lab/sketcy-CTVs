@@ -53,9 +53,19 @@ model weights; import the separate validated ZIP to play the demonstration.
 
 ## Install and try
 
-Use the supplied `sketcy-ctvs-0.2.0-debug.apk` on Android 8 or later. Allow installation
-from the file manager/browser you chose, install it, then open **Sketcy CTVS**.
-This is a debug-signed personal-testing build, not a Play Store release.
+Download [Sketcy-CTVS-0.2.0.apk](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/download/v0.2.0-android-preview/Sketcy-CTVS-0.2.0.apk)
+in a browser, including Chrome. The public APK is 13,408,761 bytes and is also
+listed on the [Android preview release](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/tag/v0.2.0-android-preview).
+Use Android 8 or later; allow installation from your chosen browser/file manager
+when Android asks, install it, then open **Sketcy CTVS**. This is a debug-signed
+personal-testing build, not a Play Store release.
+
+The public APK comes from the successful CI build of application commit
+`b0f7cc6`. Its signing certificate differs from the earlier chat-delivered local
+APK. The direct download, SHA-256, package structure and signature were verified;
+this does not establish successful installation on a physical device. See
+[artifact identities](docs/VERIFICATION.md#public-browser-download) before mixing
+builds.
 
 1. Save the separately supplied `sketcy-lantern-library-v1.zip` on the device.
 2. Open **Library → Import** and choose that ZIP. Keep it zipped.

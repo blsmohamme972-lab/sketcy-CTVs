@@ -8,9 +8,17 @@ Android 8 emulator timed out during APK installation, before instrumented tests
 could execute. The checklist below is required for actual device acceptance.
 
 Version 0.2.0 is a debug-signed personal-testing APK for Android 8+ (minSdk 26,
-targetSdk 35). Download the APK and the separate Lantern Library lesson ZIP from
-the delivery message. Install from a file manager, allow installation for that
-chosen app when Android asks, and open Sketcy CTVS.
+targetSdk 35). Download the [public APK](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/download/v0.2.0-android-preview/Sketcy-CTVS-0.2.0.apk)
+in Chrome or another browser. Its exact size is 13,408,761 bytes. The separate
+Lantern Library lesson ZIP remains in the delivery message. Install the APK from
+a file manager, allow installation for that chosen app when Android asks, and
+open Sketcy CTVS.
+
+If Android reports a package parsing problem, check the downloaded file's exact
+size and compare its SHA-256 with the release's `SHA256SUMS.txt` when possible.
+A successful download and signature check do not diagnose a phone's installation
+failure. Record the Android version and installer error; do not claim the new
+URL by itself fixes that error.
 
 The application includes no medical content, model weights or generated narration.
 Use **Library → Import** to select the ZIP through Android's document picker.
