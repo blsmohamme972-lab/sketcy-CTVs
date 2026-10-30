@@ -10,3 +10,20 @@ local.properties
 *.aab
 lesson-packages/
 __pycache__/
+
+# Local narration work; distribute approved lesson packages separately.
+/local-artifacts/
+/models/
+*.gguf
+*.safetensors
+*.breeze
+*.wav
+*.pcm
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.mp4
+*.pdf
+core
+core.*

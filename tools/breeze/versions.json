@@ -1,0 +1,19 @@
+{
+  "source_repository": "https://github.com/HoppouAI/Breeze-TTS-2.cpp",
+  "source_commit": "2904b9ad126c07363e8a6c9afa08f73e3309075b",
+  "submodules": {
+    "third_party/ggml": "36da57138425487184aa1da2eee2cde155909c6f",
+    "third_party/shine": "ab5e3526b64af1a2eaa43aa6f441a7312e013519"
+  },
+  "model_repository": "https://huggingface.co/HoppouAI/Breeze-TTS-2.cpp",
+  "model_revision": "81b22bad9f05b99970e30c5ee5e4bbc52fedf2f8",
+  "model_filename": "breeze-tts-2-q8_0.gguf",
+  "model_size_bytes": 3568844480,
+  "model_sha256": "a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879",
+  "cmake_version_used": "3.31.6",
+  "voice_instruction": "A calm adult narrator speaking clear, natural English at a steady pace.",
+  "seed": 42,
+  "cfg_scale": 1.0,
+  "split_chars": 600,
+  "max_new_frames_per_piece": 750
+}

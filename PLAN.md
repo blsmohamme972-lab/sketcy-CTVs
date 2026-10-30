@@ -1,8 +1,10 @@
 # Sketcy CTVS — Final Project Plan
 
-> Checkpoint update (2026-10-30): the second approximately 10% increment adds a
-> tested playback timing core, bringing the scope estimate to approximately 20%.
-> The app remains a shell; real narration and Media3 integration are still pending.
+> Checkpoint update (2026-10-30): a third bounded increment adds a pinned Breeze
+> TTS 2 standard Q8_0 CPU probe and measured nonmedical smoke output. One
+> 12.56-second take completed in 174.91 seconds with 4.13 GiB peak process RSS.
+> Listening, full 1–4-minute track pairs, and Media3 integration remain pending.
+> The Android app remains at the prior approximately 20% implementation scope.
 > See [HANDOFF.md](HANDOFF.md) for the exact stopping point and next-worker tasks.
 > The remaining product requirements and staged approval boundaries are retained.
 
@@ -59,11 +61,14 @@ Use a Python production toolkit for validation, audio assembly, timing, and ZIP 
 
 Test the CPU build of Breeze-TTS-2.cpp with its standard Q8_0 model first. Generate short segments using a consistent synthetic voice, then assemble each track. Assess pronunciation, completeness, consistency, memory use, and generation time.
 
-**Breeze CPU narration feasibility is still unverified.** The initial planning
-session had no CPU environment; a build environment was available for the first
-two code increments, but Breeze has not been built or run. If CPU generation fails
-its feasibility test, report the blocker and pause the audio milestone. Do not
-silently substitute another model, GPU service, or placeholder audio.
+**Breeze CPU inference is demonstrated only for one short nonmedical take.**
+The third checkpoint built unchanged upstream code with GPU backends disabled,
+verified the standard Q8_0 checksum, and measured a successful 12.56-second WAV.
+Audio listening quality, completeness, cross-track voice consistency, long-form
+generation, and actual 1–4-minute track durations remain unverified. See
+[docs/BREEZE_CPU.md](docs/BREEZE_CPU.md). If a CPU attempt or quality review fails,
+report the blocker and pause the audio milestone. Do not silently substitute
+another model, GPU service, or placeholder audio.
 
 **Lesson package**
 

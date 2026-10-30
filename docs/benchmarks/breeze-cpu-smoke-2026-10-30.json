@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "started_utc": "2026-10-30T19:28:17.473779+00:00",
+  "case": "smoke",
+  "versions": {
+    "source_repository": "https://github.com/HoppouAI/Breeze-TTS-2.cpp",
+    "source_commit": "2904b9ad126c07363e8a6c9afa08f73e3309075b",
+    "submodules": {
+      "third_party/ggml": "36da57138425487184aa1da2eee2cde155909c6f",
+      "third_party/shine": "ab5e3526b64af1a2eaa43aa6f441a7312e013519"
+    },
+    "model_repository": "https://huggingface.co/HoppouAI/Breeze-TTS-2.cpp",
+    "model_revision": "81b22bad9f05b99970e30c5ee5e4bbc52fedf2f8",
+    "model_filename": "breeze-tts-2-q8_0.gguf",
+    "model_size_bytes": 3568844480,
+    "model_sha256": "a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879",
+    "cmake_version_used": "3.31.6",
+    "voice_instruction": "A calm adult narrator speaking clear, natural English at a steady pace.",
+    "seed": 42,
+    "cfg_scale": 1.0,
+    "split_chars": 600,
+    "max_new_frames_per_piece": 750
+  },
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "logical_cpus": 9,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "cpu_quota": "800000 100000",
+    "memory_limit_bytes": "8589934592",
+    "memory_current_bytes": "5076332544",
+    "memory_host": {
+      "MemTotal": "10206468 kB",
+      "MemAvailable": "9476284 kB",
+      "SwapTotal": "0 kB"
+    }
+  },
+  "status": "generated_needs_listening_review",
+  "audio": {
+    "sha256": "6dd3282fa17e6322b39a38cef526d633aca0935d50b5df4ccf78f7369e168f4d",
+    "size_bytes": 602924,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bits": 16,
+    "sample_frames": 301440,
+    "duration_seconds": 12.56,
+    "within_60_to_240_seconds": false,
+    "peak_dbfs": -7.642692361217394,
+    "rms_dbfs": -22.278353390230695,
+    "full_scale_sample_fraction": 0.0
+  },
+  "listening_review": {
+    "status": "not_performed",
+    "findings": null,
+    "reason": "Audio input/listening was unavailable in this session; no supported transcription capability was exposed."
+  },
+  "note": "A successful process and valid WAV do not establish text or voice quality.",
+  "source_verified": {
+    "source_commit": "2904b9ad126c07363e8a6c9afa08f73e3309075b",
+    "submodules": {
+      "third_party/ggml": "36da57138425487184aa1da2eee2cde155909c6f",
+      "third_party/shine": "ab5e3526b64af1a2eaa43aa6f441a7312e013519"
+    }
+  },
+  "cpu_build": {
+    "BREEZE_CUDA": "OFF",
+    "BREEZE_VULKAN": "OFF",
+    "CMAKE_BUILD_TYPE": "Release",
+    "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+    "CMAKE_C_COMPILER": "/usr/bin/cc",
+    "GGML_CUDA": "OFF",
+    "GGML_NATIVE": "ON",
+    "GGML_OPENMP": "ON",
+    "GGML_VULKAN": "OFF",
+    "CMAKE_GENERATOR": "Unix Makefiles"
+  },
+  "model_sha256_verified": "a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879",
+  "binary_sha256": "f2c83bded360a23df89fdf95a75551c3c5d4432e089c6205b06b4fb689c47122",
+  "input_text": "A blue lantern hangs beside the library door. Three paper birds circle a clock, and a small wooden boat rests on the windowsill. This is a nonmedical narration test.",
+  "input_sha256": "82d62adf84c72a15412b4eb0b9e48a882f3f99970dd7450c2c80170a0bf047b2",
+  "command": [
+    "/tmp/sketcy-breeze-cpu-src/build-cpu/breeze-cli",
+    "/tmp/sketcy-breeze-model/breeze-tts-2-q8_0.gguf",
+    "--cpu",
+    "--text",
+    "A blue lantern hangs beside the library door. Three paper birds circle a clock, and a small wooden boat rests on the windowsill. This is a nonmedical narration test.",
+    "--instruction",
+    "A calm adult narrator speaking clear, natural English at a steady pace.",
+    "--seed",
+    "42",
+    "--cfg-scale",
+    "1.0",
+    "--split-chars",
+    "600",
+    "--max-new",
+    "750",
+    "--timings",
+    "--output",
+    "/tmp/sketcy-breeze-smoke-01/narration.wav"
+  ],
+  "timeout_seconds": 600.0,
+  "run": {
+    "return_code": 0,
+    "timed_out": false,
+    "interrupted": false,
+    "wall_seconds": 174.90690491900006,
+    "cpu_user_seconds": 648.328184,
+    "cpu_system_seconds": 5.807088,
+    "peak_rss_kib": 4327580
+  },
+  "wall_seconds_per_audio_second": 13.925708990366246,
+  "independent_ffprobe": {
+    "codec_name": "pcm_s16le",
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "duration_seconds": 12.56,
+    "size_bytes": 602924
+  }
+}
