@@ -19,8 +19,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Install pinned Android platform and build tools
-        run: sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
+      - name: Install verified Android command-line tools, platform and build tools
+        run: |
+          sketcy_sdk="$RUNNER_TEMP/sketcy-android-sdk"
+          sketcy_cli="$RUNNER_TEMP/sketcy-commandlinetools.zip"
+          curl --fail --location --retry 3 --output "$sketcy_cli" https://dl.google.com/android/repository/commandlinetools-linux-11479570_latest.zip
+          printf '%s  %s\n' '9673a4b9bdfc49a26022b047af0b8a91da74ed951ffd7dbe04181bce36980e6d' "$sketcy_cli" | sha256sum --check -
+          mkdir -p "$sketcy_sdk/cmdline-tools"
+          unzip -q "$sketcy_cli" -d "$RUNNER_TEMP/sketcy-cli-unpacked"
+          mv "$RUNNER_TEMP/sketcy-cli-unpacked/cmdline-tools" "$sketcy_sdk/cmdline-tools/13.0"
+          python3 -c 'print("y\n" * 100)' > "$RUNNER_TEMP/sketcy-sdk-license-answers.txt"
+          "$sketcy_sdk/cmdline-tools/13.0/bin/sdkmanager" --sdk_root="$sketcy_sdk" 'platforms;android-35' 'build-tools;34.0.0' < "$RUNNER_TEMP/sketcy-sdk-license-answers.txt"
+          printf 'ANDROID_HOME=%s\nANDROID_SDK_ROOT=%s\n' "$sketcy_sdk" "$sketcy_sdk" >> "$GITHUB_ENV"
       - name: CPU benchmark tooling tests (no model download)
         run: python3 -m unittest discover -s tools/breeze -p 'test_*.py' -v
       - name: Production tooling tests (no medical sources or generated media)
