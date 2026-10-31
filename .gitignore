@@ -25,6 +25,7 @@ __pycache__/
 *.ogg
 *.mp4
 *.pdf
+!/Cardiothoracic_Surgery_Chapters/*.pdf
 core
 core.*
 
