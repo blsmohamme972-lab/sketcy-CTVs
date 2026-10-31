@@ -8,19 +8,36 @@ this repository.
 ## Internal visual authoring
 
 Use [Sketcy Studio](../../studio/README.md) and its
-[agent instructions](../../studio/AGENTS.md) to compose original vectors and
-independent image layers, connect source facts, and preview both narration
-modes. This tool is for the assistant; it is not in the student app.
+[agent instructions](../../studio/AGENTS.md) to create one complete image per
+lesson, connect source facts, and preview both narration modes. Generate the
+background and all characters and props together in one image-generation call,
+then import the result:
+
+```sh
+node studio/agent.mjs new --image /private/lesson.png --title "Lesson" --id lesson-01 --out /private/lesson.sketcy-studio.json
+```
+
+The image's original dimensions must be 64–4096 pixels per axis. Studio embeds
+it as one locked full-canvas image, preserving transparency. It imports the
+completed picture; image generation runs separately through the authorized
+image tool. This tool is for the assistant; it is not in the student app.
+Set the actual content policy and add exact source/fact references with patches.
+Unpainted, visible rectangle nodes with `fill: "none"`, `stroke: "none"` and
+`factIds` supply symbol hotspots without splitting the picture.
 `node studio/agent.mjs handoff --project … --out-dir …` writes a real scene PNG,
 `authoring.json` in this toolkit's input shape, a `narration-plan.json`, and
 explicit draft timing. Continue through the real generation/review/package
 steps below; a Studio handoff is not an importable ZIP.
 
 The handoff's review flags start false. Its cue times do not override measured
-Breeze segment boundaries. For independent objects, use
-[`studio_package.py`](studio_package.py) and [schema 2](../../docs/LESSON_PACKAGE_V2.md).
-It compares the handoff to the generation ledger, validates exported pixel
-identities/placement/pivots, and invokes the existing packager and JVM validator.
+Breeze segment boundaries. Use [`studio_package.py`](studio_package.py) for the
+measured handoff. By default it packages one scene as one lesson with only the
+complete `images/scene.png`, retaining camera cues, captions, hotspots and both
+narration modes. No background/cutout generation or layer export is required.
+It compares scripts, fact links, durations and cue boundaries with the generation
+ledger, then invokes the existing packager and JVM validator. Optional
+`--layers` adds independent objects under [schema 2](../../docs/LESSON_PACKAGE_V2.md)
+and verifies their pixel identities, placement and pivots.
 The explicit `EXTERNAL_REVIEW` category permits visibly labeled public-source
 test demonstrations with human review pending. It requires real external URLs;
 it never makes external sources user-provided. `USER_SOURCE` approval gates
@@ -65,10 +82,11 @@ one or more `{sourceId, locator, quote}` references. Every quote must be an exac
 substring of the cited excerpt. Keep an inventory-to-source coverage checklist;
 mechanical ID coverage cannot prove that no source fact was omitted.
 
-Split facts into parts. Write two distinct English scripts per part: an
-explanation of the supplied material and a mnemonic story. Story actions may be
+Use one scene and one part for each lesson package. Write two distinct English
+scripts: an explanation of the supplied material and a mnemonic story. Story actions may be
 invented; medical claims must still map to the source inventory. Use original
-illustrations and consistent symbols. Inspect the artwork, including counts,
+illustrations and consistent symbols. Include all symbols in the lesson's
+single generated picture. Inspect the artwork, including counts,
 colors, labels and symbol placement, before defining normalized hotspots.
 
 The original technical demo is a complete **nonmedical** authoring example:
@@ -127,7 +145,7 @@ Both assembled tracks must measure 60–240 seconds at normal speed.
 
 Listen against every intended sentence. Record errors and redo failed segments
 with Breeze CPU. Check endings and joins, factual completeness, pronunciation,
-consistent voice and acceptable pacing. Medical/source lessons require both
+consistent voice and acceptable pacing. `USER_SOURCE` lessons require both
 `quality.audioReviewed` and `quality.sourceCoverageReviewed`, a named reviewer,
 and useful review notes. These are recorded attestations, not an automatic
 medical correctness guarantee. Do not set them without doing the reviews.
@@ -138,6 +156,21 @@ python3 tools/production/package_lesson.py \
   --generation /private/generation \
   --output /private/deliverables/lesson-v1.zip
 ```
+
+For a measured Studio project, attach the actual WAVs, patch cue boundaries to
+their measured segment times, and export the handoff. Use the single-image
+bridge instead of the general authoring JSON command above:
+
+```sh
+node studio/agent.mjs handoff --project /private/measured.sketcy-studio.json --part-id part-01 --out-dir /private/production
+python3 tools/production/studio_package.py --handoff /private/production --generation /private/generation --output /private/lesson.zip
+```
+
+`--part-id` must match the narration plan. The bridge retains exact camera
+targets and rejects guessed or rescaled cue boundaries. If independently moving
+objects are needed, export their layers and add `--layers /private/layers`.
+The complete-image path retains schema 2 for `EXTERNAL_REVIEW`; it does not
+promote source or listening approval flags.
 
 The packager verifies unchanged measured audio and the pinned generation ledger,
 creates whole-segment captions and camera cues at actual segment boundaries,

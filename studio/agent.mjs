@@ -106,6 +106,21 @@ async function renderApi(project, fn) {
   const { withRenderer } = await import("./src/browser-render.mjs");
   return withRenderer(project, fn);
 }
+async function readImage(path) {
+  if ((await stat(path)).size > LIMITS.assetBytes)
+    throw new Error("Image exceeds 32 MiB.");
+  const mime = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+  }[extname(path).toLowerCase()];
+  if (!mime) throw new Error("Use a local PNG, JPEG or WebP image.");
+  const bytes = new Uint8Array(await readFile(path)),
+    data = dataFromBytes(bytes, mime),
+    info = await renderApi(null, (api) => api.inspectImage(data));
+  return { name: basename(path), mime, data, ...info };
+}
 function nonemptyParent(project, id) {
   function visit(nodes) {
     if (nodes.some((n) => n.id === id)) return nodes;
@@ -193,18 +208,52 @@ function patch(project, operations) {
 async function run() {
   if (!command || command === "help") {
     console.log(
-      `Sketcy Studio — internal agent authoring\n\nnode studio/agent.mjs new --title "Scene" --out /private/scene.sketcy-studio.json [--demo] [--id stable-project]\nnode studio/agent.mjs validate --project /private/scene.sketcy-studio.json\nnode studio/agent.mjs patch --project /private/scene.sketcy-studio.json --ops /private/ops.json --out /private/revised.sketcy-studio.json\nnode studio/agent.mjs add-image --project ... --image /private/object.png --out ... [--id stable-layer] [--background] [--x 100 --y 200 --width 300]\nnode studio/agent.mjs add-audio --project ... --audio /private/explanation.wav --mode explanation --out ...\nnode studio/agent.mjs render --project ... --out /private/scene.png [--mode story --time-ms 15000] [--reduced-motion]\nnode studio/agent.mjs layers --project ... --out-dir /private/layers\nnode studio/agent.mjs handoff --project ... --out-dir /private/production [--part-id part-01]\n\nSVG rendering and validation need Node 22+. PNG rendering and asset inspection also need npm ci, Playwright Chromium and Python 3. All generated outputs must stay outside Git. Existing outputs are protected unless --force is explicit.`,
+      `Sketcy Studio — internal agent authoring\n\nnode studio/agent.mjs new --image /private/lesson.png --title "Lesson" --out /private/lesson.sketcy-studio.json [--id stable-project]\nnode studio/agent.mjs new --title "Scene" --out /private/scene.sketcy-studio.json [--demo] [--id stable-project]\nnode studio/agent.mjs validate --project /private/scene.sketcy-studio.json\nnode studio/agent.mjs patch --project /private/scene.sketcy-studio.json --ops /private/ops.json --out /private/revised.sketcy-studio.json\nnode studio/agent.mjs add-image --project ... --image /private/object.png --out ... [--id stable-layer] [--background] [--x 100 --y 200 --width 300]\nnode studio/agent.mjs add-audio --project ... --audio /private/explanation.wav --mode explanation --out ...\nnode studio/agent.mjs render --project ... --out /private/scene.png [--mode story --time-ms 15000] [--reduced-motion]\nnode studio/agent.mjs layers --project ... --out-dir /private/layers\nnode studio/agent.mjs handoff --project ... --out-dir /private/production [--part-id part-01]\n\nGenerate one complete image per lesson, then use new --image to import it at its original size. This CLI imports artwork; image generation runs separately.\nSVG rendering and validation need Node 22+. PNG rendering and asset inspection also need npm ci, Playwright Chromium and Python 3. All generated outputs must stay outside Git. Existing outputs are protected unless --force is explicit.`,
     );
     return;
   }
   if (command === "new") {
+    if (options.image && options.demo)
+      throw new Error("Choose either --image or --demo.");
+    await ensureWritable(required("out"));
     const p = options.demo
       ? demoProject()
       : emptyProject(options.title || "Untitled scene");
     if (options.title) p.title = options.title;
     if (options.id) p.id = options.id;
+    let image;
+    if (options.image) {
+      const asset = await readImage(resolve(options.image)),
+        assetId = uid("asset");
+      if (asset.width < 64 || asset.height < 64)
+        throw new Error("A complete scene must be at least 64 × 64 pixels.");
+      p.width = asset.width;
+      p.height = asset.height;
+      p.background = "none";
+      p.assets[assetId] = asset;
+      p.nodes.push(
+        makeNode("image", {
+          id: "scene-image",
+          name: asset.name,
+          assetId,
+          width: asset.width,
+          height: asset.height,
+          role: "background",
+          locked: true,
+          fill: "none",
+          stroke: "none",
+        }),
+      );
+      image = {
+        layerId: "scene-image",
+        assetId,
+        width: asset.width,
+        height: asset.height,
+        hasTransparency: asset.hasTransparency,
+      };
+    }
     validateProject(p);
-    return report(await saveJson(required("out"), p));
+    return report({ ...(await saveJson(required("out"), p)), ...image });
   }
   const project = await readProject();
   if (command === "validate")
@@ -228,21 +277,9 @@ async function run() {
   }
   if (command === "add-image") {
     const path = resolve(required("image")),
-      fileStat = await stat(path);
-    if (fileStat.size > LIMITS.assetBytes)
-      throw new Error("Image exceeds 32 MiB.");
-    const mime = {
-      ".png": "image/png",
-      ".jpg": "image/jpeg",
-      ".jpeg": "image/jpeg",
-      ".webp": "image/webp",
-    }[extname(path).toLowerCase()];
-    if (!mime) throw new Error("Use a local PNG, JPEG or WebP image.");
-    const bytes = new Uint8Array(await readFile(path)),
-      data = dataFromBytes(bytes, mime),
-      info = await renderApi(null, (api) => api.inspectImage(data)),
+      info = await readImage(path),
       assetId = uid("asset");
-    project.assets[assetId] = { name: basename(path), mime, data, ...info };
+    project.assets[assetId] = info;
     let ratio = options.width
       ? Number(options.width) / info.width
       : options.background

@@ -12,11 +12,17 @@ Read [the staged plan](../docs/STUDIO_PLAN.md),
 [agent instructions](AGENTS.md), [the format](../docs/STUDIO_FORMAT.md) and
 [drawing rules](../docs/ART_DIRECTION.md).
 
+The default authoring flow makes **one complete image for one lesson**. Generate
+the background, characters and props together in one image-generation call,
+then import that finished picture with `new --image`. Source-linked hotspots,
+camera cues and both narration modes use the same image. Separate generated
+objects and layer export are optional for independent object motion.
+
 ## Authoring commands
 
-Use Node 22+ and Python 3.10+. Project creation, patches, structural validation
-and SVG export use Node alone. PNG rendering and image inspection use the same
-SVG renderer in headless Chromium:
+Use Node 22+ and Python 3.10+. Empty/demo project creation, patches, structural
+validation and SVG export use Node alone. Image import, including `new --image`,
+and PNG rendering use the same SVG renderer in headless Chromium:
 
 ```sh
 cd studio
@@ -35,15 +41,15 @@ Existing files are protected; use a new revision path, or `--force` when an
 intentional replacement is appropriate.
 
 ```sh
-node studio/agent.mjs new --demo --out /private/workshop.sketcy-studio.json
-node studio/agent.mjs validate --project /private/workshop.sketcy-studio.json
-node studio/agent.mjs render --project /private/workshop.sketcy-studio.json --out /private/workshop.png
-node studio/agent.mjs layers --project /private/workshop.sketcy-studio.json --out-dir /private/workshop-layers
-node studio/agent.mjs handoff --project /private/workshop.sketcy-studio.json --out-dir /private/production
+node studio/agent.mjs new --image /private/lesson.png --title "Lesson" --id lesson-01 --out /private/lesson.sketcy-studio.json
+node studio/agent.mjs validate --project /private/lesson.sketcy-studio.json
+node studio/agent.mjs render --project /private/lesson.sketcy-studio.json --out /private/lesson-preview.png
+node studio/agent.mjs handoff --project /private/lesson.sketcy-studio.json --out-dir /private/production
 ```
 
 | Command | Result |
 | --- | --- |
+| `new --image … --title "Lesson" --out …` | Complete PNG/JPEG/WebP as one locked background image on its original canvas; `--id` supplies a stable project identity |
 | `new --title "Scene" --out …` | Empty portable scene; `--demo` loads the original nonmedical Lantern Workshop |
 | `patch --project … --ops … --out …` | Validated batch of scene, fact, source and timeline edits; the input is preserved |
 | `add-image --project … --image … --out …` | Decoded PNG/JPEG/WebP embedded as an independent layer; reports actual transparency |
@@ -54,8 +60,22 @@ node studio/agent.mjs handoff --project /private/workshop.sketcy-studio.json --o
 | `layers --project … --out-dir …` | Background, transparent element PNGs, placement/pivot/motion metadata and SHA-256 hashes |
 | `handoff --project … --out-dir …` | Scene PNG, authoring JSON, two-track narration plan and explicit draft timing |
 
-`add-image` also accepts `--x`, `--y`, `--width` and `--name`. Width defaults to
-the smaller of the original image width and artboard width. Keep each moving
+`new --image` accepts images measuring 64–4096 pixels on each axis. It embeds
+the image without cropping or scaling, uses an identity transform and preserves
+its transparency. Image generation happens separately with the authorized
+image tool. `--demo` and `--image` cannot be combined.
+
+Set the actual source policy with a `set-policy` patch, then add sources, facts
+and cues with exact references. A new project defaults to `TECHNICAL_DEMO`;
+importing an image does not establish that it is a nonmedical demonstration.
+For hotspots over the finished picture, add `rect` nodes with `visible: true`,
+`fill: "none"`, `stroke: "none"` and linked `factIds`. Their bounds become
+symbol regions; use their IDs in cue `layerIds`. These regions add no painted
+artwork and do not split the image into separate objects.
+
+For optional extra artwork, `add-image` accepts `--x`, `--y`, `--width` and
+`--name`. Its default element sizing fits within 55% of the canvas width and
+65% of its height without enlarging the source. Keep each independently moving
 object at the top level; static details can be grouped with it. Layer export
 rejects interleaved backgrounds and nested animation that would be lost when a
 group is rasterized. Backgrounds must be static and below all elements.
@@ -107,19 +127,25 @@ package using the existing Kotlin validator. The packager uses measured segment
 boundaries from that ledger; Studio draft cue times do not override them.
 
 The handoff deliberately starts with both review flags false. It is **not** an
-Android ZIP. Version 0.3 adds a [schema-2 bridge](../docs/LESSON_PACKAGE_V2.md)
-for measured layer exports and explicitly labeled `EXTERNAL_REVIEW` packages.
-Schema 1 remains a single-image format. Use stable `--id` values with `new` and
-`add-image`, and `handoff --part-id <id>` matching the CPU generation plan.
+Android ZIP. The measured production bridge packages one Studio scene as one
+lesson. By default it uses only `images/scene.png`, including for explicitly
+labeled `EXTERNAL_REVIEW` lessons under [schema 2](../docs/LESSON_PACKAGE_V2.md).
+Schema 1 remains supported for compatible single-image lessons. Use stable
+`--id` values with `new` and `add-image`, and `handoff --part-id <id>` matching
+the CPU generation plan.
 Source `externalUrl` attribution survives export. Patch actual segment start/end
 times after attaching WAVs; `cameraDurationMs: 1400` can settle a camera move
 while its longer caption remains visible. The bridge rejects guessed timing.
 
 ```sh
-node studio/agent.mjs layers --project /private/measured.sketcy-studio.json --out-dir /private/layers
-node studio/agent.mjs handoff --project /private/measured.sketcy-studio.json --part-id part-01 --out-dir /private/handoff
-python3 tools/production/studio_package.py --handoff /private/handoff --layers /private/layers --generation /private/breeze-run --output /private/lesson-demo.zip
+node studio/agent.mjs handoff --project /private/measured.sketcy-studio.json --part-id part-01 --out-dir /private/production
+python3 tools/production/studio_package.py --handoff /private/production --generation /private/generation --output /private/lesson.zip
 ```
+
+The single image supports camera movement, captions and source-linked symbol
+highlights. Independent object motion requires the optional `layers` export
+and `studio_package.py --layers /private/layers`; the bridge then verifies the
+exported images and supplies the schema-2 scene layers.
 
 ## Verification
 

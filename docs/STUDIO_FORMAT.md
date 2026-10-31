@@ -40,6 +40,19 @@ Large text/source inventories still need sensible per-part splitting. Import
 validates the schema before replacing the current document, then decodes actual
 images/WAVs and verifies their reported dimensions/duration.
 
+The default `new --image` workflow creates one scene for one lesson from a
+complete PNG/JPEG/WebP. The canvas matches the decoded image's original
+dimensions (64–4096 per axis), `background` is `none`, and one locked image node
+has `role: "background"` and the identity matrix `[1,0,0,1,0,0]`. The original
+image bytes and transparency are retained in one embedded asset. Source policy,
+facts and narration still need explicit authoring.
+
+Symbol hotspots over this picture can be `rect` nodes with `visible: true`,
+`fill: "none"`, `stroke: "none"` and linked `factIds`. Their transformed bounds
+become normalized symbol regions in the handoff, while the rendered picture
+stays unchanged. Cue `layerIds` refer to these node IDs. Setting `visible: false`
+would omit a hotspot from symbol export.
+
 ## Timing
 
 A track has `durationMs`, nullable `audioAssetId`, and ordered, non-overlapping
@@ -89,8 +102,10 @@ it cannot change identity or node type. Inspect `agent.mjs` for the whitelist.
 
 ## Raster layer set: `sketcy.layer-assets.v1`
 
-`layers` writes one full-size `background.png` plus one transparent PNG for
-each visible top-level element, ordered back to front. The background contains
+This optional format is used for independent object motion; the default
+complete-image lesson needs no layer export. `layers` writes one full-size
+`background.png` plus one transparent PNG for each visible top-level element,
+ordered back to front. The background contains
 the artboard fill and static background layers. Transparent crops use actual
 browser glyph bounds plus conservative stroke padding, aligned to integer pixel
 coordinates. The manifest records canvas size, background hash and each
@@ -103,7 +118,8 @@ Background layers must precede all elements. Nested animated children and
 animated backgrounds are rejected before export: move each independent animated
 object to the top level. Static groups become one raster layer. The project
 remains the full editable source of truth. `androidV1IndependentMotion: false`
-explicitly records that this layer manifest is not currently an Android package.
+explicitly records that this layer manifest itself is not an Android package.
+The schema-2 production bridge supplies Android scene metadata from it.
 
 ## Production draft: `sketcy.studio-handoff.v1`
 
@@ -116,9 +132,10 @@ ledger. No complete ZIP is produced at this stage.
 
 Production must supply measured Breeze generation, human listening/source
 reviews, and final package validation. The packager derives timing from measured
-segments, not `timingDraft`. A later versioned Android contract is required to
-play independent element motion. Do not relabel `EXTERNAL_REVIEW` medical drafts
-as `TECHNICAL_DEMO` or `USER_SOURCE` to get them through the current importer.
+segments, not unmeasured `timingDraft` guesses. The measured bridge requires
+Studio cue boundaries to match those segments and preserves the authored camera
+targets. Do not relabel `EXTERNAL_REVIEW` medical drafts as `TECHNICAL_DEMO` or
+`USER_SOURCE` to get them through an older importer.
 
 ## Measured production additions — 31 October 2026
 
@@ -129,7 +146,14 @@ and review flags are never promoted. A cue can set `cameraDurationMs` between
 1 and its interval length, allowing the camera to settle while the caption
 continues. Legacy cues without it retain their previous interpolation behavior.
 
-Use the schema-2 production bridge for independent layer playback. The layer
+The measured production bridge accepts `--handoff`, `--generation` and
+`--output` for the default complete-image path. It packages one scene as one
+lesson using only `images/scene.png`, with no `scene` layer object. External
+review lessons retain schema 2 and source attribution; compatible other lessons
+retain schema 1. Both narration modes, source/fact links, camera cues and false
+review flags remain intact.
+
+Add `--layers` for optional schema-2 independent layer playback. The layer
 export format still uses pixels and normalized pivots; the bridge converts
 translations/placement into complete-scene fractions and verifies image hashes.
 Measured WAV attachment alone still leaves cue rescaling as draft timing.

@@ -1,5 +1,30 @@
 # Verification — Android 0.3, measured Studio bridge and historical checks
 
+## One complete image per lesson — 31 October 2026
+
+The default authoring instructions now request one image-generation call for a
+complete scene. `new --image` imports that scene in one command, and the measured
+Studio packaging bridge no longer requires a transparent layer export.
+
+| Check | Observed result |
+| --- | --- |
+| Studio core/CLI | 48 passed; includes conflicting-image/demo rejection and output protection before image decoding |
+| Chromium | 16 passed; a non-16:9 image retains its exact dimensions, identity transform, transparency and pixels through import, fact-hotspot edits and handoff |
+| Production | 15 passed; single-image CLI path, original schema/source/review flags, measured camera timing, and rejection of changed scripts, durations and boundaries |
+| Formatting | Studio Prettier check and `git diff --check` passed |
+
+The browser regression exports one lesson part and verifies normalized symbol
+regions and both tracks' hotspot links without painting over the original image.
+Existing independent-layer export/recomposition and deterministic frame checks
+also pass. Local tools: Node 24.19.0, Python 3.12.14, Playwright 1.56.1 and Chromium
+build 1194. Test artwork is an original neutral browser canvas fixture.
+
+No actual lesson image, Breeze narration, lesson delivery ZIP or APK was
+regenerated in this change. Production checks exercise the bridge using test
+fixtures; they do not establish a new real-media generation or listening pass.
+Android code is unchanged; Android builds and device tests were not repeated.
+The previous acceptance limits below remain open.
+
 ## Android 0.3 / two-example engineering checks — 31 October 2026
 
 | Check | Observed result |

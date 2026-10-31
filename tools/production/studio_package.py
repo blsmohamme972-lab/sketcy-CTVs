@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Bridge a measured Studio handoff and transparent layer export to schema-2 Android.
+"""Bridge a measured Studio handoff to an Android lesson with one complete image.
+
+An optional transparent layer export retains independent object motion in schema 2.
 
 No synthesis, resampling, invented duration, or review approval happens here.
 Use the existing CPU generation ledger, then the shared JVM archive validator.
@@ -31,11 +33,11 @@ def png_file(folder, name, checksum):
 
 
 def prepare(handoff_folder, layer_folder, generation):
+    """Use the complete scene PNG when layer_folder is None."""
     handoff = strict_json(handoff_folder / "studio-handoff.json")
-    exported = strict_json(layer_folder / "layers.layer-assets.json")
     ledger = strict_json(generation / "generation.json")
-    if handoff["schema"] != "sketcy.studio-handoff.v1" or exported["schema"] != "sketcy.layer-assets.v1":
-        raise ValueError("Unsupported Studio handoff or layer export")
+    if handoff["schema"] != "sketcy.studio-handoff.v1":
+        raise ValueError("Unsupported Studio handoff")
     manifest = copy.deepcopy(handoff["lesson"])
     if len(manifest["parts"]) != 1 or len(handoff["narrationPlan"]["parts"]) != 1:
         raise ValueError("Export one Studio scene per package")
@@ -62,6 +64,14 @@ def prepare(handoff_folder, layer_folder, generation):
             "endMs": cue["startMs"] + cue.get("cameraDurationMs", cue["endMs"] - cue["startMs"]),
             "target": cue.get("camera") or {"x": 0, "y": 0, "width": 1, "height": 1},
             "easing": cue.get("easing", "EASE_IN_OUT")} for cue in timing["cues"]]
+    images = {part["illustrationPath"]: str((handoff_folder / "images/scene.png").resolve())}
+    authored = {"lesson": manifest, "imageFiles": images, "cameraCues": {part_id: camera_cues}}
+    if layer_folder is None:
+        part.pop("scene", None)
+        return authored
+    exported = strict_json(layer_folder / "layers.layer-assets.json")
+    if exported["schema"] != "sketcy.layer-assets.v1":
+        raise ValueError("Unsupported Studio layer export")
     width, height = exported["canvas"]["width"], exported["canvas"]["height"]
     if not (isinstance(width, int) and isinstance(height, int) and 64 <= width <= 4096 and 64 <= height <= 4096):
         raise ValueError("Invalid scene canvas")
@@ -69,8 +79,7 @@ def prepare(handoff_folder, layer_folder, generation):
     if size != (width, height):
         raise ValueError("Background size differs from scene")
     scene = {"width": width, "height": height, "backgroundPath": "images/background.png", "layers": []}
-    images = {part["illustrationPath"]: str((handoff_folder / "images/scene.png").resolve()),
-              scene["backgroundPath"]: str(background)}
+    images[scene["backgroundPath"]] = str(background)
     symbols = {s["id"]: s for s in manifest["symbols"]}
     for index, layer in enumerate(exported["layers"]):
         if layer["z"] != index:
@@ -92,13 +101,13 @@ def prepare(handoff_folder, layer_folder, generation):
     manifest["schemaVersion"] = 2
     part["scene"] = scene
     # Copy all flags unchanged. USER_SOURCE still needs recorded human approval.
-    return {"lesson": manifest, "imageFiles": images, "cameraCues": {part_id: camera_cues}}
+    return authored
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--handoff", type=Path, required=True)
-    parser.add_argument("--layers", type=Path, required=True)
+    parser.add_argument("--layers", type=Path, help="Optional transparent layer export for independent object motion")
     parser.add_argument("--generation", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -106,7 +115,7 @@ def main():
     if output.is_relative_to(ROOT):
         parser.error("Keep generated lesson packages outside Git")
     output.parent.mkdir(parents=True, exist_ok=True)
-    authored = prepare(args.handoff.resolve(), args.layers.resolve(), args.generation.resolve())
+    authored = prepare(args.handoff.resolve(), args.layers.resolve() if args.layers else None, args.generation.resolve())
     with tempfile.TemporaryDirectory(prefix="sketcy-studio-package-", dir=output.parent) as work:
         authoring = Path(work) / "authoring.json"
         authoring.write_text(json.dumps(authored, indent=2) + "\n")
