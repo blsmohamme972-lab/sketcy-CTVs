@@ -5,6 +5,16 @@ explicit direction. Never add it to student navigation, require a student to
 operate it, or put authoring dependencies in the APK. Work alone and use English
 unless the user changes those instructions.
 
+## Available learner-selected book
+
+The user explicitly authorized the Oxford Cardiothoracic Surgery PDFs in
+`Cardiothoracic_Surgery_Chapters/` as a source when needed. Use that folder's
+README to select the chapter. For lessons based on this book, use `USER_SOURCE`,
+hash the original selected PDF, and preserve exact chapter/page locators and
+quotes. Verify bibliographic details from the PDF. The stored PDFs are an
+explicit source-file exception; do not remove them under the general private
+output rule. Source availability does not grant source/listening review approval.
+
 ## Read and preserve
 
 Read the repository HANDOFF, README and PLAN, then `studio/README.md`,
@@ -52,8 +62,9 @@ work without routine permission stops.
    `studio_package.py --handoff … --generation … --output …`; no layer export
    is required. One scene becomes one lesson package. A `.sketcy-studio.json`
    or handoff JSON is never a lesson ZIP.
-8. Preserve project/media/source files privately. Commit only code, original
-   neutral examples, tests and documentation. Update HANDOFF/README/VERIFICATION
+8. Preserve new project/media/source extracts privately. Commit code, original
+   neutral examples, tests and documentation; retain the explicitly authorized
+   Oxford chapter PDFs already stored in `Cardiothoracic_Surgery_Chapters/`. Update HANDOFF/README/VERIFICATION
    and verify the saved GitHub commit. Record incomplete acceptance honestly.
 
 Separate transparent objects and `layers` export remain optional for a specific
@@ -73,7 +84,8 @@ flattened picture contains independently editable or moving objects.
 - External-source cardiac demonstrations use the explicit schema-2 review policy
   and preview app. Keep review flags false until reviewed. Do not remove
   source-origin validation or mislabel these as v1 nonmedical demos.
-- Keep model weights, generated media, user PDFs/text and credentials out of Git.
+- Keep model weights, generated media, other user PDFs/text and credentials out
+  of Git. The user-authorized Oxford chapter folder is the explicit exception.
   CLI output guards include parent symlink resolution; do not disable them for
   convenience. Browser downloads also belong outside the checkout.
 

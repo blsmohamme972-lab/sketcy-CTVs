@@ -58,7 +58,7 @@ implementation does not by itself constitute device or medical acceptance.
 final software-emulator APK installation timed out after 600 seconds, so none of
 the four compiled instrumented tests ran. No physical-device pass is claimed.
 
-No medical PDF/text has been supplied. The separately delivered **Lantern Library**
+At the historical 0.2 checkpoint, no medical PDF/text had been supplied. The separately delivered **Lantern Library**
 package is an original nonmedical technical demo, with actual Breeze TTS 2 CPU
 narration and original artwork. It is not the requested medical pilot. Human
 listening review and physical-device acceptance are still required.
@@ -73,6 +73,17 @@ total, with peak process memory 4.23 GiB; voice encoding is measured separately.
 These runs overlapped other authoring work, so they are not isolated performance
 benchmarks. The delivered APK is 13,408,761 bytes and contains no narration or
 model weights; import the separate validated ZIP to play the demonstration.
+
+## Available book source
+
+The user authorized the **Oxford Cardiothoracic Surgery** chapter PDFs in
+[Cardiothoracic_Surgery_Chapters](Cardiothoracic_Surgery_Chapters/README.md) as
+source material when needed. All 17 chapter files are available in this repo;
+no new lesson production is requested by making the source available. When
+using the book, preserve exact chapter/page references, source quotes and the
+original PDF hash. Verify bibliographic details from the selected PDF. Existing
+source-coverage and listening review requirements still apply. Earlier notes
+about having no learner-selected medical source describe historical checkpoints.
 
 ## Included
 
@@ -100,7 +111,8 @@ model weights; import the separate validated ZIP to play the demonstration.
   layers, portable project files, two-track previews, deterministic object
   keyframes and production handoff exports.
 - Pinned GitHub Actions build/test/lint automation producing an installable debug
-  APK. No models, generated media, user PDFs or credentials are stored in Git.
+  APK. Model weights, generated media and credentials stay outside Git. The
+  explicitly authorized Oxford chapter PDFs are the source-file exception.
 
 ## Internal illustration and composition
 

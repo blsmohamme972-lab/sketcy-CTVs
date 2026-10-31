@@ -1,5 +1,21 @@
 # Worker handoff — one complete image per lesson
 
+## Available book source — 31 October 2026
+
+The user explicitly authorized merging all 17 Oxford Cardiothoracic Surgery
+chapter PDFs and using the book as a source when needed. The files are in
+`Cardiothoracic_Surgery_Chapters/`; see its README for the chapter index. This is
+the explicit exception to the usual rule keeping source PDFs outside Git.
+Earlier statements that no learner-selected medical source has been supplied
+are historical and no longer describe source availability.
+
+When authoring from this learner-selected book, use `USER_SOURCE`, hash the
+original selected PDF, and retain exact chapter/page locators and source quotes.
+Confirm title/edition from the file rather than guessing from filenames.
+Availability does not attest to medical coverage or listening quality; retain
+the existing review requirements. This merge does not itself produce new lessons.
+The current one-complete-image-per-lesson workflow remains the authoring default.
+
 ## Current authoring direction — 31 October 2026
 
 The user explicitly requested and confirmed **one complete image generated at
@@ -7,7 +23,8 @@ once for each lesson**. This supersedes the earlier default requiring a generate
 background and separately generated transparent objects. Make the whole scene
 in one image-generation call, inspect it, then use `studio/agent.mjs new --image`
 to import it as a full-canvas image. The CLI imports real artwork; it does not
-invoke image generation. Generated media and source material stay outside Git.
+invoke image generation. Generated media and new source extracts stay outside
+Git; the explicitly authorized Oxford chapter PDFs above are preserved in Git.
 
 `new --image` preserves the decoded dimensions and transparency, with one locked
 image at its original position and scale. Fact-linked, unpainted rectangles can
