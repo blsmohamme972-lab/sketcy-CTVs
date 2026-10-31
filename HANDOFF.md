@@ -1,6 +1,51 @@
-# Worker handoff — two Studio-authored cardiac examples delivered
+# Worker handoff — one complete image per lesson
 
-## Current checkpoint — 31 October 2026
+## Available book source — 31 October 2026
+
+The user explicitly authorized merging all 17 Oxford Cardiothoracic Surgery
+chapter PDFs and using the book as a source when needed. The files are in
+`Cardiothoracic_Surgery_Chapters/`; see its README for the chapter index. This is
+the explicit exception to the usual rule keeping source PDFs outside Git.
+Earlier statements that no learner-selected medical source has been supplied
+are historical and no longer describe source availability.
+
+When authoring from this learner-selected book, use `USER_SOURCE`, hash the
+original selected PDF, and retain exact chapter/page locators and source quotes.
+Confirm title/edition from the file rather than guessing from filenames.
+Availability does not attest to medical coverage or listening quality; retain
+the existing review requirements. This merge does not itself produce new lessons.
+The current one-complete-image-per-lesson workflow remains the authoring default.
+
+## Current authoring direction — 31 October 2026
+
+The user explicitly requested and confirmed **one complete image generated at
+once for each lesson**. This supersedes the earlier default requiring a generated
+background and separately generated transparent objects. Make the whole scene
+in one image-generation call, inspect it, then use `studio/agent.mjs new --image`
+to import it as a full-canvas image. The CLI imports real artwork; it does not
+invoke image generation. Generated media and new source extracts stay outside
+Git; the explicitly authorized Oxford chapter PDFs above are preserved in Git.
+
+`new --image` preserves the decoded dimensions and transparency, with one locked
+image at its original position and scale. Fact-linked, unpainted rectangles can
+define symbol hotspots over the complete scene. Keep them visible with `fill`
+and `stroke` set to `none` so they are included in the handoff. Camera movement,
+captions and the two distinct narration modes continue to work over one image.
+
+`tools/production/studio_package.py` now packages the measured handoff without
+`--layers`, producing one complete illustration in one lesson part. Script,
+fact-link, measured-duration and segment-boundary checks remain required.
+External sources retain schema 2 and `EXTERNAL_REVIEW`; review flags are never
+promoted. Optional `--layers` preserves the existing independent-object path.
+See [Studio](studio/README.md), [production](tools/production/README.md) and the
+[verification record](docs/VERIFICATION.md).
+
+This change updates the authoring software and instructions. It does not
+regenerate the two privately delivered lessons, their narration or the APK.
+The historical delivery and open listening/source/device acceptance below are
+preserved. Do not request source files just to change this workflow.
+
+## Previous two-lesson delivery — 31 October 2026
 
 The latest request, **two example lessons using the updated internal Studio**, is
 complete as a demonstration delivery. Work alone, use English and keep Studio off

@@ -1,5 +1,16 @@
 # Sketcy CTVS — Project Plan
 
+## Current authoring direction — one image per lesson
+
+The user's latest confirmed requirement is one complete image generated at once
+for each lesson. Generate the background, characters and props together in one
+call, then import the result with Studio's `new --image` command. Add source-linked
+hotspots and the two narration tracks over that image. The measured packaging
+bridge takes one scene per lesson without a required layer export. Separate
+transparent objects remain available when independent movement is requested.
+This replaces the earlier default of generating the background and every object
+in separate stages; it does not change source, narration or review requirements.
+
 ## Current scoped delivery — two layered examples completed
 
 The CABG and surgical aortic valve replacement examples have been authored in

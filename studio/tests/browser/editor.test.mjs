@@ -4,7 +4,7 @@ import { chromium } from "playwright";
 import { spawn, execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createHash } from "node:crypto";
-import { readFile, mkdir, mkdtemp, rm } from "node:fs/promises";
+import { readFile, writeFile, mkdir, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -459,6 +459,160 @@ async function agent(...args) {
 }
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const asPng = (bytes) => "data:image/png;base64," + bytes.toString("base64");
+
+test(
+  "one complete image retains its pixels and fact hotspots through the lesson handoff",
+  { timeout: 60000 },
+  async () =>
+    withPage(async (page) => {
+      // Original neutral fixture, with transparent margins and a non-16:9 canvas.
+      const data = await page.evaluate(() => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 193;
+        canvas.height = 129;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#447755";
+        ctx.fillRect(11, 13, 100, 80);
+        ctx.fillStyle = "#eeaa33";
+        ctx.fillRect(150, 100, 43, 29);
+        return canvas.toDataURL("image/png");
+      });
+      const image = resolve(temp, "complete-scene.png"),
+        input = resolve(temp, "single-image.json"),
+        ops = resolve(temp, "hotspots.json"),
+        patched = resolve(temp, "single-image-linked.json"),
+        dir = resolve(temp, "single-image-handoff");
+      await writeFile(image, Buffer.from(data.split(",")[1], "base64"));
+      const created = await agent(
+        "new",
+        "--image",
+        image,
+        "--title",
+        "One scene",
+        "--id",
+        "one-scene",
+        "--out",
+        input,
+      );
+      const p = JSON.parse(await readFile(input, "utf8"));
+      assert.deepEqual([p.width, p.height], [193, 129]);
+      assert.equal(p.background, "none");
+      assert.equal(p.nodes.length, 1);
+      assert.equal(Object.keys(p.assets).length, 1);
+      assert.deepEqual(p.nodes[0].matrix, [1, 0, 0, 1, 0, 0]);
+      assert.equal(p.nodes[0].role, "background");
+      assert.equal(p.nodes[0].locked, true);
+      assert.equal(created.hasTransparency, true);
+      assert.equal(p.assets[created.assetId].data, data);
+      const text = "The green rectangle is beside the amber rectangle.";
+      const track = (mode) => ({
+        durationMs: 90000,
+        audioAssetId: null,
+        cues: [
+          {
+            id: mode + "-cue",
+            startMs: 0,
+            endMs: 90000,
+            text,
+            factIds: ["green-fact"],
+            layerIds: ["green-hotspot"],
+            camera: { x: 0, y: 0, width: 1, height: 1 },
+            easing: "EASE_IN_OUT",
+          },
+        ],
+      });
+      await writeFile(
+        ops,
+        JSON.stringify([
+          {
+            op: "add-source",
+            source: {
+              id: "original",
+              title: "Original neutral fixture",
+              sha256: sha256(text),
+              userProvided: false,
+              excerpts: { scene: text },
+            },
+          },
+          {
+            op: "add-fact",
+            fact: {
+              id: "green-fact",
+              text,
+              sources: [
+                { sourceId: "original", locator: "scene", quote: text },
+              ],
+            },
+          },
+          {
+            op: "add-layer",
+            layer: {
+              id: "green-hotspot",
+              type: "rect",
+              name: "Green rectangle",
+              width: 100,
+              height: 80,
+              matrix: [1, 0, 0, 1, 11, 13],
+              visible: true,
+              fill: "none",
+              stroke: "none",
+              factIds: ["green-fact"],
+            },
+          },
+          ...["explanation", "story"].map((mode) => ({
+            op: "set-track",
+            mode,
+            track: track(mode),
+          })),
+        ]),
+      );
+      await agent("patch", "--project", input, "--ops", ops, "--out", patched);
+      await agent("handoff", "--project", patched, "--out-dir", dir);
+      const draft = JSON.parse(
+        await readFile(resolve(dir, "studio-handoff.json"), "utf8"),
+      );
+      assert.equal(draft.lesson.parts.length, 1);
+      assert.equal(draft.lesson.symbols.length, 1);
+      assert.deepEqual(draft.lesson.symbols[0].region, {
+        x: 11 / 193,
+        y: 13 / 129,
+        width: 100 / 193,
+        height: 80 / 129,
+      });
+      for (const mode of ["explanation", "story"])
+        assert.deepEqual(
+          draft.narrationPlan.parts[0].tracks[mode][0].symbolIds,
+          ["green-hotspot"],
+        );
+      assert.equal(draft.lesson.quality.audioReviewed, false);
+      assert.equal(draft.lesson.quality.sourceCoverageReviewed, false);
+      const difference = await page.evaluate(
+        async ({ original, rendered }) => {
+          const pixels = async (src) => {
+            const image = new Image();
+            image.src = src;
+            await image.decode();
+            const canvas = document.createElement("canvas");
+            canvas.width = image.naturalWidth;
+            canvas.height = image.naturalHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0);
+            return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+          };
+          const a = await pixels(original),
+            b = await pixels(rendered);
+          return a.length === b.length
+            ? a.reduce((n, value, i) => n + (value !== b[i]), 0)
+            : -1;
+        },
+        {
+          original: data,
+          rendered: asPng(await readFile(resolve(dir, "images/scene.png"))),
+        },
+      );
+      assert.equal(difference, 0);
+    }),
+);
 
 test(
   "agent exports real transparent layers that recompose at the saved pixel coordinates",

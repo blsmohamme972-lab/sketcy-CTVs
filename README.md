@@ -5,7 +5,15 @@ PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
 (API 26). Imports, playback and spaced review use local files and on-device
 storage. No account, server, analytics or Internet permission is required.
 
-**Current checkpoint: two complete Studio-authored demonstration packages.**
+**Current authoring flow: one complete image per lesson.** Generate the whole
+scene in one image-generation call, with its background, characters and props
+together. Import it with `node studio/agent.mjs new --image /private/lesson.png
+--title "Lesson" --out /private/lesson.sketcy-studio.json`. Studio keeps the
+original canvas and supports fact hotspots, captions and camera movement over
+that image. The measured production bridge packages one scene as one lesson
+without requiring a layer export. See [the single-image workflow](studio/README.md).
+
+**Previous media delivery: two complete Studio-authored demonstration packages.**
 The assistant uses Studio to make lessons; the student app has no authoring UI.
 Schema 2 adds independent transparent objects, gentle per-track motion and
 explicit externally sourced review demonstrations. Camera, captions, highlights
@@ -50,7 +58,7 @@ implementation does not by itself constitute device or medical acceptance.
 final software-emulator APK installation timed out after 600 seconds, so none of
 the four compiled instrumented tests ran. No physical-device pass is claimed.
 
-No medical PDF/text has been supplied. The separately delivered **Lantern Library**
+At the historical 0.2 checkpoint, no medical PDF/text had been supplied. The separately delivered **Lantern Library**
 package is an original nonmedical technical demo, with actual Breeze TTS 2 CPU
 narration and original artwork. It is not the requested medical pilot. Human
 listening review and physical-device acceptance are still required.
@@ -65,6 +73,17 @@ total, with peak process memory 4.23 GiB; voice encoding is measured separately.
 These runs overlapped other authoring work, so they are not isolated performance
 benchmarks. The delivered APK is 13,408,761 bytes and contains no narration or
 model weights; import the separate validated ZIP to play the demonstration.
+
+## Available book source
+
+The user authorized the **Oxford Cardiothoracic Surgery** chapter PDFs in
+[Cardiothoracic_Surgery_Chapters](Cardiothoracic_Surgery_Chapters/README.md) as
+source material when needed. All 17 chapter files are available in this repo;
+no new lesson production is requested by making the source available. When
+using the book, preserve exact chapter/page references, source quotes and the
+original PDF hash. Verify bibliographic details from the selected PDF. Existing
+source-coverage and listening review requirements still apply. Earlier notes
+about having no learner-selected medical source describe historical checkpoints.
 
 ## Included
 
@@ -92,7 +111,8 @@ model weights; import the separate validated ZIP to play the demonstration.
   layers, portable project files, two-track previews, deterministic object
   keyframes and production handoff exports.
 - Pinned GitHub Actions build/test/lint automation producing an installable debug
-  APK. No models, generated media, user PDFs or credentials are stored in Git.
+  APK. Model weights, generated media and credentials stay outside Git. The
+  explicitly authorized Oxford chapter PDFs are the source-file exception.
 
 ## Internal illustration and composition
 
@@ -112,9 +132,10 @@ external authoring steps, with their real outputs imported into Studio.
 The production export retains exact source references and false review flags,
 writes a real scene PNG, and supplies separate explanation/story script inputs.
 It is a draft handoff, not an Android lesson ZIP. The measured production bridge
-combines that handoff, Studio's PNG layer export and the verified Breeze ledger
-into an Android schema-2 ZIP. The two delivered examples use this complete path.
-Schema 1 remains supported for older flattened illustrations.
+combines that handoff and the verified Breeze ledger into a single-image lesson
+ZIP. A PNG layer export is optional for independently moving objects; the two
+previously delivered examples use that layered path. Schema 1 remains supported,
+and external-review lessons retain schema 2 with either artwork format.
 
 Start with [agent instructions](studio/AGENTS.md),
 [drawing rules](docs/ART_DIRECTION.md), and [format details](docs/STUDIO_FORMAT.md).
