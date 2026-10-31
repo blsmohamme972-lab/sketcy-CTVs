@@ -5,7 +5,15 @@ PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
 (API 26). Imports, playback and spaced review use local files and on-device
 storage. No account, server, analytics or Internet permission is required.
 
-**Current checkpoint: two complete Studio-authored demonstration packages.**
+**Current authoring flow: one complete image per lesson.** Generate the whole
+scene in one image-generation call, with its background, characters and props
+together. Import it with `node studio/agent.mjs new --image /private/lesson.png
+--title "Lesson" --out /private/lesson.sketcy-studio.json`. Studio keeps the
+original canvas and supports fact hotspots, captions and camera movement over
+that image. The measured production bridge packages one scene as one lesson
+without requiring a layer export. See [the single-image workflow](studio/README.md).
+
+**Previous media delivery: two complete Studio-authored demonstration packages.**
 The assistant uses Studio to make lessons; the student app has no authoring UI.
 Schema 2 adds independent transparent objects, gentle per-track motion and
 explicit externally sourced review demonstrations. Camera, captions, highlights
@@ -112,9 +120,10 @@ external authoring steps, with their real outputs imported into Studio.
 The production export retains exact source references and false review flags,
 writes a real scene PNG, and supplies separate explanation/story script inputs.
 It is a draft handoff, not an Android lesson ZIP. The measured production bridge
-combines that handoff, Studio's PNG layer export and the verified Breeze ledger
-into an Android schema-2 ZIP. The two delivered examples use this complete path.
-Schema 1 remains supported for older flattened illustrations.
+combines that handoff and the verified Breeze ledger into a single-image lesson
+ZIP. A PNG layer export is optional for independently moving objects; the two
+previously delivered examples use that layered path. Schema 1 remains supported,
+and external-review lessons retain schema 2 with either artwork format.
 
 Start with [agent instructions](studio/AGENTS.md),
 [drawing rules](docs/ART_DIRECTION.md), and [format details](docs/STUDIO_FORMAT.md).

@@ -53,6 +53,25 @@ test("agent refuses to put generated projects inside the repository", () => {
   assert.match(result.stderr, /outside the Git repository/);
   assert.equal(existsSync(out), false);
 });
+test("single-image creation rejects a conflicting demo and preflights output", () =>
+  fixture((dir) => {
+    const path = resolve(dir, "scene.json");
+    const conflict = cli(
+      "new",
+      "--image",
+      "unused.png",
+      "--demo",
+      "--out",
+      path,
+    );
+    assert.equal(conflict.status, 1);
+    assert.match(conflict.stderr, /either --image or --demo/);
+    assert.equal(existsSync(path), false);
+    writeFileSync(path, "existing project");
+    const overwrite = cli("new", "--image", "unused.png", "--out", path);
+    assert.match(overwrite.stderr, /Output exists/);
+    assert.equal(readFileSync(path, "utf8"), "existing project");
+  }));
 test("agent protects existing output unless force is explicit", () =>
   fixture((dir) => {
     const path = resolve(dir, "scene.json");
