@@ -1,52 +1,84 @@
-# Worker handoff — Android 0.3 layered demonstration checkpoint
+# Worker handoff — two Studio-authored cardiac examples delivered
 
-## Current work — two Studio-authored cardiac examples, 31 October 2026
+## Current checkpoint — 31 October 2026
 
-The latest user request is **two example lessons using the updated internal Studio**.
-Work alone, use English, and keep Studio off the student side. The selected topics
-are CABG (The Bypass Mountain) and surgical aortic valve replacement (The Gatekeeper
-Courtyard). Public medical sources are authorized for these demonstrations only.
+The latest request, **two example lessons using the updated internal Studio**, is
+complete as a demonstration delivery. Work alone, use English and keep Studio off
+the student side. Stop here for the user's review; the other eight proposed
+demonstrations have not been produced as finished lessons.
 
-The engineering bridge is implemented: schema 2 has independent transparent PNG
-layers, pivots and per-track keyframes, sampled directly from Media3 position.
-The still-scene setting disables both camera and object motion. Explicit
-`EXTERNAL_REVIEW` packages retain HTTPS source URLs and false human-review flags;
-the app labels them in the library, lesson, player, explorer and review screens.
-`USER_SOURCE` still requires user-provided material and named source/listening
-approval. Schema 1 remains readable. See [schema 2](docs/LESSON_PACKAGE_V2.md).
+| Lesson | Explanation | Story | Independent objects | Facts |
+| --- | ---: | ---: | ---: | ---: |
+| CABG — The Bypass Mountain | 107.20 s | 106.80 s | 7 | 6 |
+| Surgical aortic valve replacement — The Gatekeeper Courtyard | 111.84 s | 107.92 s | 6 | 6 |
 
-`tools/production/studio_package.py` bridges Studio's real PNG layer export and
-handoff to the existing measured CPU packager. It rejects script/fact-link drift,
-guessed segment timings, changed image hashes, placement mismatches and unsafe
-layer paths. It never grants review approval. Studio CLI accepts stable `--id`
-values for `new`/`add-image`, and `--part-id` for `handoff`.
 
-The separate `demoPreview` build installs as **Sketcy Preview**, package
-`com.sketcy.ctvs.preview`, alongside the existing app. It needs Android 8+ and
-supports these schema-2 lesson ZIPs. Do not send a v2 ZIP to the older 0.2 importer.
-The normal application identity is unchanged; the preview has its own library.
+Both schema-2 ZIPs contain actual pinned Breeze TTS 2 Q8_0 CPU narration, separate
+backgrounds and transparent object PNGs, measured captions/camera cues, per-track
+object motion, linked sources and review questions. Every track is 60–240 seconds
+at normal speed. There is no placeholder audio, silence padding, time stretching,
+GPU synthesis or alternate TTS. The same synthetic voice is used throughout.
 
-Observed engineering checks: 44 JVM tests, 47 Studio core/CLI tests, 15 Chromium
-checks, 12 Breeze tooling tests and 11 production tests passed. Debug, preview and
-instrumented-test APKs compiled; Android lint reported zero errors and 14 warnings.
-APK v2 signature, alignment, package ID and minSdk were checked. **No Android
-emulator/device test ran in this work**; this environment has no `/dev/kvm`.
+The user authorized public medical sources for these testing examples. Both use
+the explicit `EXTERNAL_REVIEW` policy and official NHS/NHLBI references. Each
+selects six introductory facts; neither claims complete coverage of its source
+articles. Source and listening approval flags remain false. `USER_SOURCE` still
+requires learner-supplied material, named human source and listening approval.
 
-The two original compositions exist with seven CABG objects and six valve objects,
-each independently transparent, plus separate backgrounds. The pinned Breeze CPU
-run is producing the four distinct tracks. Complete the delivery ledger below
-before claiming both import packages are saved. The CABG explanation already
-measures 107.20 seconds; all human listening and clinical acceptance remain open.
-Models, media, authoring projects and downloaded sources are outside Git.
+### Delivered files
 
-### Immediate completion work
+- `Sketcy-Preview-0.3.0.apk` — separate `com.sketcy.ctvs.preview` app, Android 8+.
+- `01-CABG-Bypass-Mountain.zip` and `02-Aortic-Valve-Gatekeepers.zip` — import these
+  separately through **Sketcy Preview → Library → Import**, without extracting.
+- `Two-Cardiac-Lessons-Review-Guide.pdf` — four illustrated pages, twelve facts
+  and six official source links.
+- `Two-Lesson-Studio-Projects.zip` — two portable projects with embedded original
+  image/audio assets, scripts, measured cues, source records and execution evidence.
+- Two full scene PNG previews, `START-HERE.txt` and `SHA256SUMS.txt`.
 
-Finish the same pinned CPU run; align Studio cues and object keys to actual
-segment boundaries; export and validate both v2 ZIPs with the app's JVM parser;
-inspect recomposition and representative moving/still frames; save the APK,
-lesson files and editable project bundle; record hashes/durations/resource use
-and saved-file identities in README/VERIFICATION; verify GitHub and stop after
-the two requested examples. Do not expand to the other eight demonstrations.
+These were supplied separately from Git. Recover the named delivered project
+bundle to revise artwork; the repository deliberately contains no model weights,
+generated images/audio, full source downloads, personal documents or credentials.
+The authoring bundle is not an Android import ZIP. The previous 0.2 importer
+cannot read schema 2. Sketcy Preview installs alongside it and has its own library.
+
+### Implementation and evidence
+
+Android/Studio implementation: `640920eab864e881a61a86b8535a877c695ec23e`.
+Camera-preserving production bridge: `09a89805e53c8af1eb8d882da3e910764785c366`.
+Read [verification](docs/VERIFICATION.md), [schema 2](docs/LESSON_PACKAGE_V2.md)
+and the [measured delivery record](docs/evidence/two-cardiac-lessons-2026-10-31.json).
+The final documentation checkpoint records those tested implementations.
+
+Observed: 44 JVM tests, 47 Studio core/CLI tests, 15 Chromium tests, 12 Breeze
+tooling tests and 11 production tests passed. Both real lesson ZIPs passed the
+shared Kotlin archive validator. Debug, preview and instrumented-test APKs
+compiled; lint has zero errors and 14 warnings. APK v2 signature, alignment,
+package ID and minSdk were checked. The previous schema-1 Lantern Library ZIP
+still validates. **Zero Android emulator/device tests ran in this increment**;
+the environment has no `/dev/kvm`. Browser checks are not Android tests.
+
+### Next step after the user's review
+
+Record actual phone import/playback, seeking, speed, shared-fact narration
+switching, captions/highlights, independent motion and Still scene. Review all
+four tracks by listening, including medical pronunciation and transitions;
+review medical scope and fact/source completeness. The independent automated
+transcript comparison is evidence, not human approval. Keep review flags false
+until the corresponding review is actually performed and attributed.
+
+One possibly clipped story ending was regenerated with the same model/script
+and voice using seed 43; both attempts are recorded. Check the `heart-lung`
+pronunciation in the valve story support segment during listening review.
+
+For revisions, open the delivered projects in Studio or use `studio/agent.mjs`.
+If scripts or fact links change, regenerate affected narration through the same
+pinned CPU path, measure actual frames, realign cues and export again. Do not
+reuse mismatched audio or simply rescale draft cues. The bridge preserves camera
+targets, easing, transition durations, PNG placement and independent pivots.
+No permission is needed for already authorized routine fixes; do not expand
+past these two examples without a new direction. A learner-source medical pilot
+still needs the learner's own PDF/text.
 
 ## Previous Studio 0.1 checkpoint (historical)
 

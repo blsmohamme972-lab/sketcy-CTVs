@@ -28,13 +28,136 @@ Debug signing certificate SHA-256:
 `d5b5719cde48c7a7344b3567c3abe73d0eddf9e792f6867d0f84094e51d23927`.
 This is a review build with a separate app identity, not a production release key.
 
-The source and model pins in `tools/breeze/versions.json` were restored and
-verified. A clean Release build with CUDA and Vulkan disabled passed the upstream
-`depth-replay-cpu` test. The new neutral smoke generated 11.76 seconds of audio.
-Actual lesson generation is in progress; add final track, package and resource
-measurements before declaring the two-example delivery complete. Nonzero PCM,
-structural checks and generated frames do not constitute human listening or
-clinical review.
+### Completed two-lesson delivery
+
+| Lesson | Explanation | Story | Independent objects | Facts |
+| --- | ---: | ---: | ---: | ---: |
+| CABG — The Bypass Mountain | 107.20 s | 106.80 s | 7 | 6 |
+| Surgical aortic valve replacement — The Gatekeeper Courtyard | 111.84 s | 107.92 s | 6 | 6 |
+
+
+Both actual ZIPs passed the shared JVM archive parser, including bounded ZIP
+structure/CRC, source quotes and coverage IDs, PNG metadata/hashes, layer
+placement, exact media duration and all referenced assets. The old schema-1
+Lantern Library ZIP also passed with explanation 86,880 ms and story 91,040 ms.
+These are real-file parser checks, not Android import/playback tests.
+
+The four-page PDF was rendered and all pages visually inspected. All twelve
+symbol cards and six clickable official source URLs were checked for layout and
+text extraction. Both scene compositions and representative moving/still frames
+were inspected. All thirteen placed objects have real transparent and visible
+pixels. Reduced-motion frames match their respective base compositions.
+Separate alpha rasterization is not byte-identical to flattened composition;
+the measured per-pixel differences are recorded in the JSON evidence.
+
+### Actual Breeze CPU measurements
+
+Source commit `2904b9ad126c07363e8a6c9afa08f73e3309075b`; ggml
+`36da57138425487184aa1da2eee2cde155909c6f`; shine
+`ab5e3526b64af1a2eaa43aa6f441a7312e013519`. Model repository revision
+`81b22bad9f05b99970e30c5ee5e4bbc52fedf2f8`; standard
+`breeze-tts-2-q8_0.gguf`, 3,568,844,480 bytes, SHA-256
+`a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879`.
+All pins were verified against `tools/breeze/versions.json`. A clean CMake 3.31.6
+Release CPU build with GCC 13.3 disabled CUDA, Vulkan, server/shared and MP3
+output and passed upstream `depth-replay-cpu`. The preceding neutral smoke
+generated 11.76 seconds.
+
+Hardware reported AMD EPYC 9V74, nine affinity CPUs and an eight-CPU cgroup quota,
+with an 8 GiB memory limit and no swap. The initial 24 synthesis processes used
+`--cpu --seed 42 --cfg-scale 1 --split-chars 0 --max-new 750 --timings` and the
+same encoded synthetic voice. One targeted retry of `valve-story-5` used seed 43
+with the same model, script, voice and other settings after recognition flagged
+a possibly clipped final phrase. Both attempts and the selection evidence are
+retained in the authoring records; the lesson uses the complete replacement.
+The version file's default split limit is 600; the executed per-segment commands
+explicitly used zero. The anchor came from
+the earlier synthetic Breeze Lantern Library narration, not a real-person clone.
+
+| Track | Audio seconds | CPU generation wall seconds | Peak process RSS (GiB) | Automated word edits / words |
+| --- | ---: | ---: | ---: | ---: |
+| cabg/explanation | 107.20 | 758.02 | 4.235 | 1 / 223 |
+| cabg/story | 106.80 | 750.95 | 4.230 | 1 / 224 |
+| valve/explanation | 111.84 | 785.43 | 4.232 | 2 / 232 |
+| valve/story | 107.92 | 769.60 | 4.226 | 2 / 233 |
+
+
+Selected segment-process wall time: **3064.00 seconds
+(51.07 minutes)** for
+**433.76 seconds** of finished narration. Maximum process
+RSS: **4.235 GiB**.
+The rejected first attempt added **129.84 seconds**;
+all synthesis attempts together took
+**53.23 minutes**.
+Voice encoding was separate: **6.81 seconds**,
+**3.929 GiB** peak RSS.
+Authoring, builds and brief recognition checks overlapped generation, so these
+are observed production times, not an isolated hardware benchmark.
+
+Tracks concatenate only original mono 24 kHz, signed 16-bit PCM segment frames.
+No silence was added; no resampling, speed alteration, alternate model, GPU
+service or placeholder audio was used. Every track measures 60–240 seconds from
+its actual frame count. Peak/RMS levels, full-scale sample fractions, file hashes,
+CPU user/system seconds and run identities are in
+[`two-cardiac-lessons-2026-10-31.json`](evidence/two-cardiac-lessons-2026-10-31.json).
+
+### Audio-quality findings and limits
+
+An independent local CPU/int8 recognition pass used faster-whisper 1.2.1,
+CTranslate2 4.8.4 and pinned `Systran/faster-whisper-base.en` revision
+`3d3d5dee26484f91867d81cb899cfcf72b96be6c`. It generated no narration. Recognition
+used no script prompt, no previous-text conditioning, beam size 5 and no VAD.
+Analysis decoded temporary 16 kHz float PCM in memory; delivered WAV bytes were
+unchanged. Across all 24 segments, normalized comparison found
+**6 word edits in 912 reference words**.
+The private authoring bundle retains both expected and recognized text, allowing
+individual differences to be reviewed. Recognition is fallible: this does not
+prove pronunciation, prosody, voice consistency or medical accuracy.
+
+Observed recognition differences include route/root, spill/spell, tradeoff
+tokenization, and one rendering of **heart-lung** as **heart long** in the valve
+story's support segment. That medical term specifically needs listening review;
+the comparison cannot distinguish a recognition mistake from a pronunciation
+issue. No claim of perfect speech or a subjective audio-quality pass is made.
+
+No human listening or clinical/source-completeness acceptance occurred here.
+Both packages keep `audioReviewed: false` and `sourceCoverageReviewed: false`
+and a visible `EXTERNAL_REVIEW` label. The official sources supplied six selected
+introductory facts per lesson; neither source article coverage nor the other
+eight proposed demonstrations is represented as complete.
+
+### Saved implementations and hosted checks
+
+Implementation commit `640920eab864e881a61a86b8535a877c695ec23e` passed both
+[Android](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41169388182)
+and [Studio](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41169388179)
+GitHub workflows. Camera preservation was added at
+`09a89805e53c8af1eb8d882da3e910764785c366`; its production suite passed locally
+and the separate [hosted Android/tooling workflow](https://github.com/blsmohamme972-lab/sketcy-CTVs/actions/runs/41169862501)
+also passed, including builds, JVM/Python tests, lint and artifact upload.
+The complete Git trees and changed file blob identities were fetched and matched
+against the staged local files before marking each save complete.
+
+### Delivered artifact identities
+
+| File | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `Sketcy-Preview-0.3.0.apk` | 12,703,450 | `9f3c05bd29c401b7d4fd71c920c4feaae02d84aa6fa42a9ab0e3d7b4868abaa2` |
+| `01-CABG-Bypass-Mountain.zip` | 16,450,127 | `17f3ed9d45e8eeb89e8c08d31b04b8020f61933f4a81b4349bc8dc6b2cee30c6` |
+| `02-Aortic-Valve-Gatekeepers.zip` | 16,498,406 | `bdf41d7b4de3e83a8753d5ea8ec142d62cba504dfe2abacf1448af33b19bac9d` |
+| `Two-Cardiac-Lessons-Review-Guide.pdf` | 9,613,492 | `2ea35e59137404d828b07bcca827739266b84038ab9312bb164b61098b31a63d` |
+| `CABG-Bypass-Mountain.png` | 3,583,149 | `46016ac5c18839e9e5154a0d690042afb1424cca6d4f640fd246c91df51920f4` |
+| `Aortic-Valve-Gatekeepers.png` | 3,633,618 | `3852f59fa1ef0ebd3d0d96b25faa0e1da8818529aee678c5684f7e0391f6a6a3` |
+| `START-HERE.txt` | 2,270 | `bcaab0b2e06bb323792ec42385d662a4c08b414bd38d55e5ac24e5c03bde66b8` |
+| `Two-Lesson-Studio-Projects.zip` | 53,034,795 | `86e3104984ca26bd6fb35917c39298ddc4d5b08fb58d163029d80a487c7f3cf0` |
+
+
+The APK was built from the tested Android implementation at `640920e`; the later
+camera correction changes only the authoring bridge and its test/documentation.
+The delivered files are stored outside Git. `SHA256SUMS.txt` accompanies them.
+`Two-Lesson-Studio-Projects.zip` is an editable authoring archive, not a student
+lesson ZIP. No model weights, full downloaded articles, source PDF or credentials
+are included. File-format integrity does not establish successful phone import.
 
 ## Studio 0.1 internal authoring — 30 October 2026 (UTC)
 

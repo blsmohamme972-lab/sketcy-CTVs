@@ -1,0 +1,716 @@
+{
+  "date_utc": "2026-10-31",
+  "scope": "Two Studio-authored external-source cardiac demonstrations",
+  "code_commit": "640920eab864e881a61a86b8535a877c695ec23e",
+  "production_camera_commit": "09a89805e53c8af1eb8d882da3e910764785c366",
+  "narration_versions": {
+    "source_repository": "https://github.com/HoppouAI/Breeze-TTS-2.cpp",
+    "source_commit": "2904b9ad126c07363e8a6c9afa08f73e3309075b",
+    "submodules": {
+      "third_party/ggml": "36da57138425487184aa1da2eee2cde155909c6f",
+      "third_party/shine": "ab5e3526b64af1a2eaa43aa6f441a7312e013519"
+    },
+    "model_repository": "https://huggingface.co/HoppouAI/Breeze-TTS-2.cpp",
+    "model_revision": "81b22bad9f05b99970e30c5ee5e4bbc52fedf2f8",
+    "model_filename": "breeze-tts-2-q8_0.gguf",
+    "model_size_bytes": 3568844480,
+    "model_sha256": "a02bcc4b69b0601032727f8040c4942149b1b73aa0f69022fe5aaa6a8f0ef879",
+    "cmake_version_used": "3.31.6",
+    "voice_instruction": "A calm adult narrator speaking clear, natural English at a steady pace.",
+    "seed": 42,
+    "cfg_scale": 1.0,
+    "split_chars": 600,
+    "max_new_frames_per_piece": 750
+  },
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "logical_cpus": 9,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "cpu_quota": "800000 100000",
+    "memory_limit_bytes": "8589934592",
+    "memory_current_bytes": "4232749056",
+    "memory_host": {
+      "MemTotal": "10206472 kB",
+      "MemAvailable": "9426672 kB",
+      "SwapTotal": "0 kB"
+    }
+  },
+  "plan_sha256": "8aae327e9da9bf423fcedaf6fb39d6e6e3e6634e1e63a983f54d9d1e333278ca",
+  "binary_sha256": "fe64657fa9113c4ce5c995336923905bf4ba93789d8245ee9a09271f5922822a",
+  "synthetic_anchor_sha256": "a8c6c7e0d77f11ac2fbdb4e2b252e2483fc4af24cd46931f5ba163e7fdbbec53",
+  "encoded_voice_sha256": "48468c0f3a0f569c85add4fdc5691b81522038b52f98abf6b9e650c4293bb206",
+  "voice_encoding_run": {
+    "return_code": 0,
+    "timed_out": false,
+    "interrupted": false,
+    "wall_seconds": 6.812952227999972,
+    "cpu_user_seconds": 13.35305,
+    "cpu_system_seconds": 1.402007,
+    "peak_rss_kib": 4119356
+  },
+  "generation_settings": {
+    "backend": "CPU",
+    "default_seed": 42,
+    "seed_overrides": {
+      "valve-story-5": 43
+    },
+    "cfg_scale": 1.0,
+    "split_chars_actual": 0,
+    "max_new_frames_per_segment": 750,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "pcm_bits": 16
+  },
+  "assembly": "Concatenated original PCM segment frames; no silence padding, resampling, time stretching or alternate TTS",
+  "tracks": {
+    "cabg/explanation": {
+      "audio": {
+        "sha256": "18de3e332ef2f725875fb2da61c958d3ee9db4f79bcf685aa50011b7a6205f28",
+        "size_bytes": 5145644,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 2572800,
+        "duration_seconds": 107.2,
+        "within_60_to_240_seconds": true,
+        "peak_dbfs": -8.054888278576508,
+        "rms_dbfs": -25.16896400612793,
+        "full_scale_sample_fraction": 0.0
+      },
+      "segments": 6,
+      "generation_wall_seconds": 758.0208109470001,
+      "generation_cpu_user_seconds": 2916.317884,
+      "generation_cpu_system_seconds": 17.402858000000002,
+      "peak_process_rss_kib": 4440252,
+      "wall_seconds_per_audio_second": 7.071089654356344,
+      "automatic_recognition_reference_words": 223,
+      "automatic_recognition_word_edits": 1,
+      "human_listening_approved": false,
+      "pcm_joins": [
+        {
+          "at_ms": 17520,
+          "last_sample": -8,
+          "next_sample": 10,
+          "step_fraction_full_scale": 0.00054931640625
+        },
+        {
+          "at_ms": 34480,
+          "last_sample": 0,
+          "next_sample": 19,
+          "step_fraction_full_scale": 0.000579833984375
+        },
+        {
+          "at_ms": 50080,
+          "last_sample": 0,
+          "next_sample": 2,
+          "step_fraction_full_scale": 6.103515625e-05
+        },
+        {
+          "at_ms": 66000,
+          "last_sample": 0,
+          "next_sample": 13,
+          "step_fraction_full_scale": 0.000396728515625
+        },
+        {
+          "at_ms": 83760,
+          "last_sample": 0,
+          "next_sample": -136,
+          "step_fraction_full_scale": 0.004150390625
+        }
+      ]
+    },
+    "cabg/story": {
+      "audio": {
+        "sha256": "d5a291473ae235b22a5a5a9ca7239429a226788d58c92ba56d1f512d9bff29d8",
+        "size_bytes": 5126444,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 2563200,
+        "duration_seconds": 106.8,
+        "within_60_to_240_seconds": true,
+        "peak_dbfs": -7.75459564134797,
+        "rms_dbfs": -25.52627977229665,
+        "full_scale_sample_fraction": 0.0
+      },
+      "segments": 6,
+      "generation_wall_seconds": 750.952416412,
+      "generation_cpu_user_seconds": 2877.8600930000002,
+      "generation_cpu_system_seconds": 17.541184,
+      "peak_process_rss_kib": 4435204,
+      "wall_seconds_per_audio_second": 7.0313896667790265,
+      "automatic_recognition_reference_words": 224,
+      "automatic_recognition_word_edits": 1,
+      "human_listening_approved": false,
+      "pcm_joins": [
+        {
+          "at_ms": 17120,
+          "last_sample": 0,
+          "next_sample": 1,
+          "step_fraction_full_scale": 3.0517578125e-05
+        },
+        {
+          "at_ms": 35120,
+          "last_sample": 0,
+          "next_sample": 2,
+          "step_fraction_full_scale": 6.103515625e-05
+        },
+        {
+          "at_ms": 52320,
+          "last_sample": 0,
+          "next_sample": 2,
+          "step_fraction_full_scale": 6.103515625e-05
+        },
+        {
+          "at_ms": 69280,
+          "last_sample": 0,
+          "next_sample": 2,
+          "step_fraction_full_scale": 6.103515625e-05
+        },
+        {
+          "at_ms": 85280,
+          "last_sample": 0,
+          "next_sample": -135,
+          "step_fraction_full_scale": 0.004119873046875
+        }
+      ]
+    },
+    "valve/explanation": {
+      "audio": {
+        "sha256": "6f5fd838f1ce63bc0c71c09afd18c49328974d78042728f1f10c2a85dc8b2ee9",
+        "size_bytes": 5368364,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 2684160,
+        "duration_seconds": 111.84,
+        "within_60_to_240_seconds": true,
+        "peak_dbfs": -7.829353974965102,
+        "rms_dbfs": -25.457838351070684,
+        "full_scale_sample_fraction": 0.0
+      },
+      "segments": 6,
+      "generation_wall_seconds": 785.4303044749995,
+      "generation_cpu_user_seconds": 3020.50836,
+      "generation_cpu_system_seconds": 17.550623,
+      "peak_process_rss_kib": 4437444,
+      "wall_seconds_per_audio_second": 7.022803151600496,
+      "automatic_recognition_reference_words": 232,
+      "automatic_recognition_word_edits": 2,
+      "human_listening_approved": false,
+      "pcm_joins": [
+        {
+          "at_ms": 16960,
+          "last_sample": -1,
+          "next_sample": 2,
+          "step_fraction_full_scale": 9.1552734375e-05
+        },
+        {
+          "at_ms": 35440,
+          "last_sample": 0,
+          "next_sample": 0,
+          "step_fraction_full_scale": 0.0
+        },
+        {
+          "at_ms": 54320,
+          "last_sample": 0,
+          "next_sample": 15,
+          "step_fraction_full_scale": 0.000457763671875
+        },
+        {
+          "at_ms": 70640,
+          "last_sample": 1,
+          "next_sample": 5,
+          "step_fraction_full_scale": 0.0001220703125
+        },
+        {
+          "at_ms": 89520,
+          "last_sample": 0,
+          "next_sample": -18,
+          "step_fraction_full_scale": 0.00054931640625
+        }
+      ]
+    },
+    "valve/story": {
+      "audio": {
+        "sha256": "ee2b5168379170c4d6a3e6dbbf4494708a5f164fdc7c41f47b0aaaec5a81be0f",
+        "size_bytes": 5180204,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 2590080,
+        "duration_seconds": 107.92,
+        "within_60_to_240_seconds": true,
+        "peak_dbfs": -9.157197925781077,
+        "rms_dbfs": -25.568377822881992,
+        "full_scale_sample_fraction": 0.0
+      },
+      "segments": 6,
+      "generation_wall_seconds": 769.6013439149997,
+      "generation_cpu_user_seconds": 2963.030826,
+      "generation_cpu_system_seconds": 16.552528,
+      "peak_process_rss_kib": 4431404,
+      "wall_seconds_per_audio_second": 7.131220755328018,
+      "automatic_recognition_reference_words": 233,
+      "automatic_recognition_word_edits": 2,
+      "human_listening_approved": false,
+      "pcm_joins": [
+        {
+          "at_ms": 16240,
+          "last_sample": -3,
+          "next_sample": 2,
+          "step_fraction_full_scale": 0.000152587890625
+        },
+        {
+          "at_ms": 34480,
+          "last_sample": 0,
+          "next_sample": 2,
+          "step_fraction_full_scale": 6.103515625e-05
+        },
+        {
+          "at_ms": 52880,
+          "last_sample": 0,
+          "next_sample": 1,
+          "step_fraction_full_scale": 3.0517578125e-05
+        },
+        {
+          "at_ms": 68720,
+          "last_sample": 0,
+          "next_sample": 10,
+          "step_fraction_full_scale": 0.00030517578125
+        },
+        {
+          "at_ms": 87600,
+          "last_sample": 0,
+          "next_sample": 8,
+          "step_fraction_full_scale": 0.000244140625
+        }
+      ]
+    }
+  },
+  "total_generation_wall_seconds": 3064.0048757489994,
+  "rejected_attempt_wall_seconds": 129.84001963899982,
+  "all_attempt_generation_wall_seconds": 3193.8448953879993,
+  "quality_retries": [
+    {
+      "segmentId": "valve-story-5",
+      "reason": "Two whole-segment CPU recognitions omitted the final with a mechanical valve phrase; tail-only check was also incomplete. Regenerate the unchanged script with the same pinned model and synthetic voice.",
+      "defaultSeed": 42,
+      "retrySeed": 43,
+      "originalAudio": {
+        "sha256": "371af781bc5a9fffd97ced969e881c744c376bae264384b0fb9a90b61bd4f585",
+        "size_bytes": 833324,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 416640,
+        "duration_seconds": 17.36,
+        "within_60_to_240_seconds": false,
+        "peak_dbfs": -11.583751861124806,
+        "rms_dbfs": -25.185377089262154,
+        "full_scale_sample_fraction": 0.0
+      },
+      "originalRun": {
+        "return_code": 0,
+        "timed_out": false,
+        "interrupted": false,
+        "wall_seconds": 129.84001963899982,
+        "cpu_user_seconds": 499.08296,
+        "cpu_system_seconds": 2.8374829999999998,
+        "peak_rss_kib": 4421480
+      },
+      "selectedAudio": {
+        "sha256": "e03bdae92e6c7276634d77e9a5783a12551a22eae9353bf93506ed633252d909",
+        "size_bytes": 906284,
+        "sample_rate_hz": 24000,
+        "channels": 1,
+        "sample_width_bits": 16,
+        "sample_frames": 453120,
+        "duration_seconds": 18.88,
+        "within_60_to_240_seconds": false,
+        "peak_dbfs": -9.78160246771999,
+        "rms_dbfs": -25.527703352972555,
+        "full_scale_sample_fraction": 0.0
+      },
+      "selectedRun": {
+        "return_code": 0,
+        "timed_out": false,
+        "interrupted": false,
+        "wall_seconds": 132.25923374399963,
+        "cpu_user_seconds": 509.32376,
+        "cpu_system_seconds": 2.778794,
+        "peak_rss_kib": 4425916
+      },
+      "originalRecognitionWordEdits": 4,
+      "selectedRecognitionWordEdits": 0,
+      "selected": true,
+      "humanListeningApproved": false,
+      "selectionReason": "Same-model retry recognizes the complete unchanged script ending and required medical phrase; human listening approval remains false"
+    }
+  ],
+  "total_audio_seconds": 433.76,
+  "peak_generation_process_rss_kib": 4440252,
+  "measurement_limit": "Authoring, builds and short recognition checks overlapped CPU synthesis; not an isolated hardware benchmark",
+  "recognition": {
+    "purpose": "Independent automated speech-recognition comparison; not human listening or clinical approval",
+    "model": {
+      "purpose": "CPU speech recognition check only; no narration generated or replaced",
+      "repository": "Systran/faster-whisper-base.en",
+      "revision": "3d3d5dee26484f91867d81cb899cfcf72b96be6c",
+      "files": [
+        {
+          "file": "config.json",
+          "sha256": "f3bc3821e9fc76a27bae538e11ae5b677dcdd352b4600429ce7951d398569aeb",
+          "bytes": 2227
+        },
+        {
+          "file": "model.bin",
+          "sha256": "2a166925539a16005f14ff328359f9b9adb9dc4fb631bb3b227526862e93e2ef",
+          "bytes": 145216508
+        },
+        {
+          "file": "tokenizer.json",
+          "sha256": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+          "bytes": 2128466
+        },
+        {
+          "file": "vocabulary.txt",
+          "sha256": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf",
+          "bytes": 422309
+        }
+      ]
+    },
+    "packages": {
+      "faster-whisper": "1.2.1",
+      "ctranslate2": "4.8.4",
+      "tokenizers": "0.23.3",
+      "av": "19.0.2"
+    },
+    "settings": {
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 2,
+      "beam_size": 5,
+      "language": "en",
+      "initial_prompt": null,
+      "analysis_preprocessing": "ffmpeg in-memory mono float32 16 kHz; original delivered PCM unchanged"
+    },
+    "reference_words": 912,
+    "word_edits": 6,
+    "flagged_segments": [
+      "cabg-explanation-2",
+      "cabg-story-3",
+      "valve-explanation-6",
+      "valve-story-2",
+      "valve-story-4"
+    ],
+    "listening_attention": "Check heart-lung in valve-story-4, transcribed as heart long; ASR cannot distinguish a recognition error from a pronunciation issue"
+  },
+  "sources": {
+    "cabg-overview": {
+      "externalUrl": "https://www.nhlbi.nih.gov/health/coronary-artery-bypass-grafting",
+      "sha256": "fcf97b12a9d99f435b2606da352c586a4e8e3c48516cf778e76c504c2cf0ad7d",
+      "bytes": 63751,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "cabg-overview"
+    },
+    "cabg-during": {
+      "externalUrl": "https://www.nhlbi.nih.gov/health/coronary-artery-bypass-grafting/during",
+      "sha256": "d7821671f74d26d262b04cf54af78d169f9479886a75ce94637ed55ab2bc8e89",
+      "bytes": 72591,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "cabg-during"
+    },
+    "cabg-recovery": {
+      "externalUrl": "https://www.nhs.uk/tests-and-treatments/coronary-artery-bypass-graft/recovery/",
+      "sha256": "e46bef02031d24227267cd072a391cdc5dcbcbd6be507d7edd5ca70361d96260",
+      "bytes": 33668,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "cabg-recovery"
+    },
+    "valve-disease": {
+      "externalUrl": "https://www.nhs.uk/tests-and-treatments/heart-valve-replacement/why-its-done/",
+      "sha256": "2e127f3df0d966ae12ab9d0b1de1745793406c1f3598ebb20679c3119f0dd16d",
+      "bytes": 28156,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "valve-disease"
+    },
+    "valve-surgery": {
+      "externalUrl": "https://www.nhs.uk/tests-and-treatments/heart-valve-replacement/how-its-done/",
+      "sha256": "55f01e6c0b60cfa2cab0429eafac743d86d9f7cf36f2fd0d822ce56956f67604",
+      "bytes": 32874,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "valve-surgery"
+    },
+    "valve-types": {
+      "externalUrl": "https://www.nhlbi.nih.gov/health/heart-valve-diseases/treatment",
+      "sha256": "18cc5cddc86eccbb4ada1b7c271b55962176f77a19418f7608974e063917cc43",
+      "bytes": 79382,
+      "accessedUtc": "2026-10-31",
+      "hashScope": "downloaded HTML bytes; not a user-supplied document",
+      "title": "valve-types"
+    }
+  },
+  "hosted_checks": {
+    "runs": [
+      {
+        "commit": "640920eab864e881a61a86b8535a877c695ec23e",
+        "runId": 41169388179,
+        "name": "Studio",
+        "conclusion": "success"
+      },
+      {
+        "commit": "640920eab864e881a61a86b8535a877c695ec23e",
+        "runId": 41169388182,
+        "name": "Android checks and APK",
+        "conclusion": "success"
+      },
+      {
+        "commit": "09a89805e53c8af1eb8d882da3e910764785c366",
+        "runId": 41169862501,
+        "name": "Android checks and APK",
+        "conclusion": "success"
+      }
+    ],
+    "androidDeviceTestsExecuted": 0
+  },
+  "delivery_checks": {
+    "cabg": {
+      "layerCount": 7,
+      "layers": [
+        {
+          "id": "fortress",
+          "zeroAlphaPixels": 57706,
+          "visiblePixels": 52322,
+          "size": [
+            346,
+            318
+          ],
+          "sha256": "993e938310e2ba33f189bed47f4469c4918c23666e9ec9b57f8b0a5ef55f9dd0"
+        },
+        {
+          "id": "blocked-road",
+          "zeroAlphaPixels": 24561,
+          "visiblePixels": 19063,
+          "size": [
+            287,
+            152
+          ],
+          "sha256": "ed06790373642166affbddd446a1df41badb73cb8c85126b953a8f9a80d1bc68"
+        },
+        {
+          "id": "bridge",
+          "zeroAlphaPixels": 295519,
+          "visiblePixels": 143858,
+          "size": [
+            877,
+            501
+          ],
+          "sha256": "7948fa180ba97f721e80631e8c92e5850cf44e11a6561e35096fedc7a69382b0"
+        },
+        {
+          "id": "builder",
+          "zeroAlphaPixels": 48458,
+          "visiblePixels": 39056,
+          "size": [
+            266,
+            329
+          ],
+          "sha256": "1e3361c78d16f8ac8964dba3bc35fd07457851cc22d8ddf4d9f3ca04f78aac40"
+        },
+        {
+          "id": "pump",
+          "zeroAlphaPixels": 41885,
+          "visiblePixels": 44505,
+          "size": [
+            326,
+            265
+          ],
+          "sha256": "8519040b4a8092dcbcda8d9cee90b4aeb5fca4b2a52c68d4ac52ec8af2200d60"
+        },
+        {
+          "id": "drummer",
+          "zeroAlphaPixels": 46039,
+          "visiblePixels": 24319,
+          "size": [
+            277,
+            254
+          ],
+          "sha256": "2aacb3aed4021ff0e9308fc209df0d5b141c111876f13243c71ec6ed567c6d92"
+        },
+        {
+          "id": "care",
+          "zeroAlphaPixels": 22939,
+          "visiblePixels": 18881,
+          "size": [
+            246,
+            170
+          ],
+          "sha256": "84f00a36e25d8ee07b5be2243c2dde433aef4572f60b1e609730182bf32501aa"
+        }
+      ],
+      "maxRecompositionChannelDifference": 11,
+      "meanRecompositionChannelDifference": 0.04708333333333333,
+      "pixelsOver2ChannelLevels": 5,
+      "pixelsOver5ChannelLevels": 2,
+      "totalPixels": 1440000,
+      "recompositionFinding": "All seven placements visually inspected. Five of 1,440,000 pixels differ by more than 2 channel levels; two exceed 5. Separate alpha rasterization is not byte-identical to the flattened scene.",
+      "reducedMotionMatchesBase": true,
+      "zipSha256": "17f3ed9d45e8eeb89e8c08d31b04b8020f61933f4a81b4349bc8dc6b2cee30c6",
+      "zipBytes": 16450127,
+      "manifestSha256": "824090fa05aae4c8f4de7688c3a5c48cd1b150dc76a8dfa2bf1dda695a50b9cf",
+      "facts": 6,
+      "quality": {
+        "sourceCoverageReviewed": false,
+        "audioReviewed": false,
+        "reviewer": "",
+        "notes": "Studio authoring draft; source completeness and listening have not been approved."
+      }
+    },
+    "valve": {
+      "layerCount": 6,
+      "layers": [
+        {
+          "id": "narrow-gate",
+          "zeroAlphaPixels": 37320,
+          "visiblePixels": 50489,
+          "size": [
+            317,
+            277
+          ],
+          "sha256": "3e5989909812093b1871c73b2e976c4af790cf7c0c2cfa5b8d8abee10854b8a0"
+        },
+        {
+          "id": "leaky-gate",
+          "zeroAlphaPixels": 40364,
+          "visiblePixels": 47982,
+          "size": [
+            326,
+            271
+          ],
+          "sha256": "b16a2bfeb20dada9dafdf3c4a3cdd20a986c22db33759ea8c718578b23e2fb4f"
+        },
+        {
+          "id": "surgeon",
+          "zeroAlphaPixels": 37966,
+          "visiblePixels": 43434,
+          "size": [
+            296,
+            275
+          ],
+          "sha256": "b370e6c5bfca680c3e646e28b8edbe20675a2024f2d8f682c6c6a7e7ae9fbc8a"
+        },
+        {
+          "id": "metal-gate",
+          "zeroAlphaPixels": 50665,
+          "visiblePixels": 30991,
+          "size": [
+            346,
+            236
+          ],
+          "sha256": "a92f447300a07ca51927caf48ab8bc10b9213ba726c738808e9d27ce5417cb86"
+        },
+        {
+          "id": "leaf-gate",
+          "zeroAlphaPixels": 33191,
+          "visiblePixels": 39507,
+          "size": [
+            326,
+            223
+          ],
+          "sha256": "6ddb8d33b3064c1fd92332f3306f9be7688f213aed1aa4ed484e3647ee0e474d"
+        },
+        {
+          "id": "pump",
+          "zeroAlphaPixels": 30754,
+          "visiblePixels": 31346,
+          "size": [
+            276,
+            225
+          ],
+          "sha256": "c216d0298747f67801b1837f8888c614ae24de5c0d93aca9a5f3cc32452e958f"
+        }
+      ],
+      "maxRecompositionChannelDifference": 9,
+      "meanRecompositionChannelDifference": 0.0341078125,
+      "pixelsOver2ChannelLevels": 34,
+      "pixelsOver5ChannelLevels": 12,
+      "totalPixels": 1440000,
+      "recompositionFinding": "All six placements inspected; differences measured without modifying any delivered pixels. Separate rasterization is not assumed byte-identical to the flattened scene.",
+      "reducedMotionMatchesBase": true,
+      "zipSha256": "bdf41d7b4de3e83a8753d5ea8ec142d62cba504dfe2abacf1448af33b19bac9d",
+      "zipBytes": 16498406,
+      "manifestSha256": "ff47c7690d4b5a29d382ef46eb5eeaa60d6734194d389c3d53038e4c54ee9c04",
+      "facts": 6,
+      "quality": {
+        "sourceCoverageReviewed": false,
+        "audioReviewed": false,
+        "reviewer": "",
+        "notes": "Studio authoring draft; source completeness and listening have not been approved."
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "filename": "Sketcy-Preview-0.3.0.apk",
+      "bytes": 12703450,
+      "sha256": "9f3c05bd29c401b7d4fd71c920c4feaae02d84aa6fa42a9ab0e3d7b4868abaa2"
+    },
+    {
+      "filename": "01-CABG-Bypass-Mountain.zip",
+      "bytes": 16450127,
+      "sha256": "17f3ed9d45e8eeb89e8c08d31b04b8020f61933f4a81b4349bc8dc6b2cee30c6"
+    },
+    {
+      "filename": "02-Aortic-Valve-Gatekeepers.zip",
+      "bytes": 16498406,
+      "sha256": "bdf41d7b4de3e83a8753d5ea8ec142d62cba504dfe2abacf1448af33b19bac9d"
+    },
+    {
+      "filename": "Two-Cardiac-Lessons-Review-Guide.pdf",
+      "bytes": 9613492,
+      "sha256": "2ea35e59137404d828b07bcca827739266b84038ab9312bb164b61098b31a63d"
+    },
+    {
+      "filename": "CABG-Bypass-Mountain.png",
+      "bytes": 3583149,
+      "sha256": "46016ac5c18839e9e5154a0d690042afb1424cca6d4f640fd246c91df51920f4"
+    },
+    {
+      "filename": "Aortic-Valve-Gatekeepers.png",
+      "bytes": 3633618,
+      "sha256": "3852f59fa1ef0ebd3d0d96b25faa0e1da8818529aee678c5684f7e0391f6a6a3"
+    },
+    {
+      "filename": "START-HERE.txt",
+      "bytes": 2270,
+      "sha256": "bcaab0b2e06bb323792ec42385d662a4c08b414bd38d55e5ac24e5c03bde66b8"
+    },
+    {
+      "filename": "Two-Lesson-Studio-Projects.zip",
+      "bytes": 53034795,
+      "sha256": "86e3104984ca26bd6fb35917c39298ddc4d5b08fb58d163029d80a487c7f3cf0"
+    }
+  ],
+  "human_clinical_approved": false,
+  "human_listening_approved": false,
+  "android_emulator_tests_executed": 0,
+  "android_device_tests_executed": 0
+}

@@ -5,19 +5,41 @@ PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
 (API 26). Imports, playback and spaced review use local files and on-device
 storage. No account, server, analytics or Internet permission is required.
 
-**Current engineering checkpoint: Android 0.3 and Studio's measured layer bridge.**
+**Current checkpoint: two complete Studio-authored demonstration packages.**
 The assistant uses Studio to make lessons; the student app has no authoring UI.
-Schema 2 adds independent transparent objects, per-track gentle motion and explicit
-externally sourced review demonstrations. Camera, captions, highlights and objects
-follow the Media3 audio position, including seeks and the still-scene setting.
-The separate **Sketcy Preview** APK can be installed alongside version 0.2.
+Schema 2 adds independent transparent objects, gentle per-track motion and
+explicit externally sourced review demonstrations. Camera, captions, highlights
+and objects follow Media3's audio position, including seeks and Still scene.
 
-The current delivery task is two original cardiac examples: **The Bypass Mountain
-(CABG)** and **The Gatekeeper Courtyard (surgical aortic valve replacement)**.
-Artwork is composed in Studio; the four real Breeze Q8_0 CPU tracks and complete
-ZIP delivery are being finalized. No human clinical/listening pass is claimed.
-See [the current handoff](HANDOFF.md), [schema 2](docs/LESSON_PACKAGE_V2.md),
-[authoring](studio/README.md) and [verification](docs/VERIFICATION.md).
+| Lesson | Explanation | Story | Independent objects | Facts |
+| --- | ---: | ---: | ---: | ---: |
+| CABG — The Bypass Mountain | 107.20 s | 106.80 s | 7 | 6 |
+| Surgical aortic valve replacement — The Gatekeeper Courtyard | 111.84 s | 107.92 s | 6 | 6 |
+
+
+Both examples contain original layered artwork and four distinct, measured
+Breeze TTS 2 Q8_0 CPU tracks. The two ZIPs, separate **Sketcy Preview** APK,
+illustrated PDF guide and editable Studio projects were delivered outside Git.
+Use the new preview app for these files; the older 0.2 importer reads schema 1.
+The preview installs alongside the older app with a separate library.
+
+Public NHS/NHLBI sources were authorized for these testing examples. They retain
+real attribution and an `EXTERNAL_REVIEW` label. They cover twelve selected
+introductory facts, not entire articles. **Human listening, clinical/source
+approval and Android device acceptance remain open.** No claim is made that
+all ten proposed demonstrations are complete. See [the handoff](HANDOFF.md),
+[schema 2](docs/LESSON_PACKAGE_V2.md), [authoring](studio/README.md) and
+[verification](docs/VERIFICATION.md).
+
+### Try the two new examples
+
+1. Install the separately supplied `Sketcy-Preview-0.3.0.apk` on Android 8+.
+2. Open **Sketcy Preview → Library → Import** and select
+   `01-CABG-Bypass-Mountain.zip`; repeat for `02-Aortic-Valve-Gatekeepers.zip`.
+   Keep both ZIPs intact. The APK contains no bundled lesson media or model.
+3. Play Explanation and Story, seek, change speed, switch by shared fact, and
+   compare moving objects with **Still scene**. Explore symbols and their sources.
+4. Try Review and export a backup before removing or changing the app.
 
 **Android baseline: version 0.2.0 engineering checkpoint.** The user asked to proceed with
 all remaining work after the bounded CPU feasibility checkpoint `c5eea4d`.
@@ -89,14 +111,15 @@ external authoring steps, with their real outputs imported into Studio.
 
 The production export retains exact source references and false review flags,
 writes a real scene PNG, and supplies separate explanation/story script inputs.
-It is a draft handoff, not an Android lesson ZIP. Android package v1 still uses
-one PNG per part; independent object animation currently works in Studio only.
-The new tool does not complete the pending cardiac lesson artwork/audio packs.
+It is a draft handoff, not an Android lesson ZIP. The measured production bridge
+combines that handoff, Studio's PNG layer export and the verified Breeze ledger
+into an Android schema-2 ZIP. The two delivered examples use this complete path.
+Schema 1 remains supported for older flattened illustrations.
 
 Start with [agent instructions](studio/AGENTS.md),
 [drawing rules](docs/ART_DIRECTION.md), and [format details](docs/STUDIO_FORMAT.md).
 
-## Install and try
+## Historical 0.2 installation and Lantern Library demo
 
 Download [Sketcy-CTVS-0.2.0.apk](https://github.com/blsmohamme972-lab/sketcy-CTVs/releases/download/v0.2.0-android-preview/Sketcy-CTVS-0.2.0.apk)
 in a browser, including Chrome. The public APK is 13,408,761 bytes and is also
@@ -136,12 +159,13 @@ Android SDK platform 35 and Build Tools 34.0.0. Set `ANDROID_HOME`, or let Andro
 Studio create a local, untracked `local.properties`. Do not commit local paths.
 
 ```sh
-./gradlew :lesson-model:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --no-daemon
+./gradlew :lesson-model:test :app:assembleDebug :app:assembleDemoPreview :app:assembleDebugAndroidTest :app:lintDebug --no-daemon
 python3 -m unittest discover -s tools/breeze -p 'test_*.py' -v
 python3 -m unittest discover -s tools/production -p 'test_*.py' -v
 ```
 
-The APK is produced at `app/build/outputs/apk/debug/app-debug.apk`. Dependencies
+The standard APK is `app/build/outputs/apk/debug/app-debug.apk`; the separate
+preview is `app/build/outputs/apk/demoPreview/app-demoPreview.apk`. Dependencies
 need network access on the first build. Gradle uses one worker and an in-process
 Kotlin compiler to keep authoring/build memory pressure manageable.
 
