@@ -28,11 +28,20 @@ function fixture(run) {
 test("agent creates and validates a portable project without a browser", () =>
   fixture((dir) => {
     const path = resolve(dir, "scene.json"),
-      created = cli("new", "--title", "Agent scene", "--out", path);
+      created = cli(
+        "new",
+        "--title",
+        "Agent scene",
+        "--id",
+        "repeatable-scene",
+        "--out",
+        path,
+      );
     assert.equal(created.status, 0, created.stderr);
     const p = JSON.parse(readFileSync(path, "utf8"));
     assert.equal(p.title, "Agent scene");
     assert.equal(p.schema, "sketcy.studio.v1");
+    assert.equal(p.id, "repeatable-scene");
     const checked = cli("validate", "--project", path);
     assert.equal(checked.status, 0, checked.stderr);
     assert.equal(JSON.parse(checked.stdout).valid, true);

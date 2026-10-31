@@ -1,7 +1,7 @@
 # Studio authoring formats, version 1
 
 These formats belong to the internal authoring tool. They are separate from
-[Android lesson package v1](LESSON_PACKAGE.md). No executable code or network
+[Android lesson packages](LESSON_PACKAGE_V2.md). No executable code or network
 asset URL belongs in a project.
 
 ## Portable project: `sketcy.studio.v1`
@@ -10,10 +10,10 @@ asset URL belongs in a project.
 | --- | --- |
 | `schema`, `id`, `title` | Exact schema name, stable identity and scene title |
 | `width`, `height`, `background` | Artboard pixels, 64–4096 per axis; hex color or `none` |
-| `contentType` | `TECHNICAL_DEMO`, `USER_SOURCE`, or authoring-only `EXTERNAL_REVIEW` |
+| `contentType` | `TECHNICAL_DEMO`, `USER_SOURCE`, or explicitly external `EXTERNAL_REVIEW` |
 | `nodes` | Back-to-front scene graph; children use the same order inside groups |
 | `assets` | ID-keyed embedded PNG/JPEG/WebP/WAV data URLs and measured metadata |
-| `sources` | Original source identity, title, SHA-256, `userProvided` and exact locator-to-excerpt map |
+| `sources` | Original source identity, title, SHA-256, `userProvided`, optional HTTPS `externalUrl`, and exact locator-to-excerpt map |
 | `facts` | Stable fact IDs, complete text and `{sourceId, locator, quote}` references |
 | `tracks` | Separate `explanation` and `story` objects |
 | `quality` | Review attestations; exporting a new production draft resets approvals |
@@ -119,3 +119,17 @@ reviews, and final package validation. The packager derives timing from measured
 segments, not `timingDraft`. A later versioned Android contract is required to
 play independent element motion. Do not relabel `EXTERNAL_REVIEW` medical drafts
 as `TECHNICAL_DEMO` or `USER_SOURCE` to get them through the current importer.
+
+## Measured production additions — 31 October 2026
+
+Stable project/layer IDs can be supplied to the agent CLI with `--id` on `new`
+and `add-image`. `handoff --part-id` preserves the exact generated part identity.
+External-source handoffs use schema 2 and retain `externalUrl`; source origin
+and review flags are never promoted. A cue can set `cameraDurationMs` between
+1 and its interval length, allowing the camera to settle while the caption
+continues. Legacy cues without it retain their previous interpolation behavior.
+
+Use the schema-2 production bridge for independent layer playback. The layer
+export format still uses pixels and normalized pivots; the bridge converts
+translations/placement into complete-scene fractions and verifies image hashes.
+Measured WAV attachment alone still leaves cue rescaling as draft timing.

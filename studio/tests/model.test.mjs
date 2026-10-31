@@ -149,6 +149,20 @@ test("unknown project version is rejected", () => {
   p.schema = "other";
   assert.throws(() => validateProject(p), /Unsupported/);
 });
+test("external handoff keeps real origin and a chosen part identity without approval", () => {
+  const p = demoProject();
+  p.contentType = "EXTERNAL_REVIEW";
+  p.sources[0].externalUrl = "https://example.org/neutral-fixture";
+  p.sources[0].userProvided = false;
+  const out = handoff(p, "measured-part");
+  assert.equal(out.lesson.schemaVersion, 2);
+  assert.equal(out.lesson.parts[0].id, "measured-part");
+  assert.equal(out.narrationPlan.parts[0].id, "measured-part");
+  assert.equal(out.lesson.sources[0].externalUrl, p.sources[0].externalUrl);
+  assert.equal(out.lesson.quality.audioReviewed, false);
+  p.sources[0].externalUrl = "https://user:secret@example.org/";
+  assert.throws(() => validateProject(p), /without credentials/);
+});
 test("remote and executable image URLs are rejected", () => {
   for (const data of [
     "https://example.com/a.png",

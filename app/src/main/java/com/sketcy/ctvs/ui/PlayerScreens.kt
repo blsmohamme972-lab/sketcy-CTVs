@@ -33,7 +33,8 @@ fun PlayerScreen(model: AppViewModel,installed: InstalledLesson,part: PackagePar
         Box(modifier.clip(RoundedCornerShape(if(fullscreen)0.dp else 20.dp))) {
             Illustration(File(installed.directory,part.illustrationPath),symbols,Modifier.fillMaxSize(),
                 focus=frame?.focus ?: ImageRegion(0f,0f,1f,1f),highlighted=frame?.highlightedSymbolIds?.toSet() ?: emptySet(),
-                resetKey="${part.id}/${state.mode}")
+                resetKey="${part.id}/${state.mode}",layeredScene=part.scene,directory=installed.directory,
+                positionMs=state.positionMs,mode=state.mode,reducedMotion=prefs.reducedMotion)
             FilledTonalIconButton(onClick=onFullscreen,modifier=Modifier.align(Alignment.BottomEnd).padding(8.dp)) {
                 Icon(if(fullscreen)StudyIcons.FullscreenExit else StudyIcons.Fullscreen,if(fullscreen)"Exit fullscreen" else "Fullscreen")
             }
@@ -42,6 +43,7 @@ fun PlayerScreen(model: AppViewModel,installed: InstalledLesson,part: PackagePar
     }
     val controls: @Composable ()->Unit = {
         Column(verticalArrangement=Arrangement.spacedBy(12.dp)) {
+            if(installed.lesson.contentType==ContentType.EXTERNAL_REVIEW)DemoLabel()
             FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 NarrationMode.entries.forEach {mode->FilterChip(selected=state.mode==mode,onClick={model.player.switchMode(mode)},
                     label={Text(if(mode==NarrationMode.EXPLANATION)"Explanation" else "Story")})}
@@ -102,6 +104,7 @@ fun ExplorerScreen(installed: InstalledLesson,part: PackagePart) {
     var hide by rememberSaveable {mutableStateOf(false)}
     val selected=symbols.find {it.id==selectedId}
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        if(installed.lesson.contentType==ContentType.EXTERNAL_REVIEW)DemoLabel()
         Text("Every object has a purpose",style=MaterialTheme.typography.headlineMedium)
         Text("Tap a symbol, or choose one below. Pinch and drag to explore the illustration.")
         Illustration(File(installed.directory,part.illustrationPath),symbols,Modifier.fillMaxWidth().aspectRatio(1.4f).clip(RoundedCornerShape(20.dp)),

@@ -8,12 +8,13 @@ import java.security.MessageDigest
 val PackageJson = Json { encodeDefaults = true; ignoreUnknownKeys = false; isLenient = false }
 
 @Serializable
-enum class ContentType { USER_SOURCE, TECHNICAL_DEMO }
+enum class ContentType { USER_SOURCE, TECHNICAL_DEMO, EXTERNAL_REVIEW }
 
 @Serializable
 data class SourceDocument(
     val id: String, val title: String, val sha256: String,
     val userProvided: Boolean, val excerpts: Map<String, String>,
+    val externalUrl: String? = null,
 )
 
 @Serializable
@@ -52,6 +53,7 @@ data class Track(
 data class PackagePart(
     val id: String, val title: String, val objectives: List<String>,
     val illustrationPath: String, val factIds: List<String>, val explanation: Track, val story: Track,
+    val scene: LayeredScene? = null,
 ) {
     fun track(mode: NarrationMode) = if (mode == NarrationMode.EXPLANATION) explanation else story
 }
@@ -98,7 +100,10 @@ data class LessonPackage(
     ).toByteArray(Charsets.UTF_8))
 
     fun validate() {
-        require(schemaVersion == 1) { "Unsupported lesson schema $schemaVersion" }
+        require(schemaVersion in 1..2) { "Unsupported lesson schema $schemaVersion" }
+        if (schemaVersion == 1) require(contentType != ContentType.EXTERNAL_REVIEW && parts.all { it.scene == null } && sources.all { it.externalUrl == null }) {
+            "External review and layered scenes require schema 2"
+        }
         requireId(lessonId)
         require(revision > 0 && language == "en") { "Invalid revision or language" }
         require(title.isNotBlank() && title.length <= 200 && specialty.isNotBlank()) { "Lesson needs a title and specialty" }
@@ -113,12 +118,21 @@ data class LessonPackage(
             require(source.title.isNotBlank() && hashPattern.matches(source.sha256)) { "Invalid source identity" }
             require(source.excerpts.isNotEmpty() && source.excerpts.all { it.key.isNotBlank() && it.value.isNotBlank() }) { "Source excerpts are required" }
             if (contentType == ContentType.USER_SOURCE) require(source.userProvided) { "Medical sources must be user supplied" }
+            source.externalUrl?.let { url ->
+                val uri = java.net.URI(url)
+                require(url.length <= 2000 && uri.scheme == "https" && !uri.host.isNullOrBlank() && uri.userInfo == null) { "Invalid external source URL" }
+            }
+            if (contentType == ContentType.EXTERNAL_REVIEW) require(!source.userProvided && source.externalUrl != null) {
+                "Review demonstrations require explicitly external sources and HTTPS attribution"
+            }
         }
         if (contentType == ContentType.USER_SOURCE) {
             require(quality.sourceCoverageReviewed && quality.audioReviewed && quality.reviewer.isNotBlank()) {
                 "User-source lessons require recorded source coverage and listening review"
             }
         }
+        if (contentType == ContentType.EXTERNAL_REVIEW) require(quality.notes.isNotBlank()) { "Demonstrations must record review limitations" }
+        if (quality.sourceCoverageReviewed || quality.audioReviewed) require(quality.reviewer.isNotBlank()) { "Name the recorded reviewer" }
         require(narration.engine == "Breeze TTS 2" && narration.backend == "CPU") { "Breeze TTS 2 CPU provenance required" }
         require(narration.modelSha256 == STANDARD_Q8_SHA256 && hashPattern.matches(narration.voiceSha256)) { "Standard Q8_0 and voice checksums required" }
         require(Regex("[a-f0-9]{40}").matches(narration.codeCommit)) { "Exact narration code revision required" }
@@ -148,6 +162,11 @@ data class LessonPackage(
             require(part.factIds.isNotEmpty() && part.factIds.all { it in factIds })
             require(assetMap[part.illustrationPath]?.mediaType == "image/png") { "Missing illustration" }
             referencedAssets += part.illustrationPath
+            part.scene?.let { scene ->
+                scene.validate(part, assetMap, symbols)
+                referencedAssets += scene.backgroundPath
+                referencedAssets += scene.layers.map { it.assetPath }
+            }
             listOf(part.explanation, part.story).forEach { track ->
                 require(assetMap[track.assetPath]?.mediaType == "audio/wav") { "Missing narration asset" }
                 referencedAssets += track.assetPath

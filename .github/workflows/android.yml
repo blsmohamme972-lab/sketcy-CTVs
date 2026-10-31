@@ -36,7 +36,7 @@ jobs:
       - name: Production tooling tests (no medical sources or generated media)
         run: python3 -m unittest discover -s tools/production -p 'test_*.py' -v
       - name: JVM tests, Android build, instrumented-test build, and lint
-        run: ./gradlew :lesson-model:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --no-daemon
+        run: ./gradlew :lesson-model:test :app:assembleDebug :app:assembleDemoPreview :app:assembleDebugAndroidTest :app:lintDebug --no-daemon
       - name: Save installable debug APK and verification reports
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -46,6 +46,7 @@ jobs:
           if-no-files-found: error
           path: |
             app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/demoPreview/*.apk
             app/build/reports/lint-results-debug.*
             lesson-model/build/reports/tests/test/
             lesson-model/build/test-results/test/

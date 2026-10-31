@@ -43,6 +43,14 @@ test("camera interpolates from the previous settled focus and holds in a gap", (
   assert.equal(frameAt(track, 4500).camera.x, 0.2);
   assert.equal(frameAt(track, 7500).camera.x, 0.1);
 });
+test("measured narration can keep a caption after its short camera transition settles", () => {
+  const t = structuredClone(track);
+  t.cues[0].cameraDurationMs = 1400;
+  assert.equal(frameAt(t, 700).camera.x, 0.1);
+  assert.equal(frameAt(t, 2000).camera.x, 0.2);
+  assert.equal(frameAt(t, 2000).caption, "a");
+  assert.equal(frameAt(t, 700).camera.x, 0.1);
+});
 test("backward seeks are deterministic and clamp at track boundaries", () => {
   const before = frameAt(track, 2000);
   frameAt(track, 9000);

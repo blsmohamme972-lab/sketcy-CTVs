@@ -67,6 +67,7 @@ fun LibraryScreen(lessons: List<InstalledLesson>,progress: List<ProgressRow>,bus
                                 if(installed.row.bookmarked)"Remove bookmark" else "Bookmark lesson")}}
                         Text("${lesson.specialty} · ${lesson.parts.size} ${if(lesson.parts.size==1)"part" else "parts"} · ${lesson.facts.size} facts",style=MaterialTheme.typography.bodyMedium)
                         if(lesson.contentType==ContentType.TECHNICAL_DEMO)Text("TECHNICAL DEMO · NONMEDICAL",color=MaterialTheme.colorScheme.secondary,style=MaterialTheme.typography.labelSmall)
+                        if(lesson.contentType==ContentType.EXTERNAL_REVIEW)DemoLabel()
                         LinearProgressIndicator(progress={completed.toFloat()/(lesson.parts.size*2)},modifier=Modifier.fillMaxWidth())
                         Text(if(rows.isEmpty())"Ready to begin" else "$completed of ${lesson.parts.size*2} tracks complete · continue where you left off",style=MaterialTheme.typography.labelMedium)
                     }
@@ -86,6 +87,9 @@ fun LessonScreen(installed: InstalledLesson,progress: List<ProgressRow>,busy: Bo
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(18.dp)) {
         Text(lesson.title,style=MaterialTheme.typography.headlineLarge)
         Text("${lesson.specialty} · ${lesson.facts.size} facts · revision ${lesson.revision}",style=MaterialTheme.typography.bodyMedium)
+        if(lesson.contentType==ContentType.EXTERNAL_REVIEW)Notice("A demonstration for review",
+            "This lesson uses cited public sources. It is a testing example, not approved clinical teaching. " +
+                (if(lesson.quality.audioReviewed) "A listening review is recorded. " else "Human listening review is pending. ") + lesson.quality.notes)
         if(lesson.contentType==ContentType.TECHNICAL_DEMO)Notice("A nonmedical technical demo",
             "This original scene demonstrates playback and review. " +
                 (if(lesson.quality.audioReviewed) "An audio review is recorded for this package. " else "Its narration has not received a human listening review. ") +
@@ -125,10 +129,16 @@ fun SourceEvidence(lesson: LessonPackage,fact: Fact) {
             fact.sources.forEach {reference->
                 val source=lesson.sources.first {it.id==reference.sourceId}
                 Text("${source.title} · ${reference.locator}",style=MaterialTheme.typography.labelMedium,color=MaterialTheme.colorScheme.primary)
+                source.externalUrl?.let { Text(it,style=MaterialTheme.typography.bodySmall) }
                 Text("“${reference.quote}”",style=MaterialTheme.typography.bodyMedium)
             }
         }}
     }
+}
+
+@Composable
+fun DemoLabel() {
+    Text("DEMONSTRATION · AWAITING REVIEW",color=MaterialTheme.colorScheme.secondary,style=MaterialTheme.typography.labelSmall)
 }
 
 fun clock(ms: Long): String {val seconds=ms.coerceAtLeast(0)/1000;return "${seconds/60}:${(seconds%60).toString().padStart(2,'0')}"}

@@ -1,4 +1,40 @@
-# Verification — Studio 0.1 and Android 0.2.0
+# Verification — Android 0.3, measured Studio bridge and historical checks
+
+## Android 0.3 / two-example engineering checks — 31 October 2026
+
+| Check | Observed result |
+| --- | --- |
+| Kotlin JVM | 44 passed, zero failures; includes v1 origin gates, v2 source/layer validation, deterministic seeks, separate track keys and reduced motion |
+| Studio core/CLI | 47 passed; stable IDs, explicit part identity, retained external URL and short camera transitions with longer captions |
+| Chromium | 15 passed; real browser/renderer tests, separate from Android |
+| CPU tooling / production | 12 and 11 passed respectively; production includes measured-boundary, fact-link, hash, pivot and placement checks |
+| Android build | `assembleDebug`, `assembleDemoPreview`, `assembleDebugAndroidTest` passed |
+| Android lint | Zero errors/fatals; 14 warnings, not a warning-free report |
+| Preview APK | `com.sketcy.ctvs.preview`, 0.3.0-preview, minSdk 26, targetSdk 35, 12,703,450 bytes |
+| APK integrity | APK Signature Scheme v2 verified; zip alignment checked; no device installation inferred |
+| Emulator/device | Zero tests executed in this increment; `/dev/kvm` absent |
+
+Local JDK: Eclipse Temurin 17.0.21+9, verified archive SHA-256
+`8b9b611d917e3dfd8419d3566b5949226f69b052fed7e109c1368add1dfe8711`.
+Gradle 8.9, Kotlin 2.0.21, SDK 35/build-tools 34.0.0; existing dependency pins
+remain unchanged. SDK downloads used the session proxy and its CA trust.
+Node 24.22.1, Python 3.12.14, Playwright 1.56.1/Chromium 1194.
+The restricted subprocess wrapper again suppressed captured CLI output; the
+same suite passed with subprocess permission. No failing assertion was removed.
+
+Preview APK SHA-256:
+`9f3c05bd29c401b7d4fd71c920c4feaae02d84aa6fa42a9ab0e3d7b4868abaa2`.
+Debug signing certificate SHA-256:
+`d5b5719cde48c7a7344b3567c3abe73d0eddf9e792f6867d0f84094e51d23927`.
+This is a review build with a separate app identity, not a production release key.
+
+The source and model pins in `tools/breeze/versions.json` were restored and
+verified. A clean Release build with CUDA and Vulkan disabled passed the upstream
+`depth-replay-cpu` test. The new neutral smoke generated 11.76 seconds of audio.
+Actual lesson generation is in progress; add final track, package and resource
+measurements before declaring the two-example delivery complete. Nonzero PCM,
+structural checks and generated frames do not constitute human listening or
+clinical review.
 
 ## Studio 0.1 internal authoring — 30 October 2026 (UTC)
 

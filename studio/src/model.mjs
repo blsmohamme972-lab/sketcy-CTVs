@@ -338,6 +338,17 @@ export function validateProject(p) {
     assert(!sourceIds.has(s.id), "Duplicate source ID.");
     sourceIds.add(s.id);
     string(s.title, 500, "source title");
+    if (s.externalUrl !== undefined) {
+      string(s.externalUrl, 2000, "external source URL");
+      const url = new URL(s.externalUrl);
+      assert(
+        url.protocol === "https:" &&
+          url.hostname &&
+          !url.username &&
+          !url.password,
+        "External source URL must be HTTPS without credentials.",
+      );
+    }
     assert(
       typeof s.userProvided === "boolean",
       "Source origin must be explicit.",
@@ -486,6 +497,8 @@ export function validateProject(p) {
       c.layerIds.forEach((v) => assert(nodeIds.has(v), "Missing cue layer."));
       assert(["LINEAR", "EASE_IN_OUT"].includes(c.easing), "Invalid easing.");
       if (c.camera) {
+        if (c.cameraDurationMs !== undefined)
+          number(c.cameraDurationMs, 1, c.endMs - c.startMs, "camera duration");
         for (const key of ["x", "y"])
           number(c.camera[key], 0, 1, "camera position");
         for (const key of ["width", "height"])
@@ -558,14 +571,14 @@ export function readiness(p) {
     issues.push("User-source lessons require learner-supplied sources.");
   if (p.contentType === "EXTERNAL_REVIEW")
     issues.push(
-      "External-source review drafts are not supported by Android package v1.",
+      "External medical demonstrations require schema 2, HTTPS source attribution and a visible review label. Use the measured Studio production bridge.",
     );
   issues.push(
     "Breeze generation provenance and human listening/source review must be completed in the production workflow.",
   );
   if (flatten(p.nodes).some((n) => MODES.some((m) => n.motion[m].length)))
     issues.push(
-      "Independent layer motion is previewed in Studio; Android package v1 does not support it.",
+      "Independent layer motion requires the transparent layer export and Android schema 2 production bridge.",
     );
   return [...new Set(issues)];
 }

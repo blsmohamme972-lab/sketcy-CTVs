@@ -81,6 +81,7 @@ fun ReviewSession(model: AppViewModel,prefs: StudyPreferences,busy: Boolean,onFi
     val symbol=symbols.find {it.id==q.symbolId}
     val masked=q.type==QuestionType.IMAGE_OCCLUSION && !p.revealed
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(18.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        if(lesson.contentType==ContentType.EXTERNAL_REVIEW)DemoLabel()
         Text(questionLabel(q.type).uppercase(),color=MaterialTheme.colorScheme.primary,style=MaterialTheme.typography.labelMedium)
         Text(q.prompt,style=MaterialTheme.typography.headlineSmall)
         Illustration(File(p.installed.directory,part.illustrationPath),symbols,

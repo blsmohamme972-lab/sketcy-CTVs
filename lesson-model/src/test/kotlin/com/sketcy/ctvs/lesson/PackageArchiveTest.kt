@@ -117,4 +117,37 @@ class PackageArchiveTest {
         assertNotEquals(lesson.fingerprint(fact),lesson.fingerprint(fact.copy(text="The test object is red.")))
         assertNotEquals(lesson.fingerprint(fact),lesson.fingerprint(fact.copy(sources=fact.sources.map {it.copy(locator="passage 2")})))
     }
+
+    @Test fun `external medical demonstrations have a separate versioned origin and review policy`() {
+        val draft=lesson(wav()).copy(schemaVersion=2,contentType=ContentType.EXTERNAL_REVIEW,
+            sources=lesson(wav()).sources.map {it.copy(externalUrl="https://example.org/source")},
+            quality=QualityReview(notes="Synthetic fixture. Awaiting human review."))
+        draft.validate()
+        assertFails {draft.copy(schemaVersion=1).validate()}
+        assertFails {draft.copy(sources=draft.sources.map {it.copy(userProvided=true)}).validate()}
+        assertFails {draft.copy(sources=draft.sources.map {it.copy(externalUrl=null)}).validate()}
+        assertFails {draft.copy(sources=draft.sources.map {it.copy(externalUrl="javascript:alert(1)")}).validate()}
+        assertFails {draft.copy(quality=QualityReview()).validate()}
+        // A demonstration cannot be promoted to user-supplied content by changing its label.
+        assertFails {draft.copy(contentType=ContentType.USER_SOURCE).validate()}
+    }
+
+    @Test fun `layered package references every PNG and bounds keys to its measured tracks`() {
+        val base=lesson(wav())
+        val layer=SceneLayer("layer","images/object.png",ImageRegion(0f,0f,1f,1f),"s",
+            explanation=listOf(LayerKeyframe(0),LayerKeyframe(1000,scale=1.04f)))
+        val scene=LayeredScene(64,64,"images/background.png",listOf(layer))
+        val pkg=base.copy(schemaVersion=2,parts=listOf(base.parts.single().copy(scene=scene)),
+            assets=base.assets+listOf("images/background.png","images/object.png").map {Asset(it,"image/png",png.size.toLong(),sha256(png))})
+        pkg.validate()
+        assertFails {pkg.copy(schemaVersion=1).validate()}
+        assertFails {pkg.copy(assets=pkg.assets.dropLast(1)).validate()}
+        fun changed(l: SceneLayer)=pkg.copy(parts=listOf(pkg.parts.single().copy(scene=scene.copy(layers=listOf(l)))))
+        assertFails {changed(layer.copy(story=listOf(LayerKeyframe(60_001)))).validate()}
+        assertFails {changed(layer.copy(story=listOf(LayerKeyframe(1000),LayerKeyframe(1000)))).validate()}
+        assertFails {changed(layer.copy(story=listOf(LayerKeyframe(1000,dx=Float.NaN)))).validate()}
+        assertFails {changed(layer.copy(story=listOf(LayerKeyframe(1000,scale=2f)))).validate()}
+        assertFails {changed(layer.copy(symbolId="missing")).validate()}
+        assertFails {changed(layer.copy(pivotX=2f)).validate()}
+    }
 }

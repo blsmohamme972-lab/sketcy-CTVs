@@ -1,6 +1,15 @@
 # Sketcy CTVS — Project Plan
 
-## New authoring direction — Studio 0.1
+## Current scoped delivery — two layered examples
+
+Build and deliver two lessons using Studio: CABG and surgical aortic valve
+replacement. The versioned Android renderer, external-source review policy,
+measured handoff bridge and separate preview APK are implemented and checked.
+Complete the four real Breeze CPU tracks, package validation and file delivery;
+then stop for the user's review. Human listening, clinical approval and phone
+acceptance remain explicit gates. Do not claim the other eight lessons exist.
+
+## Earlier authoring direction — Studio 0.1
 
 The user requested an Illustrator-like tool inside the repo and clarified that
 it is **for the assistant to author lessons, never part of the student app**.
@@ -10,8 +19,8 @@ vectors and images, source-linked facts, two narration timelines, deterministic
 camera/object previews, portable projects, raster layer exports and production
 handoff. Local verification is recorded separately from Android checks.
 
-Next: measured Breeze ledger integration, a versioned Android layer renderer,
-then completion and review of the first three cardiac layer packs. Advanced
+The next scoped work is measured completion and review of the two requested
+cardiac examples using the now implemented schema-2 layer bridge. Advanced
 Illustrator features and automatic image/audio job orchestration remain later
 milestones. The existing Android app stays Kotlin/Compose/Media3, API 26+.
 

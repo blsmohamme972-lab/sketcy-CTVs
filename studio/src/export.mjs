@@ -89,10 +89,11 @@ export async function pngBlob(project, opts = {}) {
     URL.revokeObjectURL(url);
   }
 }
-export function handoff(project) {
+export function handoff(project, partId = "part-01") {
   validateProject(project);
-  const partId = "part-01",
-    symbols = [];
+  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(partId))
+    throw new Error("Invalid part ID.");
+  const symbols = [];
   function visit(nodes, parent) {
     for (const n of nodes) {
       if (!n.visible) continue;
@@ -144,7 +145,7 @@ export function handoff(project) {
     ],
   };
   const lesson = {
-    schemaVersion: 1,
+    schemaVersion: project.contentType === "EXTERNAL_REVIEW" ? 2 : 1,
     lessonId: project.id,
     revision: 1,
     title: project.title,
@@ -152,12 +153,13 @@ export function handoff(project) {
     language: "en",
     contentType: project.contentType,
     sources: project.sources.map(
-      ({ id, title, sha256, userProvided, excerpts }) => ({
+      ({ id, title, sha256, userProvided, excerpts, externalUrl }) => ({
         id,
         title,
         sha256,
         userProvided,
         excerpts,
+        ...(externalUrl ? { externalUrl } : {}),
       }),
     ),
     facts: project.facts,

@@ -5,13 +5,19 @@ PDFs and text. Kotlin, Jetpack Compose, Room, DataStore and Media3; Android 8+
 (API 26). Imports, playback and spaced review use local files and on-device
 storage. No account, server, analytics or Internet permission is required.
 
-**Current checkpoint: Sketcy Studio 0.1 internal authoring, Android 0.2.0.**
-The repository now includes an illustration/composition tool for the assistant
-and future agents. It creates editable scenes, independent image layers, source
-fact links and explanation/story previews. **Studio is not in the student app.**
-See [the authoring guide](studio/README.md) and [the staged plan](docs/STUDIO_PLAN.md).
-The new work passed 45 JavaScript/core/CLI checks and 15 real Chromium checks;
-those are separate from Android JVM, emulator and physical-device validation.
+**Current engineering checkpoint: Android 0.3 and Studio's measured layer bridge.**
+The assistant uses Studio to make lessons; the student app has no authoring UI.
+Schema 2 adds independent transparent objects, per-track gentle motion and explicit
+externally sourced review demonstrations. Camera, captions, highlights and objects
+follow the Media3 audio position, including seeks and the still-scene setting.
+The separate **Sketcy Preview** APK can be installed alongside version 0.2.
+
+The current delivery task is two original cardiac examples: **The Bypass Mountain
+(CABG)** and **The Gatekeeper Courtyard (surgical aortic valve replacement)**.
+Artwork is composed in Studio; the four real Breeze Q8_0 CPU tracks and complete
+ZIP delivery are being finalized. No human clinical/listening pass is claimed.
+See [the current handoff](HANDOFF.md), [schema 2](docs/LESSON_PACKAGE_V2.md),
+[authoring](studio/README.md) and [verification](docs/VERIFICATION.md).
 
 **Android baseline: version 0.2.0 engineering checkpoint.** The user asked to proceed with
 all remaining work after the bounded CPU feasibility checkpoint `c5eea4d`.
@@ -27,8 +33,9 @@ package is an original nonmedical technical demo, with actual Breeze TTS 2 CPU
 narration and original artwork. It is not the requested medical pilot. Human
 listening review and physical-device acceptance are still required.
 The user later authorized public medical sources for a separate cardiac testing
-demonstration. Those remain external-source review drafts; this exception does
-not make them learner-supplied sources or change the v1 importer policy.
+demonstration. These use the explicit schema-2 `EXTERNAL_REVIEW` policy and a visible review
+label. The exception does not make them learner-supplied or relax `USER_SOURCE`
+review requirements. The older v1 importer cannot read v2 packages.
 
 The real Explanation track measures **86.88 seconds** and Story **91.04 seconds**
 at normal speed. Eight separate CPU generation processes took 57.64 minutes in

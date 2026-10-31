@@ -57,8 +57,9 @@ work without routine permission stops.
 - Imported WAV metadata and nonzero PCM do not prove Breeze origin, intelligibility
   or correctness. Retain the actual generation ledger and listening findings.
 - Never set source/listening approval flags just to satisfy a validator.
-- External-source cardiac drafts need their own reviewed delivery policy before
-  v1 Android import. Do not remove source-origin validation to bypass that gate.
+- External-source cardiac demonstrations use the explicit schema-2 review policy
+  and preview app. Keep review flags false until reviewed. Do not remove
+  source-origin validation or mislabel these as v1 nonmedical demos.
 - Keep model weights, generated media, user PDFs/text and credentials out of Git.
   CLI output guards include parent symlink resolution; do not disable them for
   convenience. Browser downloads also belong outside the checkout.

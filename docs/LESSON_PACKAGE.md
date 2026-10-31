@@ -1,3 +1,5 @@
+> This document defines the preserved schema-1 baseline. See [schema 2](LESSON_PACKAGE_V2.md) for independent layers and explicit external review demonstrations. Android 0.3 reads both versions.
+
 # Lesson ZIP contract — version 1
 
 The executable specification is

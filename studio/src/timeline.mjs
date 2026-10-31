@@ -18,7 +18,11 @@ export function frameAt(track, positionMs, reducedMotion = false) {
     for (const c of track.cues) {
       if (!c.camera) continue;
       if (time < c.startMs) break;
-      const t = clamp((time - c.startMs) / (c.endMs - c.startMs), 0, 1),
+      const t = clamp(
+          (time - c.startMs) / (c.cameraDurationMs ?? c.endMs - c.startMs),
+          0,
+          1,
+        ),
         e = c.easing === "LINEAR" ? t : smooth(t);
       camera = Object.fromEntries(
         Object.keys(camera).map((k) => [k, lerp(camera[k], c.camera[k], e)]),

@@ -17,11 +17,14 @@ explicit draft timing. Continue through the real generation/review/package
 steps below; a Studio handoff is not an importable ZIP.
 
 The handoff's review flags start false. Its cue times do not override measured
-Breeze segment boundaries. Current Android package v1 flattens artwork to one
-PNG per part and cannot play Studio's independent element motion. Keep external
-medical testing drafts labelled `EXTERNAL_REVIEW` in Studio; that authoring-only
-type is not supported by the existing Android importer. Do not mislabel content
-or source origin to bypass validation.
+Breeze segment boundaries. For independent objects, use
+[`studio_package.py`](studio_package.py) and [schema 2](../../docs/LESSON_PACKAGE_V2.md).
+It compares the handoff to the generation ledger, validates exported pixel
+identities/placement/pivots, and invokes the existing packager and JVM validator.
+The explicit `EXTERNAL_REVIEW` category permits visibly labeled public-source
+test demonstrations with human review pending. It requires real external URLs;
+it never makes external sources user-provided. `USER_SOURCE` approval gates
+remain unchanged. Schema-2 ZIPs require Android 0.3, including Sketcy Preview.
 
 ## 1. Extract only material supplied by the learner
 

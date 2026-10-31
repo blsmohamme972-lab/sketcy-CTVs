@@ -11,7 +11,7 @@ import java.util.zip.ZipFile
 
 data class ValidatedPackage(val lesson: LessonPackage, val manifestJson: String, val manifestSha256: String)
 
-/** Bounded, strict v1 archive import. Call only with a new private staging directory. */
+/** Bounded, strict v1/v2 archive import. Call only with a new private staging directory. */
 object PackageArchive {
     const val MAX_ZIP_BYTES = 256L * 1024 * 1024
     const val MAX_EXPANDED_BYTES = 512L * 1024 * 1024
@@ -75,6 +75,10 @@ object PackageArchive {
                     if (asset.mediaType == "image/png") inspectPng(output)
                 }
                 lesson.parts.forEach { part ->
+                    part.scene?.let { scene ->
+                        require(inspectPng(File(destination, scene.backgroundPath)) == (scene.width to scene.height)) { "Scene background dimensions differ" }
+                        require(inspectPng(File(destination, part.illustrationPath)) == (scene.width to scene.height)) { "Scene thumbnail dimensions differ" }
+                    }
                     listOf(part.explanation, part.story).forEach { track ->
                         val duration = inspectWav(File(destination, track.assetPath))
                         require(duration in 60_000..240_000 && kotlin.math.abs(duration - track.durationMs) <= 1) { "Actual narration duration differs from declaration" }

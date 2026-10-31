@@ -1,4 +1,54 @@
-# Worker handoff — Studio 0.1 internal authoring checkpoint
+# Worker handoff — Android 0.3 layered demonstration checkpoint
+
+## Current work — two Studio-authored cardiac examples, 31 October 2026
+
+The latest user request is **two example lessons using the updated internal Studio**.
+Work alone, use English, and keep Studio off the student side. The selected topics
+are CABG (The Bypass Mountain) and surgical aortic valve replacement (The Gatekeeper
+Courtyard). Public medical sources are authorized for these demonstrations only.
+
+The engineering bridge is implemented: schema 2 has independent transparent PNG
+layers, pivots and per-track keyframes, sampled directly from Media3 position.
+The still-scene setting disables both camera and object motion. Explicit
+`EXTERNAL_REVIEW` packages retain HTTPS source URLs and false human-review flags;
+the app labels them in the library, lesson, player, explorer and review screens.
+`USER_SOURCE` still requires user-provided material and named source/listening
+approval. Schema 1 remains readable. See [schema 2](docs/LESSON_PACKAGE_V2.md).
+
+`tools/production/studio_package.py` bridges Studio's real PNG layer export and
+handoff to the existing measured CPU packager. It rejects script/fact-link drift,
+guessed segment timings, changed image hashes, placement mismatches and unsafe
+layer paths. It never grants review approval. Studio CLI accepts stable `--id`
+values for `new`/`add-image`, and `--part-id` for `handoff`.
+
+The separate `demoPreview` build installs as **Sketcy Preview**, package
+`com.sketcy.ctvs.preview`, alongside the existing app. It needs Android 8+ and
+supports these schema-2 lesson ZIPs. Do not send a v2 ZIP to the older 0.2 importer.
+The normal application identity is unchanged; the preview has its own library.
+
+Observed engineering checks: 44 JVM tests, 47 Studio core/CLI tests, 15 Chromium
+checks, 12 Breeze tooling tests and 11 production tests passed. Debug, preview and
+instrumented-test APKs compiled; Android lint reported zero errors and 14 warnings.
+APK v2 signature, alignment, package ID and minSdk were checked. **No Android
+emulator/device test ran in this work**; this environment has no `/dev/kvm`.
+
+The two original compositions exist with seven CABG objects and six valve objects,
+each independently transparent, plus separate backgrounds. The pinned Breeze CPU
+run is producing the four distinct tracks. Complete the delivery ledger below
+before claiming both import packages are saved. The CABG explanation already
+measures 107.20 seconds; all human listening and clinical acceptance remain open.
+Models, media, authoring projects and downloaded sources are outside Git.
+
+### Immediate completion work
+
+Finish the same pinned CPU run; align Studio cues and object keys to actual
+segment boundaries; export and validate both v2 ZIPs with the app's JVM parser;
+inspect recomposition and representative moving/still frames; save the APK,
+lesson files and editable project bundle; record hashes/durations/resource use
+and saved-file identities in README/VERIFICATION; verify GitHub and stop after
+the two requested examples. Do not expand to the other eight demonstrations.
+
+## Previous Studio 0.1 checkpoint (historical)
 
 ## Latest user direction and saved work
 

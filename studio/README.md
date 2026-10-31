@@ -93,7 +93,7 @@ SVG/PNG exports omit selection controls, captions and editing overlays.
 
 `handoff` produces:
 
-- `images/scene.png`: real flattened base illustration for Android package v1.
+- `images/scene.png`: real flattened base illustration/thumbnail for Android.
 - `authoring.json`: `lesson` plus an `imageFiles` mapping to the actual PNG.
 - `narration-plan.json`: distinct explanation/story segment arrays with fact
   and symbol IDs, for the existing Breeze CPU runner.
@@ -107,10 +107,19 @@ package using the existing Kotlin validator. The packager uses measured segment
 boundaries from that ledger; Studio draft cue times do not override them.
 
 The handoff deliberately starts with both review flags false. It is **not** an
-Android ZIP. Android package v1 supports one PNG per part and camera movement;
-independent object animation currently works in Studio only. The layer manifest
-preserves the inputs for a later versioned Android renderer. `EXTERNAL_REVIEW`
-projects remain review drafts and are not a supported v1 delivery content type.
+Android ZIP. Version 0.3 adds a [schema-2 bridge](../docs/LESSON_PACKAGE_V2.md)
+for measured layer exports and explicitly labeled `EXTERNAL_REVIEW` packages.
+Schema 1 remains a single-image format. Use stable `--id` values with `new` and
+`add-image`, and `handoff --part-id <id>` matching the CPU generation plan.
+Source `externalUrl` attribution survives export. Patch actual segment start/end
+times after attaching WAVs; `cameraDurationMs: 1400` can settle a camera move
+while its longer caption remains visible. The bridge rejects guessed timing.
+
+```sh
+node studio/agent.mjs layers --project /private/measured.sketcy-studio.json --out-dir /private/layers
+node studio/agent.mjs handoff --project /private/measured.sketcy-studio.json --part-id part-01 --out-dir /private/handoff
+python3 tools/production/studio_package.py --handoff /private/handoff --layers /private/layers --generation /private/breeze-run --output /private/lesson-demo.zip
+```
 
 ## Verification
 

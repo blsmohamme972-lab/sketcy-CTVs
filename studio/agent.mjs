@@ -193,7 +193,7 @@ function patch(project, operations) {
 async function run() {
   if (!command || command === "help") {
     console.log(
-      `Sketcy Studio — internal agent authoring\n\nnode studio/agent.mjs new --title "Scene" --out /private/scene.sketcy-studio.json [--demo]\nnode studio/agent.mjs validate --project /private/scene.sketcy-studio.json\nnode studio/agent.mjs patch --project /private/scene.sketcy-studio.json --ops /private/ops.json --out /private/revised.sketcy-studio.json\nnode studio/agent.mjs add-image --project ... --image /private/object.png --out ... [--background] [--x 100 --y 200 --width 300]\nnode studio/agent.mjs add-audio --project ... --audio /private/explanation.wav --mode explanation --out ...\nnode studio/agent.mjs render --project ... --out /private/scene.png [--mode story --time-ms 15000] [--reduced-motion]\nnode studio/agent.mjs layers --project ... --out-dir /private/layers\nnode studio/agent.mjs handoff --project ... --out-dir /private/production\n\nSVG rendering and validation need Node 22+. PNG rendering and asset inspection also need npm ci, Playwright Chromium and Python 3. All generated outputs must stay outside Git. Existing outputs are protected unless --force is explicit.`,
+      `Sketcy Studio — internal agent authoring\n\nnode studio/agent.mjs new --title "Scene" --out /private/scene.sketcy-studio.json [--demo] [--id stable-project]\nnode studio/agent.mjs validate --project /private/scene.sketcy-studio.json\nnode studio/agent.mjs patch --project /private/scene.sketcy-studio.json --ops /private/ops.json --out /private/revised.sketcy-studio.json\nnode studio/agent.mjs add-image --project ... --image /private/object.png --out ... [--id stable-layer] [--background] [--x 100 --y 200 --width 300]\nnode studio/agent.mjs add-audio --project ... --audio /private/explanation.wav --mode explanation --out ...\nnode studio/agent.mjs render --project ... --out /private/scene.png [--mode story --time-ms 15000] [--reduced-motion]\nnode studio/agent.mjs layers --project ... --out-dir /private/layers\nnode studio/agent.mjs handoff --project ... --out-dir /private/production [--part-id part-01]\n\nSVG rendering and validation need Node 22+. PNG rendering and asset inspection also need npm ci, Playwright Chromium and Python 3. All generated outputs must stay outside Git. Existing outputs are protected unless --force is explicit.`,
     );
     return;
   }
@@ -202,6 +202,7 @@ async function run() {
       ? demoProject()
       : emptyProject(options.title || "Untitled scene");
     if (options.title) p.title = options.title;
+    if (options.id) p.id = options.id;
     validateProject(p);
     return report(await saveJson(required("out"), p));
   }
@@ -262,6 +263,7 @@ async function run() {
           ? Number(options.y)
           : (project.height - info.height * ratio) / 2;
     const n = makeNode("image", {
+      id: options.id || uid("layer"),
       name: options.name || basename(path),
       assetId,
       width: info.width,
@@ -422,7 +424,7 @@ async function run() {
   if (command === "handoff") {
     const dir = privateOutput(required("out-dir"));
     await mkdir(resolve(dir, "images"), { recursive: true });
-    const out = handoff(project),
+    const out = handoff(project, options["part-id"] || "part-01"),
       image = await ensureWritable(resolve(dir, "images/scene.png"));
     // Preflight all outputs before rendering or writing any project-derived text.
     for (const name of [

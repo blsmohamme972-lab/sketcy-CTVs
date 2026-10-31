@@ -121,10 +121,24 @@ class LessonRepository(private val context: Context) {
     } }
 
     private fun decodeImages(lesson: LessonPackage, directory: File) {
+        val layers=lesson.parts.flatMap {it.scene?.layers.orEmpty()}.map {it.assetPath}.toSet()
         lesson.assets.filter { it.mediaType=="image/png" }.forEach { asset ->
             val options=BitmapFactory.Options().apply { inSampleSize=4 }
             val bitmap=BitmapFactory.decodeFile(File(directory,asset.path).path,options)
-            requireNotNull(bitmap) { "Illustration cannot be decoded" };bitmap.recycle()
+            requireNotNull(bitmap) { "Illustration cannot be decoded" }
+            try {
+                if(asset.path in layers) {
+                    var transparent=false;var visible=false
+                    val row=IntArray(bitmap.width)
+                    for(y in 0 until bitmap.height) {
+                        bitmap.getPixels(row,0,bitmap.width,0,y,bitmap.width,1)
+                        row.forEach { pixel -> val alpha=pixel ushr 24
+                            transparent=transparent || alpha==0;visible=visible || alpha>0 }
+                        if(transparent && visible)break
+                    }
+                    require(transparent && visible) { "Each scene object needs visible pixels and genuine transparency" }
+                }
+            } finally {bitmap.recycle()}
         }
     }
 

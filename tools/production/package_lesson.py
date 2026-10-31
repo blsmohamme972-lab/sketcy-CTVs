@@ -58,11 +58,15 @@ def build(authoring, generation, output, validator=True):
         "voiceSha256": ledger["voice_sha256"]}
     media = {}
     for part in manifest["parts"]:
-        image_path = part["illustrationPath"]
-        image = Path(authored["imageFiles"][image_path])
-        if not image.is_absolute():
-            image = authoring.parent / image
-        media[image_path] = image.resolve()
+        image_paths = [part["illustrationPath"]]
+        if part.get("scene"):
+            image_paths += [part["scene"]["backgroundPath"]]
+            image_paths += [layer["assetPath"] for layer in part["scene"]["layers"]]
+        for image_path in image_paths:
+            image = Path(authored["imageFiles"][image_path])
+            if not image.is_absolute():
+                image = authoring.parent / image
+            media[image_path] = image.resolve()
         symbols = {s["id"]: s for s in manifest["symbols"] if s["partId"] == part["id"]}
         for mode in ("explanation", "story"):
             record = ledger["tracks"][part["id"] + "/" + mode]
