@@ -42,6 +42,7 @@ def prepare(handoff_folder, layer_folder, generation):
     part = manifest["parts"][0]
     part_id = part["id"]
     plan = handoff["narrationPlan"]["parts"][0]
+    camera_cues = {}
     if plan["id"] != part_id:
         raise ValueError("Narration part identity differs")
     for mode in ("explanation", "story"):
@@ -57,6 +58,10 @@ def prepare(handoff_folder, layer_folder, generation):
             for cue, segment in zip(timing["cues"], measured["segments"])
         ):
             raise ValueError("Studio cues must use actual generated segment boundaries")
+        camera_cues[mode] = [{"startMs": cue["startMs"],
+            "endMs": cue["startMs"] + cue.get("cameraDurationMs", cue["endMs"] - cue["startMs"]),
+            "target": cue.get("camera") or {"x": 0, "y": 0, "width": 1, "height": 1},
+            "easing": cue.get("easing", "EASE_IN_OUT")} for cue in timing["cues"]]
     width, height = exported["canvas"]["width"], exported["canvas"]["height"]
     if not (isinstance(width, int) and isinstance(height, int) and 64 <= width <= 4096 and 64 <= height <= 4096):
         raise ValueError("Invalid scene canvas")
@@ -87,7 +92,7 @@ def prepare(handoff_folder, layer_folder, generation):
     manifest["schemaVersion"] = 2
     part["scene"] = scene
     # Copy all flags unchanged. USER_SOURCE still needs recorded human approval.
-    return {"lesson": manifest, "imageFiles": images}
+    return {"lesson": manifest, "imageFiles": images, "cameraCues": {part_id: camera_cues}}
 
 
 def main():

@@ -87,6 +87,10 @@ def build(authoring, generation, output, validator=True):
                     target = {"x": x, "y": y, "width": right-x, "height": bottom-y}
                 cues.append({"startMs": s["startMs"], "endMs": min(s["startMs"]+1400, s["endMs"]),
                              "target": target, "easing": "EASE_IN_OUT"})
+            if part["id"] in authored.get("cameraCues", {}):
+                # A measured Studio handoff owns its camera choices. The Kotlin
+                # validator still checks target bounds and timeline constraints.
+                cues = authored["cameraCues"][part["id"]][mode]
             path = f"audio/{part['id']}-{mode}.wav"
             part[mode] = {"assetPath": path, "durationMs": audio["sample_frames"]*1000//24000,
                           "segments": segments, "captions": captions, "cameraCues": cues}

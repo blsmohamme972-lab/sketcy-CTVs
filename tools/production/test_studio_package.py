@@ -48,6 +48,8 @@ class StudioPackageTest(unittest.TestCase):
         return prepare(self.root, self.root, self.root)
 
     def test_preserves_review_flags_and_exact_independent_pivot_and_normalized_motion(self):
+        self.handoff["timingDraft"]["story"]["cues"][0].update(cameraDurationMs=1400,
+            camera={"x": .1, "y": .2, "width": .5, "height": .4}, easing="LINEAR")
         result = self.run_prepare()
         self.assertEqual(result["lesson"]["schemaVersion"], 2)
         self.assertFalse(result["lesson"]["quality"]["audioReviewed"])
@@ -56,6 +58,8 @@ class StudioPackageTest(unittest.TestCase):
         self.assertEqual(layer["explanation"][0]["dx"], .0625)
         self.assertEqual(layer["explanation"][0]["dy"], .0625)
         self.assertEqual(set(result["imageFiles"]), {"images/scene.png", "images/background.png", "images/object.png"})
+        self.assertEqual(result["cameraCues"]["p"]["story"], [{"startMs": 0, "endMs": 1400,
+            "target": {"x": .1, "y": .2, "width": .5, "height": .4}, "easing": "LINEAR"}])
 
     def test_guessed_or_rescaled_cues_cannot_pass_measured_boundary_check(self):
         self.handoff["timingDraft"]["story"]["cues"][0]["endMs"] = 59000

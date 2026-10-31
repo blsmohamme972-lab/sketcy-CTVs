@@ -79,7 +79,8 @@ camera view while keeping captions/highlights active.
 3. Attach the actual WAVs in Studio, then patch captions and object keys from the
    ledger's measured segments. Automatic cue rescaling alone is draft timing.
    Optional `cameraDurationMs` lets a 1.4-second transition settle while the
-   segment caption continues; the production camera uses this 1.4-second pattern.
+   segment caption continues. The bridge preserves the authored camera targets,
+   easing and transition duration; these examples use 1.4-second transitions.
 4. Export `layers` and `handoff --part-id <measured-part-id>` outside Git.
 5. Run the bridge:
 
